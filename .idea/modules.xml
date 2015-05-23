@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/micromall.iml" filepath="$PROJECT_DIR$/micromall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/micromall-adminWeb/micromall-adminWeb.iml" filepath="$PROJECT_DIR$/micromall-adminWeb/micromall-adminWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/micromall-agentWeb/micromall-agentWeb.iml" filepath="$PROJECT_DIR$/micromall-agentWeb/micromall-agentWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/micromall-datacenter/micromall-datacenter.iml" filepath="$PROJECT_DIR$/micromall-datacenter/micromall-datacenter.iml" />
+    </modules>
+  </component>
+</project>

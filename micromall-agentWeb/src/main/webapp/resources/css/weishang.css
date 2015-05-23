@@ -1,0 +1,1078 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 640px;
+    height: 100%;
+    background: #FFF;
+    font-size: 14px;
+    font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+    line-height: 1.5;
+    color: #333;
+    -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+.grzx_bar {
+    position: relative;
+    width: 100%;
+    min-height: 44px;
+    line-height: 44px;
+    background-color: #EFEFEF;
+    border-bottom: 1px solid #DDD;
+}
+
+.grzx_bar_back {
+    width: 50px;
+    height: 45px;
+    position: absolute;
+}
+
+.grzx_bar_back a {
+    overflow: hidden;
+    display: block;
+    height: 100%;
+}
+
+.grzx_bar_mm {
+    width: 100%;
+    height: 45px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
+}
+
+.ws_wrap {
+    position: relative;
+    padding-bottom: 44px;
+    min-height: 100px;
+}
+
+.add_weiinput {
+    height: 20px;
+    line-height: normal;
+    border: 0 none;
+    font-size: 14px;
+    width: 100%;
+    -webkit-appearance: none;
+    vertical-align: top;
+    color: #333;
+}
+
+.add_weip {
+    border-bottom: 1px solid #ddd;
+    padding: 13px 20px 13px 100px;
+    position: relative;
+    background-color: #fff
+}
+
+.add_wei.mm {
+    color: #666;
+    width: 80px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto 0;
+    height: 20px;
+    padding-right: 20px;
+    text-align: right;
+}
+
+.add_weiselect {
+    width: 100%;
+    font-size: 14px;
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border: 1px solid #ddd;
+    padding: 0 16px 0 5px;
+    background: #fff;
+    background-size: 15px 5px;
+}
+
+.add_wei.command {
+    padding: 15px 10px;
+    border-bottom: 0;
+}
+
+.add_weibutton {
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    background-color: #3884FF;
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    width: 100%;
+    border: 0 none;
+}
+
+.add_wei.button {
+    display: block;
+    height: 42px;
+    text-align: center;
+    line-height: 42px;
+    background-color: #3884FF;
+    color: #000;
+    font-size: 16px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    width: 100%;
+    border: 0 none;
+}
+
+.add_wei.submit {
+    background-color: #ec5050;
+}
+
+.add_wei.submit2 {
+    background-color: #00B937;
+}
+
+.add_wei.submit4 {
+    background-color: #00B937;
+}
+
+.add_wei.submit3 {
+    background-color: #FF4700;
+}
+
+.add_wei.wsws_back {
+    background-color: #e7e9eb;
+    border: 1px solid #5A5A5A;
+}
+
+.fgxian {
+    background-color: #f5f5f5;
+    height: 10px;
+    border-bottom: 1px solid #ddd
+}
+
+.h40 {
+    height: 40px
+}
+
+.h20 {
+    height: 20px
+}
+
+.h10 {
+    height: 10px
+}
+
+.h5 {
+    height: 5px
+}
+
+.h4 {
+    height: 4px
+}
+
+.kbys {
+    background-color: #ddd;
+    height: 1px;
+}
+
+/*xinzhendizhi*/
+
+.add_list .add {
+    position: relative;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.add_list ul {
+    padding-right: 50px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.add_list ul {
+    padding: 15px 10px;
+    border-bottom: 1px solid #E7E7E7;
+}
+
+.add_list .edit {
+    height: 20px;
+    margin-top: 10px;
+    float: right;
+    z-index: 2;
+}
+
+.add_list .edit a {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 0px 10px;
+    float: left;
+}
+
+.add_list ul.onjs {
+    background-color: #E50003;
+    color: #fff
+}
+
+.add_list ul.onjs .edit a.se {
+    display: none
+}
+
+.add_list ul.onjs .edit a {
+    border: 1px solid #E50003;
+    color: #fff
+}
+
+.appointment_type .date:after {
+    content: '\20';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -10px;
+    background-position: -60px -30px;
+}
+
+.add_list_link .item:after {
+    background-image: url(../images/sp.png);
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
+    -webkit-background-size: 100px 100px;
+}
+
+.add_list .act {
+    background-color: #ff3b2f;
+    color: #fff;
+    width: 70px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.add_list .del {
+    height: 16px;
+    line-height: 16px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 70px;
+    margin-top: -8px;
+}
+
+.add_list_link .item {
+    position: relative;
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 10px;
+    background: #efefef;
+    border-bottom: 1px solid #cbcbcb;
+}
+
+.add_list_link .item:after {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    content: '';
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin-top: -12px;
+    background-position: -25px 0;
+}
+
+.pay_type h3:after {
+    background: none;
+}
+
+.add_list .edit:after {
+    width: 30px;
+}
+
+.add_list .edit {
+    right: 0;
+}
+
+#noSelectPage:after {
+    background: none;
+}
+
+.add_list ul:before {
+    display: none;
+}
+
+.add_wei.mm2 {
+    color: #666;
+    width: 80px;
+    line-height: 20px;
+    position: absolute;
+    top: -18px;
+    bottom: 0;
+    right: 5px;
+    margin: auto 0;
+    height: 20px;
+    text-align: right;
+}
+
+/**/
+.add_wei.mm2 .button {
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+.bj {
+    min-width: 320px;
+    max-width: 640px;
+    margin: 0 auto;
+    background-color: #ec5050; /* color: #333; */
+}
+
+.pic {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+}
+
+.pic.wimg100 {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto;
+    border-radius: 100px;
+    background-color: #fff
+}
+
+.pic.wimg100 img {
+    border-radius: 100px;
+    vertical-align: central
+}
+
+.pici {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+}
+
+.pici.wimg100 {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto;
+    border-radius: 100px;
+    background-color: #fff
+}
+
+.pici.wimg100 img {
+    border-radius: 100px;
+    vertical-align: central
+}
+
+.all {
+    text-align: center;
+}
+
+.all span {
+    color: #111;
+}
+
+.about {
+    text-align: center;
+}
+
+.about span {
+}
+
+.wz {
+    color: #111;
+    font-family: microsoft yahei;
+}
+
+.wz0 {
+    font-size: 30px;
+    line-height: 30px
+}
+
+.wz1 {
+    font-size: 18px;
+    line-height: 20px
+}
+
+.wz2 {
+    font-size: 13px;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center
+}
+
+.add_wei_shang_i.bottom p {
+    border-bottom: 1px solid #ddd;
+    padding: 13px 20px 13px 13px;
+    position: relative;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.add_wei_shang_i p {
+    border: 1px solid #5A5A5A;
+    padding: 13px 20px 13px 100px;
+    position: relative;
+}
+
+.add_wei_shang_ii.bottom p {
+    border-bottom: 1px solid #ddd;
+    padding: 13px 20px 13px 13px;
+    position: relative;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.add_wei_shang_o.bottom p {
+    border-bottom: 1px solid #ddd;
+    padding: 13px 20px 13px 13px;
+    position: relative;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.add_wei_shang_ii p {
+    border: 1px solid #5A5A5A;
+    padding: 13px 20px 13px 100px;
+    position: relative;
+}
+
+.add_wei_shang_o p {
+    border: 1px solid #5A5A5A;
+    padding: 13px 20px 13px 100px;
+    position: relative;
+}
+
+.add_wei_shang.left p {
+    padding: 13px 20px 13px 13px;
+}
+
+.add_wei_shang input {
+    height: 20px;
+    line-height: normal;
+    border: 0 none;
+    font-size: 14px;
+    width: 100%;
+    background: #e7e9eb;
+    -webkit-appearance: none;
+    vertical-align: top;
+    color: #333;
+}
+
+.add_wei_shang_i input {
+    height: 20px;
+    line-height: normal;
+    border: 0 none;
+    font-size: 14px;
+    width: 100%;
+    background: #e7e9eb;
+    -webkit-appearance: none;
+    vertical-align: top;
+    color: #333;
+}
+
+.add_wei_shang_ii input {
+    height: 20px;
+    line-height: normal;
+    border: 0 none;
+    font-size: 14px;
+    width: 100%;
+    background: #e7e9eb;
+    -webkit-appearance: none;
+    vertical-align: top;
+    color: #333;
+}
+
+.add_wei_shang_o input {
+    height: 20px;
+    line-height: normal;
+    border: 0 none;
+    font-size: 14px;
+    width: 100%;
+    background: #e7e9eb;
+    -webkit-appearance: none;
+    vertical-align: top;
+    color: #333;
+}
+
+.add_wei_shang p {
+    border: 1px solid #5A5A5A;
+    border-left: 0px;
+    border-right: 0px;
+    padding: 13px 20px 13px 66px;
+    position: relative;
+    background-color: #e7e9eb
+}
+
+.add_wei_shang.bottom p {
+    border-bottom: 1px solid #5A5A5A;
+    border-left: 0px;
+    border-right: 0px;
+    padding: 13px 20px 13px 13px;
+    position: relative;
+    background-color: #e7e9eb
+}
+
+.add_wei_shang p:nth-child(even) {
+    border-top: 0px solid #5A5A5A;
+}
+
+.add_wei_shang_i p:nth-child(5n) {
+    border-bottom: 1px solid #5A5A5A;
+}
+
+.add_wei_shang_ii p:nth-child(3n) {
+    border-bottom: 1px solid #5A5A5A;
+}
+
+.add_wei_shang_o p:nth-child(12n) {
+    border-bottom: 1px solid #5A5A5A;
+}
+
+.add_wei_shang_4 p:nth-child(12n) {
+    border-bottom: 1px solid #5A5A5A;
+}
+
+.add_wei_shang .mm {
+    color: #666;
+    width: 52px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto 0;
+    height: 20px;
+    padding-right: 20px;
+    text-align: right;
+}
+
+.add_wei_shang select {
+    width: 100%;
+    font-size: 14px;
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border: 1px solid #ddd;
+    padding: 0 16px 0 5px;
+    background: #181818;
+    background-size: 15px 5px;
+}
+
+.add_wei_shang .command {
+    padding: 15px 10px;
+    border-bottom: 0;
+}
+
+.add_wei button {
+    border: 1px solid #5A5A5A;
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    width: 100%;
+    border: 0 none;
+}
+
+.add_wei .button {
+    border: 1px solid #5A5A5A;
+    display: block;
+    height: 42px;
+    text-align: center;
+    line-height: 42px;
+    font-size: 16px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    width: 100%;
+    border: 0 none;
+}
+
+.add_wei_shang .submit {
+    background-color: #ec5050;
+}
+
+.add_wei_shang .submit2 {
+    background-color: #00B937;
+}
+
+.add_wei_shang .submit4 {
+    background-color: #00B937;
+}
+
+.add_wei_shang .submit3 {
+    background-color: #FF4700;
+}
+
+.add_wei_shang .wsws_back {
+    background-color: #fff;
+}
+
+.add_wei_shang .mm2 .button {
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+.wsws_back.button {
+    border: 1px solid #5A5A5A;
+    -webkit-transition: all 0.30s ease-out;
+    -moz-transition: all 0.30s ease-out;
+    -ms-transition: all 0.30s ease-out;
+    -o-transition: all 0.30s ease-out;
+    transition: all 0.30s ease-out;
+}
+
+.wsws_back.button:hover, .wsws_back.button:focus {
+    background-color: #fff;
+    -webkit-transition: all 0.30s ease-out;
+    -moz-transition: all 0.30s ease-out;
+    -ms-transition: all 0.30s ease-out;
+    -o-transition: all 0.30s ease-out;
+    transition: all 0.30s ease-out;
+}
+
+.add_wei.wsws_back {
+    background-color: #e7e9eb;
+    border: 1px solid #5A5A5A;
+}
+
+.dl {
+    line-height: 20px;
+    color: #999;
+    text-align: left;
+    padding: 0px 10%;
+    float: left
+}
+
+.dl:hover {
+    line-height: 20px;
+    color: #707070;
+    text-align: left;
+    padding: 0px 10%;
+    float: left
+}
+
+.wj {
+    line-height: 20px;
+    color: #999;
+    text-align: right;
+    padding: 0px 10%;
+    float: right
+}
+
+.wj:hover {
+    line-height: 20px;
+    color: #707070;
+    text-align: right;
+    padding: 0px 10%;
+    float: right
+}
+
+.dl_i {
+    line-height: 20px;
+    color: #999;
+}
+
+.dl_i:hover {
+    line-height: 20px;
+    color: #707070;
+}
+
+.wj_i {
+    line-height: 20px;
+    color: #999;
+}
+
+.wj_i:hover {
+    line-height: 20px;
+    color: #707070;
+}
+
+/*商家管理页面*/
+.ull {
+    border: 1px solid #5A5A5A;
+    width: 43%;
+    margin: 10px;
+    float: left;
+}
+
+.png {
+    width: 30%;
+    margin: 0 auto;
+    padding: 10px 6px 6px 6px;
+}
+
+.wenz1 {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+
+.tabBoxs .hd {
+    height: 40px;
+    line-height: 39px;
+    font-size: 14px;
+    background-color: #5A5A5A;
+    border-bottom: 1px solid #5A5A5A;
+}
+
+.tabBoxs .hd {
+    display: box;
+    display: -ms-box;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+}
+
+.tabBoxs .hd a {
+    width: 200px;
+    padding: 0 2px;
+    color: #fff;
+    margin: 0px 10px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tabBoxs .hd a {
+    display: block;
+    flex: 1;
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    box-flex: 1;
+    -ms-box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.tabBoxs .hd .on {
+    border-bottom: 2px solid #fff;
+    color: #fff;
+}
+
+.tabBoxs .hd a.on {
+    display: block;
+    color: #fff; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
+}
+
+.pngi {
+    float: left;
+    width: 24%;
+    margin: 6px 13px 6px 0px;
+}
+
+.pngii {
+    float: left;
+    width: 25%;
+    margin: 6px 13px;
+}
+
+.boxx {
+    min-height: 240px;
+    border: 1px solid #E9E9E9;
+    background-color: #fff;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.boxxr {
+    border: 1px solid #E9E9E9;
+    background-color: #fff;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.boxi p {
+    border: 1px solid #E2E2E2;
+    padding: 13px 20px 13px 13px;
+    position: relative;
+    background-color: #F8F8F8;
+    margin: 4px 0px;
+}
+
+.dingdandiss_cell {
+    padding-left: 18px;
+    padding-right: 18px;
+    background-color: #fff;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.dingdandiss_cell .dingdandiss_celltitle {
+    line-height: 16px;
+    height: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #ddd;
+    margin-bottom: 10px;
+}
+
+.dingdandiss_dl.dl_tabel dd:last-child {
+    border-bottom: 0 none;
+}
+
+.dingdandiss_dl.dl_tabel dd {
+    padding-left: 70px;
+    min-height: 22px;
+}
+
+.dingdandiss_dl.dl_tabel dd {
+    border-bottom: 1px dotted #eaeaea;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow: visible;
+    line-height: 22px;
+}
+
+.dingdandiss_dl dd {
+    overflow: hidden;
+}
+
+.dingdandiss_dl dt {
+    float: left;
+}
+
+.dingdandiss_dl.dl_tabel dt {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.tabBoxs .hdi {
+    height: 40px;
+    line-height: 39px;
+    font-size: 14px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabBoxs .hdi {
+    display: box;
+    display: -ms-box;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+}
+
+.tabBoxs .hdi a {
+    width: 200px;
+    padding: 0 2px;
+    color: #545454;
+    margin: 0px 10px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tabBoxs .hdi a {
+    display: block;
+    flex: 1;
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    box-flex: 1;
+    -ms-box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.tabBoxs .hdi .on {
+    border-bottom: 2px solid #545454;
+    color: #545454;
+}
+
+.tabBoxs .hdi a.on {
+    display: block;
+    color: #545454; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
+}
+
+.tabBoxs .hd {
+    height: 40px;
+    line-height: 39px;
+    font-size: 14px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabBoxs .hd {
+    display: box;
+    display: -ms-box;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+}
+
+.tabBoxs .hd a {
+    width: 200px;
+    padding: 0 2px;
+    color: #fff;
+    margin: 0px 10px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tabBoxs .hd a {
+    display: block;
+    flex: 1;
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    box-flex: 1;
+    -ms-box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.tabBoxs .hd .on {
+    border-bottom: 2px solid #E6E6E6;
+    color: #FFFFFF;
+}
+
+.tabBoxs .hd a.on {
+    display: block;
+    color: #fff; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
+}
+
+.tabBoxs .bdd ul {
+    background-color: #f5f5f5
+}
+
+.tabBoxs .bdd li {
+    line-height: 33px;
+    border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    background-color: #fff;
+    margin: 10px 0px
+}
+
+.tabBoxs .bdd a {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 去掉链接触摸高亮 */
+.tabBoxs .bdd li a {
+    color: #333;
+    font-size: 14px;
+}
+
+.tabBoxs .bdd .tttt {
+    overflow: hidden;
+    padding: 6px 10px;
+}
+
+.tabBoxs .bdd .tttt .pic {
+    width: 45px;
+    float: right;
+}
+
+.tabBoxs .bdd .tttt .pic img {
+    width: 45px;
+    margin-top: 10px
+}
+
+.tabBoxs .bdd .tttt .pici {
+    width: 70px;
+    float: left;
+}
+
+.tabBoxs .bdd .tttt .pici img {
+    width: 60px;
+}
+
+.tabBoxs .bdd .tttt .conn {
+    line-height: 20px;
+}
+
+.tabBoxs .bdd .tttt .conn p {
+    font-size: 12px;
+    color: #999;
+    line-height: 15px;
+}
+
+.tabBoxs .bdd .tttt .tit, .tabBoxs .bdd .DDDH {
+    font-size: 12px;
+    line-height: 18PX;
+}
+
+.tabBoxs .bdd .DDDH {
+    padding: 4px 0px
+}
+
+.tm_tit {
+    height: 14px;
+    padding: 0px 0;
+    margin: 8px auto 5px auto;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    color: #B4B4B4;
+    font-size: 12px;
+    width: 80%;
+}
+
+.tm_tit:before {
+    right: 0;
+}
+
+.tm_tit:after, .tm_tit:before {
+    height: 1px;
+    width: 32%;
+    content: '\20';
+    position: absolute;
+    top: 10px;
+    display: block;
+    background: #ddd;
+}
+
+.imgg {
+    margin-top: 7px;
+    margin-right: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

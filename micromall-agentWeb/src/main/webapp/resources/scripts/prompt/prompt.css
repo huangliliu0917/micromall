@@ -1,0 +1,98 @@
+﻿.mod_dialog .dialog_main
+    {
+        background: #333;
+        text-shadow: none;
+        color: #fff;
+        position: fixed;
+        width: 315px;
+        left: 50%;
+        margin-left: -158px;
+        top: 30%;
+        z-index: 99999;
+    }
+
+    .qb_tac
+    {
+        text-align: center;
+    }
+
+    .qb_br
+    {
+        border-radius: 4px;
+    }
+
+    user agent stylesheetdiv
+    {
+        display: block;
+    }
+
+    Inherited from body .qb_fs_l, body
+    {
+        font-size: 15px;
+    }
+
+    a
+    {
+        text-decoration: none;
+    }
+
+    .mod_dialog .dialog_main .dialog_ft
+    {
+        padding: 10px;
+    }
+
+    .qb_flex
+    {
+        display: -webkit-box;
+    }
+
+    .mod_color_normal, .ui_color_normal, body, a
+    {
+        color: #333;
+    }
+
+    .mod_dialog .dialog_main .dialog_bd
+    {
+        padding: 20px;
+    }
+
+    .mod_dialog .dialog_main .dialog_ft a
+    {
+        color: #fff;
+        background: #3c3c3c;
+        /*margin-right: 10px;*/
+        border: 1px solid #161616;
+        box-shadow: 0 1px 1px #5a5a5a inset;
+        border-radius: 4px;
+        padding: 4px 0;
+        text-align: center;
+    }
+
+    .qb_flex .flex_box
+    {
+        -webkit-box-flex: 1;
+        display: block;
+        width: 0;
+    }
+
+    .mod_dialog .dialog_mask
+    {
+        background-color: rgba(0,0,0,.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 88888;
+    }
+
+    .prompt_note
+    {
+        display:none; z-index:2000; position:fixed;top:1px;width:80%; margin-left:10%; height:30px; line-height:30px; text-align:center; color:#fff; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:rgba(0,0,0,0.7);
+    }
+
+    .notification_note_back
+        {
+            display:none; z-index:2000; position:fixed;top:1px;width:80%; margin-left:10%; height:30px; line-height:30px; text-align:center; color:#fff; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:rgba(0,0,0,0.7);
+        }
+    .notification_bg{position:fixed;top:0;right:0;bottom:0;left:0;z-index:998;width:100%;height:100%;_padding:0 20px 0 0;display:none;background:rgba(255,255,255,0.4);}

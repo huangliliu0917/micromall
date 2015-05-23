@@ -1,0 +1,123 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.signinpanel {
+width: 780px;
+margin: 10% auto 0 auto;
+}.row {
+margin-left: -10px;
+margin-right: -10px;
+}.signinpanel .logopanel {
+float: none;
+width: auto;
+padding: 0;
+background: none;
+}.logopanel h1 {
+font-size: 30px;
+font-family: 'LatoBold', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
+letter-spacing: -1.5px;
+color: #1d2939;
+line-height: 30px;
+margin: 0;
+}.logopanel h1 span {
+color:#FF3D00;
+}.mb20 {
+margin-bottom: 20px;
+}h1, h2, h3, h4, h5 {
+font-family: 'LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
+}strong {
+font-family: 'LatoBold';
+font-weight: normal;
+}.signinpanel .signin-info ul {
+list-style: none;
+padding: 0;
+margin: 20px 0;
+}.mr5 {
+margin-right: 5px;
+}
+.fa {
+display: inline-block;
+font-family: FontAwesome;
+font-style: normal;
+font-weight: normal;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}.signinpanel .signin-info a {
+color: #333;
+}.signinpanel form {
+background: rgba(255, 255, 255, 0.4);
+border: 1px solid #ccc;
+-moz-box-shadow: 0 3px 0 rgba(12,12,12,0.03);
+-webkit-box-shadow: 0 3px 0 rgba(12,12,12,0.03);
+box-shadow: 0 3px 0 rgba(12,12,12,0.03);
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+padding:50px 30px;
+}.nomargin {
+margin: 0;
+}.mt5 {
+margin-top: 5px;
+}.signinpanel .uname {
+background: #fff url(../images/user.png) no-repeat 95% center;
+}
+.signinpanel .form-control {
+display: block;
+margin-top: 15px;
+}.signinpanel .pword {
+background: #fff url(../images/locked.png) no-repeat 95% center;
+}
+.signinpanel form a {
+color: #666;
+}.signinpanel .btn {
+margin-top: 15px;
+}
+.btn-success {
+background-color:#002769;
+border-color: #002769;color:#fff
+}.btn {
+ 
+line-height: 21px;
+-moz-transition: all 0.2s ease-out 0s;
+-webkit-transition: all 0.2s ease-out 0s;
+transition: all 0.2s ease-out 0s;
+padding: 6px 15px;
+}.col-md-5 {
+width:50%;float:left
+}.col-md-7 {
+width:48%; float:left
+}
+.col-md-6 {
+width: 50%;
+}
+.btn-block {
+display: block;
+width: 100%;
+padding-left: 0;
+padding-right: 0;
+} 
+body.signin {
+background: #e4e7ea;
+}.signup-footer {
+border-top: 1px solid #ddd;
+margin-top: 30px;
+padding-top: 10px;
+font-size: 12px;
+}
+.signuppanel{margin:2% auto 0 auto;
+width: 680px; }
+.container-box label {
+display: inline-block;
+width: 150px;
+text-align: right;
+}
+
+.container-box input[type="text"],.container-box input[type="password"]{ width:330px}
+.form-item{ padding:5px 10px}.container-box .wauto {
+width: auto;
+margin: 0 20px 0 5px;
+}.container-box .form-btn {
+padding-left: 160px;
+}.form-des{ font-size:12px; margin-top:8px;}.highlight{ color:red; padding:0px 4px}
