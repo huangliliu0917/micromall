@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="micromall-adminWeb:war">
-    <output-path>$PROJECT_DIR$/micromall-adminWeb/target</output-path>
-    <root id="archive" name="micromall-adminWeb.war">
-      <element id="artifact" artifact-name="micromall-adminWeb:war exploded" />
-    </root>
-  </artifact>
-</component>
