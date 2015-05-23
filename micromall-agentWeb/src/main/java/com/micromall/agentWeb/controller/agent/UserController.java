@@ -28,4 +28,15 @@ public class UserController extends BaseController {
         model.addAttribute("searchKey", searchKey);
         return "agent/user_list";
     }
+
+    @RequestMapping("/userEdit")
+    public String userEdit(@RequestParam(value = "userId", required = false, defaultValue = "0") int userId, Model model) {
+        if (userId > 0) {
+            model.addAttribute("userBean", userService.findByUserId(userId));
+        }
+        model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("userId", userId);
+
+        return "agent/user_edit";
+    }
 }

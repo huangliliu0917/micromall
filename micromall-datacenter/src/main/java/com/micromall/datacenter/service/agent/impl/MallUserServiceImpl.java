@@ -28,11 +28,15 @@ public class MallUserServiceImpl implements MallUserService {
         dao.delete(userId);
     }
 
+    @Transactional(readOnly = true)
     public Page<MallUserBean> findAll(int customerId, int pageIndex, int pageSize, int agentId, String searchKey) {
         MallAgentBean agentBean = new MallAgentBean();
         agentBean.setAgentId(agentId);
         return dao.findAll(customerId, searchKey, agentBean, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "userId")));
     }
 
-
+    @Transactional(readOnly = true)
+    public MallUserBean findByUserId(int userId) {
+        return dao.findOne(userId);
+    }
 }

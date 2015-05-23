@@ -13,4 +13,6 @@ public interface MallUserService {
     void delete(int userId);
 
     Page<MallUserBean> findAll(int customerId, int pageIndex, int pageSize, int agentId, String searchKey);
+
+    MallUserBean findByUserId(int userId);
 }
