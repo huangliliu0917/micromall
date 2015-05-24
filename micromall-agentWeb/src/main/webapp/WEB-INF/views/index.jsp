@@ -50,14 +50,14 @@
 </ul>
 
 
-<ul class="ull">
+<ul class="ull" onclick="goMenu('<c:url value="/userList?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/shoujihaoer.png" />" width="100%"></li>
     <li class="wenz1">我的通讯录管理</li>
 </ul>
 
 <p class="h10" style="clear:both"></p>
 
-<ul class="ull">
+<ul class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/file-settings.png" />" width="100%"></li>
     <li class="wenz1">进出货管理</li>
 </ul>

@@ -22,7 +22,7 @@ public class AccountInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String requestUrl = request.getRequestURI();
+        String requestUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
         String contextPath = request.getContextPath();
         String url = requestUrl.substring(contextPath.length());
         if (requestUrl.toLowerCase().contains("login")) {

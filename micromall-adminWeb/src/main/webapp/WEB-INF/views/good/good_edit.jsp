@@ -66,7 +66,11 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <span class="title"><i class="red">*</i>价格：</span>
+                                    <span class="title"><i class="red">*</i>销售价：</span>
+                                    <input type="text" class="text" id="price" value="${goodBean.price}"/>
+                                </li>
+                                <li>
+                                    <span class="title"><i class="red">*</i>代理商进价：</span>
                                     <ul style="margin-left: 20px;">
                                         <c:forEach items="${levelList}" var="levelBean" varStatus="index">
                                             <li>${levelBean.levelName}：<input type="text" class="text priceClass" value="${goodBean.priceViewModelList.get(index.index).price}"/>

@@ -29,12 +29,10 @@ public class GoodsController extends BaseController {
     private MallAgentLevelService levelService;
 
     @RequestMapping("/good/goodList")
-    public ModelAndView goodList(@RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
-                                 @RequestParam(value = "goodName", required = false, defaultValue = "") String goodName) {
+    public ModelAndView goodList(@RequestParam(value = "goodName", required = false, defaultValue = "") String goodName) {
         ModelMap modelMap = new ModelMap();
-        Page<MallGoodBean> pageInfo = goodsService.findAll(getCustomerId(), goodName, pageIndex, pageSize);
-        modelMap.put("pageInfo", pageInfo);
-        modelMap.put("pageIndex", pageIndex);
+        List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), goodName);
+        modelMap.put("goodList", goodList);
         modelMap.put("goodName", goodName);
         return new ModelAndView("good/good_list", modelMap);
     }

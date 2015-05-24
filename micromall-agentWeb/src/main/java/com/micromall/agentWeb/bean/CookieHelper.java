@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieHelper {
     public static String getCookieVal(HttpServletRequest request, String key) {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (key.equals(cookie.getName())) {
-                return cookie.getValue();
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(key)) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;
@@ -22,9 +24,11 @@ public class CookieHelper {
 
     public static int getCookieValInteger(HttpServletRequest request, String key) {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (key.equals(cookie.getName())) {
-                return Integer.parseInt(cookie.getValue());
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(key)) {
+                    return Integer.parseInt(cookie.getValue());
+                }
             }
         }
         return 0;
@@ -33,6 +37,7 @@ public class CookieHelper {
     public static void setCookie(HttpServletResponse response, String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(1209600);
+        cookie.setPath("/");
         response.addCookie(cookie);
     }
 }

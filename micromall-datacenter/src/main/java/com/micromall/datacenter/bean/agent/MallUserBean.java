@@ -6,35 +6,35 @@ import javax.persistence.*;
  * Created by Administrator on 2015/5/13.
  */
 @Entity
-@Table(name="Micromall_User")
+@Table(name = "Micromall_User")
 public class MallUserBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="User_Id")
-    private long userId;
-    @Column(name="User_Mobile")
+    @Column(name = "User_Id")
+    private int userId;
+    @Column(name = "User_Mobile")
     private String userMobile;
-    @Column(name="User_Name")
+    @Column(name = "User_Name")
     private String userName;
-    @Column(name="User_QQ")
+    @Column(name = "User_QQ")
     private String userQQ;
-    @Column(name="User_Weixin")
+    @Column(name = "User_Weixin")
     private String userWeixin;
-    @Column(name="User_Addr")
+    @Column(name = "User_Addr")
     private String userAddr;
     @ManyToOne
-    @JoinColumn(name="Agent_Id")
+    @JoinColumn(name = "Agent_Id")
     private MallAgentBean agent;
-    @Column(name="CustomerId")
+    @Column(name = "CustomerId")
     private int customerId;
-    @Column(name="IsDelete")
+    @Column(name = "IsDelete")
     private int isDelete;
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

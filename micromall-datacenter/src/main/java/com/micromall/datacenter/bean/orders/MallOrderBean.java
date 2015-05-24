@@ -52,6 +52,8 @@ public class MallOrderBean {
     @Column(name = "Add_Time")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date addTime;
+    @Column(name = "Pro_Num")
+    private int proNum;
 
     public Date getAddTime() {
         return addTime;
@@ -195,5 +197,13 @@ public class MallOrderBean {
 
     public void setDeliverPath(String deliverPath) {
         this.deliverPath = deliverPath;
+    }
+
+    public int getProNum() {
+        return proNum;
+    }
+
+    public void setProNum(int proNum) {
+        this.proNum = proNum;
     }
 }

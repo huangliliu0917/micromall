@@ -47,7 +47,6 @@
                             <tbody>
                             <tr>
                                 <td width="55%">
-                                    <input type="hidden" value="${pageIndex}" name="pageIndex" id="pageIndex"/>
                                     商品名称：<input style="width: 300px;" name="goodName" id="goodName" value="${goodName}" class="hasDatepicker">
 
                                     <input type="submit" class="copybtn" value="查询" style="margin-left: 50px;">
@@ -75,6 +74,7 @@
                         <tr class="sdkbar" style="font-weight:bold;">
                             <th align="center" rowspan="1" colspan="1">商品编号</th>
                             <th align="center" rowspan="1" colspan="1">商品名称</th>
+                            <th align="center" rowspan="1" colspan="1">销售价</th>
                             <th align="center" rowspan="1" colspan="1">创建日期</th>
                             <th align="center" rowspan="1" colspan="1">操作</th>
                         </tr>
@@ -83,10 +83,11 @@
 
 
                         <tbody>
-                        <c:forEach items="${pageInfo.getContent()}" var="goodBean">
+                        <c:forEach items="${goodList}" var="goodBean">
                             <tr height="28px" class="odd">
                                 <td align="center">${goodBean.goodCode}</td>
                                 <td align="center">${goodBean.goodName}</td>
+                                <td align="center">${goodBean.price}</td>
                                 <td align="center">${goodBean.addTime}</td>
                                 <td align="center">
                                     <a href="<c:url value="/good/goodEdit?goodId=${goodBean.goodId}" />">编辑</a> |
@@ -98,7 +99,6 @@
                         <!---内容---->
                     </table>
                     <!--翻页--->
-                    <div class="dataTables_paginate paging_full_numbers" style="float: right; padding: 8px"></div>
                     <p style=" clear:both"></p>
                 </div>
             </div>
@@ -108,15 +108,3 @@
 
 </body>
 </html>
-<script type="text/javascript">
-    $(function () {
-        Index.LoadPaging($(".paging_full_numbers"), ${pageIndex}, J.PageSize, ${pageInfo.getTotalElements()}, function (o, p, s, t, callback) {
-            paginate(p);
-        });
-    });
-
-    function paginate(pageIndex) {
-        $("#pageIndex").val(pageIndex);
-        $("#searchForm").submit();
-    }
-</script>

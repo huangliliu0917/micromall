@@ -1063,6 +1063,27 @@ body {
     margin-right: 3px;
 }
 
+.pngiq {
+    float: left;
+    width: 24%;
+    margin: 6px 6px 6px 0px;
+}
+
+.fonti {
+    width: 57%;
+    margin: 0 auto;
+    padding: 9px 1px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    height: 52px;
+}
+
+.picc {
+    float: right;
+    margin-top: 24px;
+}
+
 
 
 

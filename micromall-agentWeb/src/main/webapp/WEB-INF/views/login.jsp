@@ -27,6 +27,7 @@
     <script type="text/javascript">
         var customerId = ${customerId};
         var ajaxUrl = "<c:url value="/checkLogin" />";
+        var returnUrl = "${returnUrl}";
 
         $(function () {
             $("#loginBtn").click(function () {
@@ -47,8 +48,9 @@
                     customerId: customerId
                 }, function (json) {
                     if (json.result == 1) {
-                        window.location.href = "${returnUrl}";
+                        window.location.href = returnUrl == "" ? "<c:url value="/index?customerId=${customerId}" />" : returnUrl;
                     } else {
+                        loading.close();
                         alert("登录失败");
                     }
                 }, function () {

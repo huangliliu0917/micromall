@@ -35,6 +35,7 @@ public class GoodsApiController extends BaseController {
                 preGood.setGoodImg(goodBean.getGoodImg());
                 preGood.setPriceInfo(goodBean.getPriceInfo());
                 preGood.setGoodDesc(goodBean.getGoodDesc());
+                preGood.setPrice(goodBean.getPrice());
                 goodBean = preGood;
             } else {
                 goodBean.setCustomerId(getCustomerId());

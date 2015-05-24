@@ -57,6 +57,7 @@ function checkForm() {
     var goodName = $.trim($("#goodName").val());
     var goodCode = $.trim($("#goodCode").val());
     var goodImg = $.trim($("#goodImg").val());
+    var price = $.trim($("#price").val());
     var levelPriceInfo = "";
     if (goodName.length == 0) {
         $.jBox.tip("请输入商品名称");
@@ -70,12 +71,16 @@ function checkForm() {
         $.jBox.tip("请上传商品图片");
         return;
     }
+    if (price.length == 0) {
+        $.jBox.tip("请输入商品销售价");
+        return;
+    }
     levelPriceInfo = getLevelPriceInfo();
     if (levelPriceInfo.length == 0) {
         $.jBox.tip("还有价格未设置");
         return null;
     }
-    var goodDesc = $.trim($("#goodDesc")).replace(/\r/g, "").replace(/\n/g, "");
+    var goodDesc = $.trim($("#goodDesc").val()).replace(/\r/g, "").replace(/\n/g, "");
     if (goodDesc.length == 0) {
         $.jBox.tip("请输入商品描述");
         return null;
@@ -87,7 +92,8 @@ function checkForm() {
         goodCode: goodCode,
         priceInfo: levelPriceInfo,
         goodDesc: goodDesc,
-        goodImg: goodImg
+        goodImg: goodImg,
+        price: price
     }
 
     return requestData;

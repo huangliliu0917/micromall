@@ -19,6 +19,6 @@ public interface MallUserDao extends JpaRepository<MallUserBean, Integer>, JpaSp
     @Query("update MallUserBean u set u.isDelete=1 where u.userId=?1")
     void delete(int userId);
 
-    @Query("select user from MallUserBean user where user.customerId=?1 and (user.userMobile like %?2% or user.userName like %?2%) and user.agent=?3")
+    @Query("select user from MallUserBean user where user.isDelete=0 and user.customerId=?1 and (user.userMobile like %?2% or user.userName like %?2%) and user.agent=?3")
     Page<MallUserBean> findAll(int customerId, String searchKey, MallAgentBean agentBean, Pageable pageable);
 }

@@ -33,7 +33,8 @@ public class MallGoodBean {
     private int isDelete;
     @Column(name = "Good_Img")
     private String goodImg;
-
+    @Column(name = "Price")
+    private double price;
     @Column(name = "CustomerId")
     private int customerId;
 
@@ -118,5 +119,13 @@ public class MallGoodBean {
 
     public void setGoodImg(String goodImg) {
         this.goodImg = goodImg;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

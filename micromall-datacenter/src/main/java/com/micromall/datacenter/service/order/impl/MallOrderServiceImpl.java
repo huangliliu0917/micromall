@@ -1,5 +1,6 @@
 package com.micromall.datacenter.service.order.impl;
 
+import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
@@ -31,22 +32,15 @@ public class MallOrderServiceImpl implements MallOrderService {
     private MallOrderDao dao;
 
     @Transactional
-    public MallOrderBean create(MallOrderBean bean) {
+    public MallOrderBean create(MallOrderBean bean, int goodId) {
+        if (StringUtil.isEmpty(bean.getOrderId())) {
+            bean.setOrderId(this.createOrderId(bean.getCustomerId()));
+        }
+        MallGoodBean goodBean = new MallGoodBean();
+        goodBean.setGoodId(goodId);
+        bean.setGood(goodBean);
         return dao.save(bean);
     }
-
-//    public Page<MallOrderBean> findAll(int customerId, String orderId, String beginTime, String endTime, int orderStatus, int pageIndex, int pageSize) {
-//        MallOrderSearchViewModel searchViewModel = new MallOrderSearchViewModel();
-//        searchViewModel.setCustomerId(customerId);
-//        searchViewModel.setOrderId(orderId);
-//        if (StringUtil.isNotEmpty(beginTime)) {
-//            searchViewModel.setBeginTime(StringUtil.DateFormat(beginTime, StringUtil.DATE_PATTERN));
-//        }
-//        if (StringUtil.isNotEmpty(endTime)) {
-//            searchViewModel.setEndTime(StringUtil.DateFormat(endTime, StringUtil.DATE_PATTERN));
-//        }
-//        searchViewModel.setOrderStatus(orderStatus);
-//    }
 
     @Transactional(readOnly = true)
     public Page<MallOrderBean> findAll(final MallOrderSearchViewModel searchViewModel, int pageIndex, int pageSize) {
@@ -127,5 +121,19 @@ public class MallOrderServiceImpl implements MallOrderService {
         orderBean.setRealShipId(transferTo);
         orderBean.setDeliverPath(orderBean.getDeliverPath() + "," + transferTo);
         dao.save(orderBean);
+    }
+
+    public String createOrderId(int customerId) {
+        return StringUtil.DateFormat(new Date(), "yyyyMMddHHmmSS") + (int) (Math.random() * 89 + 10);
+    }
+
+    public Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType) {
+        if (orderType == 0) {
+            return dao.findAll(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //全部
+        } else if (orderType == 1) {
+            return dao.findInOrder(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //进货
+        } else {
+            return dao.findOutOrder(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //出货
+        }
     }
 }

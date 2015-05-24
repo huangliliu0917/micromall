@@ -25,13 +25,33 @@
     <link rel="stylesheet" href="<c:url value="/resources/scripts/prompt/prompt.css" />">
     <script type="text/javascript" src="<c:url value="/resources/scripts/loading/jquery.loading-0.1.js" />"></script>
     <title>我的通讯录</title>
-</head>
+    <script type="text/javascript">
+        var ajaxUrl = "<c:url value="/agentApi/" />";
+        var customerId = ${customerId};
+        function showMore(userId) {
+            $("#selUserId").val(userId);
+            $("#more_dialog").show();
+        }
+        function hideMore() {
+            $("#selUserId").val("");
+            $("#more_dialog").hide();
+        }
 
+        function goUri(uri) {
+            window.location.href = uri + $("#selUserId").val();
+        }
+
+        function deleteUser() {
+            userHandler.deleteUser($("#selUserId").val());
+        }
+    </script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.user.js" />"></script>
+</head>
 <body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
 <!---------------------/////////////////------------------------------------>
 
 <div style="background-color:#545454;height:44px;">
-    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;">新增通讯录</p>
+    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/userEdit?customerId=${customerId}"/>'">新增通讯录</p>
 
     <p style=" float:right;margin-top:5px;margin-right: 10px;">
         <input style="height: 32px;background-color: #545454;border: solid 1px #7E7E7E;color: #fff;padding-left: 7px;width: 123px;" type="" id="mobile" name="mobile" value="" placeholder="搜索">
@@ -51,7 +71,7 @@
                 <li class="tttt">
                     <div class="conn">
                         <div class="pic">
-                            <a href="javascript:"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
+                            <a href="javascript:showMore(${userBean.userId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
                         </div>
                         <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${userBean.userMobile}</p>
 
@@ -71,7 +91,9 @@
 
 <!---------------------/////////弹窗////////------------------------------------>
 
-<div style="background-color: #fff;position: fixed;bottom: 0;left: 0;right: 0;margin: auto;">
+<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 0;left: 0;right: 0;margin: auto;display:none;">
+    <input type="hidden" id="selUserId"/>
+
     <p style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;">×</p>
 
     <p style="clear:both"></p>
@@ -79,19 +101,19 @@
     <div class="ws_wrap">
         <div class="add_wei">
             <p class="command" style="background-color:transparent; padding:0px 20%;">
-                <a class="wsws_back button" id="add">发起订单</a>
+                <a class="wsws_back button" href="javascript:goUri('<c:url value="/order/createOrder?customerId=${customerId}&sendId=" />')">发起订单</a>
             </p>
 
             <p style="height:20px"></p>
 
             <p class="command" style="background-color:transparent; padding:0px 20%;">
-                <a class="wsws_back button" id="add">修改信息</a>
+                <a class="wsws_back button" href="javascript:goUri('<c:url value="/userEdit?customerId=${customerId}&userId=" />')">修改信息</a>
             </p>
 
             <p style="height:20px"></p>
 
             <p class="command" style="background-color:transparent; padding:0px 20%;">
-                <a class="wsws_back button" id="add">删除</a>
+                <a class="wsws_back button" href="javascript:deleteUser()">删除</a>
             </p>
         </div>
     </div>

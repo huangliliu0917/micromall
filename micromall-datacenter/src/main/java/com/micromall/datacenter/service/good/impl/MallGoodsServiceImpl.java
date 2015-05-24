@@ -5,9 +5,6 @@ import com.micromall.datacenter.dao.good.MallGoodsDao;
 import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.viewModel.good.GoodPriceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +47,8 @@ public class MallGoodsServiceImpl implements MallGoodsService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MallGoodBean> findAll(int customerId, String goodName, int pageIndex, int pageSize) {
-        return dao.findByCustomerIdAndGoodNameContaining(customerId, goodName, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "goodId")));
+    public List<MallGoodBean> findAll(int customerId, String goodName) {
+        return dao.findByCustomerIdAndGoodNameContaining(customerId, goodName);
     }
 
     /**
