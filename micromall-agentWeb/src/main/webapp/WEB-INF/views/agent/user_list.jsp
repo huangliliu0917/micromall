@@ -94,7 +94,7 @@
 <div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 0;left: 0;right: 0;margin: auto;display:none;">
     <input type="hidden" id="selUserId"/>
 
-    <p style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;">×</p>
+    <p style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;" onclick="hideMore()">×</p>
 
     <p style="clear:both"></p>
 
