@@ -3,9 +3,9 @@ package com.micromall.datacenter.bean.orders;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2015/5/14.
@@ -26,10 +26,10 @@ public class MallOrderBean {
     private String shipMobile;
     @Column(name = "Ship_Addr")
     private String shipAddr;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordersBean", orphanRemoval = true)
-    private List<MallOrderItemBean> orderItems;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordersBean", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<MallOrderItemBean> orderItems;
     @Column(name = "TotalPrice")
-    private BigDecimal totalPrice;
+    private double totalPrice;
     @Column(name = "Order_Desc")
     private String orderDesc;
     @Column(name = "CustomerId")
@@ -111,19 +111,19 @@ public class MallOrderBean {
         this.shipAddr = shipAddr;
     }
 
-    public List<MallOrderItemBean> getOrderItems() {
+    public Set<MallOrderItemBean> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<MallOrderItemBean> orderItems) {
+    public void setOrderItems(Set<MallOrderItemBean> orderItems) {
         this.orderItems = orderItems;
     }
 
-    public BigDecimal getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

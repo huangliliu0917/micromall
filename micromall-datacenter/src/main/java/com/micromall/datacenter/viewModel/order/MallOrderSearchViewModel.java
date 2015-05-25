@@ -8,28 +8,12 @@ import java.util.Date;
  * Created by Administrator on 2015/5/14.
  */
 public class MallOrderSearchViewModel {
-    private int customerId;
     private String orderId;
     private String beginTime;
     private String endTime;
     private int orderStatus;
-    private int ownerId;
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
+    private String shipName;
+    private String shipMobile;
 
     public String getOrderId() {
         return orderId;
@@ -61,5 +45,21 @@ public class MallOrderSearchViewModel {
 
     public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public String getShipName() {
+        return shipName;
+    }
+
+    public void setShipName(String shipName) {
+        this.shipName = shipName;
+    }
+
+    public String getShipMobile() {
+        return shipMobile;
+    }
+
+    public void setShipMobile(String shipMobile) {
+        this.shipMobile = shipMobile;
     }
 }

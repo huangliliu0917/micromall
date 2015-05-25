@@ -111,7 +111,7 @@
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>货品订单</span></a>
                         <ul class="children" style="display: block">
                             <li><a href="#"><i class="fa fa-caret-right"></i>货品查询</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>订单查询</a></li>
+                            <li onclick="goMenu('<c:url value="/order/orderList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>订单查询</a></li>
                         </ul>
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>微武器</span></a>

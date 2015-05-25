@@ -63,9 +63,33 @@ public class MallGoodsServiceImpl implements MallGoodsService {
         for (String levelPrice : tempInfo) {
             String[] info = levelPrice.split(":");
             if (Integer.parseInt(info[0]) == agentLevel) {
-                return Double.parseDouble(info[1]);
+                return Double.parseDouble(info[2]);
             }
         }
         return 0;
+    }
+
+    /**
+     * 得到某个代理商等级商品的价格
+     *
+     * @param goodList
+     * @param agentLevel
+     * @return
+     */
+    public List<MallGoodBean> setAgentPrice(List<MallGoodBean> goodList, int agentLevel) {
+        for (MallGoodBean goodBean : goodList) {
+            String[] tempInfo = goodBean.getPriceInfo().split(",");
+            for (String levelPrice : tempInfo) {
+                String[] info = levelPrice.split(":");
+                if (Integer.parseInt(info[0]) == agentLevel) {
+                    goodBean.setPrice(Double.parseDouble(info[2]));
+                }
+            }
+        }
+        return goodList;
+    }
+
+    public String findPriceInfo(int goodId) {
+        return dao.findPriceInfo(goodId);
     }
 }

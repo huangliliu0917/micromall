@@ -1,9 +1,12 @@
 package com.micromall.datacenter.service.order.impl;
 
+import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
+import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.StringUtil;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
@@ -19,9 +22,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/5/14.
@@ -30,6 +31,10 @@ import java.util.List;
 public class MallOrderServiceImpl implements MallOrderService {
     @Autowired
     private MallOrderDao dao;
+    @Autowired
+    private MallAgentService agentService;
+    @Autowired
+    private MallGoodsService goodsService;
 
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId) {
@@ -43,12 +48,12 @@ public class MallOrderServiceImpl implements MallOrderService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MallOrderBean> findAll(final MallOrderSearchViewModel searchViewModel, int pageIndex, int pageSize) {
+    public Page<MallOrderBean> findAll(final MallOrderSearchViewModel searchViewModel, int pageIndex, int pageSize, final int customerId) {
         Specification<MallOrderBean> specification = new Specification<MallOrderBean>() {
             public Predicate toPredicate(Root<MallOrderBean> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<Predicate>();
+                list.add(criteriaBuilder.equal(root.get("customerId").as(Integer.class), customerId));
                 if (searchViewModel != null) {
-                    list.add(criteriaBuilder.equal(root.get("customerId").as(Integer.class), searchViewModel.getCustomerId()));
                     if (StringUtil.isNotEmpty(searchViewModel.getOrderId())) {
                         list.add(criteriaBuilder.like(root.get("orderId").as(String.class), "%" + searchViewModel.getOrderId() + "%"));
                     }
@@ -61,8 +66,11 @@ public class MallOrderServiceImpl implements MallOrderService {
                     if (searchViewModel.getOrderStatus() != -1) {
                         list.add(criteriaBuilder.equal(root.get("orderStatus").as(Integer.class), searchViewModel.getOrderStatus()));
                     }
-                    if (searchViewModel.getOwnerId() > 0) {
-                        list.add(criteriaBuilder.equal(root.get("ownerId").as(Integer.class), searchViewModel.getOwnerId()));
+                    if (StringUtil.isNotEmpty(searchViewModel.getShipName())) {
+                        list.add(criteriaBuilder.like(root.get("shipName").as(String.class), searchViewModel.getShipName()));
+                    }
+                    if (StringUtil.isNotEmpty(searchViewModel.getShipMobile())) {
+                        list.add(criteriaBuilder.like(root.get("shipMobile").as(String.class), searchViewModel.getShipMobile()));
                     }
                 }
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
@@ -96,7 +104,7 @@ public class MallOrderServiceImpl implements MallOrderService {
      */
     @Transactional
     public void confirmShip(MallOrderBean orderBean, String[] proCodes, String shipInfo) {
-        List<MallOrderItemBean> orderItems = new ArrayList<MallOrderItemBean>();
+        Set<MallOrderItemBean> orderItems = new HashSet<MallOrderItemBean>();
         for (String proCode : proCodes) {
             MallOrderItemBean itemBean = new MallOrderItemBean();
             itemBean.setProCode(proCode);
@@ -106,6 +114,7 @@ public class MallOrderServiceImpl implements MallOrderService {
         }
         orderBean.setOrderItems(orderItems);
         orderBean.setShipInfo(shipInfo);
+        orderBean.setOrderStatus(1);
         dao.save(orderBean);
     }
 
@@ -119,7 +128,15 @@ public class MallOrderServiceImpl implements MallOrderService {
     public void transferOrder(String orderId, int transferTo) {
         MallOrderBean orderBean = dao.findOne(orderId);
         orderBean.setRealShipId(transferTo);
-        orderBean.setDeliverPath(orderBean.getDeliverPath() + "," + transferTo);
+
+        //重新设置相应的代理商价格
+        String deliverPath = orderBean.getDeliverPath().substring(1, orderBean.getDeliverPath().length() - 2); //形如：3|2|1
+        String[] tempInfo = deliverPath.split("\\|");
+        MallAgentBean agentBean = agentService.findByAgentId(Integer.parseInt(tempInfo[tempInfo.length - 1])); //已该代理商等级为准
+        double price = goodsService.getPriceByAgent(agentBean.getAgentLevel().getLevelId(), orderBean.getGood().getPriceInfo()); //得到相应代理商等级的价格
+
+        orderBean.setTotalPrice(orderBean.getProNum() * price);
+        orderBean.setDeliverPath("|" + deliverPath + "|" + transferTo + "|");
         dao.save(orderBean);
     }
 
@@ -127,13 +144,44 @@ public class MallOrderServiceImpl implements MallOrderService {
         return StringUtil.DateFormat(new Date(), "yyyyMMddHHmmSS") + (int) (Math.random() * 89 + 10);
     }
 
-    public Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType) {
+    /**
+     * 得到代理商的订单列表
+     *
+     * @param customerId
+     * @param agentId
+     * @param pageIndex
+     * @param pageSize
+     * @param orderType
+     * @return
+     */
+    public Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType, String orderId) {
+        Page<MallOrderBean> pageInfo = null;
         if (orderType == 0) {
-            return dao.findAll(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //全部
+            pageInfo = dao.findAll(customerId, "|" + agentId + "|", orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //全部
         } else if (orderType == 1) {
-            return dao.findInOrder(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //进货
+            pageInfo = dao.findInOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //进货
         } else {
-            return dao.findOutOrder(customerId, agentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //出货
+            pageInfo = dao.findOutOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //出货
         }
+        //不同代理商登录针对同一订单应该看到下级代理商的订单金额
+        for (MallOrderBean orderBean : pageInfo.getContent()) {
+            if (orderBean.getSendId() == 0) {
+                String[] deliverPath = orderBean.getDeliverPath().substring(1, orderBean.getDeliverPath().length() - 1).split("\\|");
+                int index = 0;
+                for (int i = 0; i < deliverPath.length; i++) {
+                    if (Integer.parseInt(deliverPath[i]) == agentId) {
+                        index = i;
+                        break;
+                    }
+                }
+                int resultIndex = index;
+                if (orderBean.getOwnerId() != agentId) {
+                    resultIndex = index - 1;
+                }
+                double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
+                orderBean.setTotalPrice(orderBean.getProNum() * price);
+            }
+        }
+        return pageInfo;
     }
 }

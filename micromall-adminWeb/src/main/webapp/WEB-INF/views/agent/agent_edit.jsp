@@ -108,7 +108,7 @@
                                     <input type="text" class="text" id="agentWeixin" value="${agentBean.agentWeixin}">
                                 </li>
                                 <li>
-                                    <span class="title">地址：</span>
+                                    <span class="title"><i class="red">*</i>收货地址：</span>
                                     <input type="text" class="text" id="agentAddr" value="${agentBean.agentAddr}">
                                 </li>
                             </ul>

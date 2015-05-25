@@ -92,6 +92,12 @@ Error while loading [ class org.springframework.data.jpa.repository.support.Quer
             <artifactId>querydsl-jpa</artifactId>
             <version>3.2.1</version>
             <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-jpa-2.0-api</artifactId>
+                    <groupId>org.hibernate.javax.persistence</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

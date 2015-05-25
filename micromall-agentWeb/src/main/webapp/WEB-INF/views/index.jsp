@@ -76,9 +76,9 @@
 </ul>
 
 
-<ul class="ull">
+<ul class="ull" onclick="goMenu('<c:url value="/personalSetting?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/settings.png" />" width="100%"></li>
-    <li class="wenz1">权限管理</li>
+    <li class="wenz1">个人资料</li>
 </ul>
 
 

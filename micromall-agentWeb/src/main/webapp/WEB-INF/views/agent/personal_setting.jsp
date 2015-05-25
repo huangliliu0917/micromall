@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2015/5/22
-  Time: 15:53
+  Date: 2015/5/25
+  Time: 16:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
@@ -31,13 +31,6 @@
 
         $(function () {
             agentHandler.init("<c:url value="/agentApi/" />")
-            if (editAgentId > 0) {
-                $("#agentLevel").val(${agentBean.agentLevel.levelId});
-                $("#agentLevel").attr("disabled", "disabled");
-                $("#agentAccount").attr("disabled", "disabled");
-            } else {
-                $("#agentLevel").removeAttr("disabled");
-            }
         })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.agent.js" />"></script>
@@ -51,7 +44,7 @@
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
     <div class="all" style="padding:20px 40px 10px 40px">
-        <span class="wz0" style="font-size:40px;">新增代理</span>
+        <span class="wz0" style="font-size:40px;">个人资料编辑</span>
 
         <p style="clear:both; height:30px"></p>
 
@@ -65,25 +58,13 @@
 <div class="add_wei_shang_o bottom">
 
     <p><label>
-        <input type="" id="agentAccount" name="mobile" value="${agentBean.agentAccount}" placeholder="代理人手机号"></label></p>
+        <input type="" id="agentAccount" disabled="disabled" name="mobile" value="${agentBean.agentAccount}" placeholder="代理人手机号"></label></p>
 
     <p><label>
         <input type="" id="name" name="mobile" value="${agentBean.name}" placeholder="代理人姓名"></label></p>
 
-    <p><label>
-        <input type="" id="agentPassword" name="mobile" value="" placeholder="登录密码"></label></p>
-
-    <p><label>
-        <input type="" id="confirmPass" name="mobile" value="" placeholder="确认登录密码"></label></p>
-
     <p>
-        <select id="agentLevel" style="width: 100%;background-color: #e7e9eb;border: 0px;color: #000;">
-            <option value="0">代理级别</option>
-            <c:forEach items="${levelList}" var="levelBean">
-                <option value="${levelBean.levelId}">${levelBean.levelName}</option>
-            </c:forEach>
-        </select>
-        </form>
+        <label><input type="hidden" id="agentLevel" name="mobile" value="${agentBean.agentLevel.levelId}">${agentBean.agentLevel.levelName}</label>
     </p>
 
     <p><label>
@@ -123,4 +104,3 @@
 </div>
 </body>
 </html>
-

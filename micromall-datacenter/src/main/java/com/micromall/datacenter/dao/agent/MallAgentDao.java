@@ -35,4 +35,7 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
 
     @Query("select agent from MallAgentBean agent where agent.isDelete=0 and agent.customerId=?1 and (agent.agentAccount like %?2% or agent.name like %?2%) and agent.superAgentId=?3")
     Page<MallAgentBean> findBySearchKey(int customerId, String searchKey, int superAgentId, Pageable pageable);
+
+    @Query("select agent.agentLevel from MallAgentBean agent where agent.agentId=?1")
+    MallAgentLevelBean findAgentLevel(int agentId);
 }

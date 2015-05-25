@@ -28,4 +28,6 @@ public interface MallAgentService {
     boolean accountExist(String account, int customerId);
 
     Page<MallAgentBean> findBySearchKey(int customerId, String searchKey, int pageIndex, int pageSize, int superAgentId);
+
+    MallAgentLevelBean findAgentLevel(int agentId);
 }

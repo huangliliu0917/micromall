@@ -35,6 +35,8 @@
     <script type="text/javascript">
         var orderId = "${orderBean.orderId}";
         var customerId = ${customerId};
+        var ajaxUrl = "<c:url value="/orderApi/" />";
+        var orderListUrl = "<c:url value="/order/orderList?customerId=${customerId}" />";
         function confirmShip() {
             var index = true;
             var proCodes = "";
@@ -68,17 +70,47 @@
                 shipInfo: shipInfo
             }
 
-            J.GetJsonRespons("<c:url value="/orderApi/confirmShip" />", requestData, function (json) {
+            J.GetJsonRespons(ajaxUrl + "confirmShip", requestData, function (json) {
                 loading.close();
                 if (json.result == 1) {
                     SimplePrompt.showPromptWithFunc("确认发货成功", function () {
-                        window.location.href = "<c:url value="/order/orderList?customerId=${customerId}" />";
+                        window.location.href = orderListUrl;
                     });
                 } else {
                     SimplePrompt.showPrompt("确认发货失败");
                 }
             }, function () {
             }, J.PostMethod);
+        }
+
+        function transferOrder() {
+            loading.show("正在转交");
+            J.GetJsonRespons(ajaxUrl + "transferOrder", {
+                customerId: customerId,
+                orderId: orderId
+            }, function (json) {
+                loading.close();
+                if (json.result == 1) {
+                    SimplePrompt.showPromptWithFunc("转交成功", function () {
+                        window.location.href = orderListUrl;
+                    });
+                } else {
+                    SimplePrompt.showPrompt("转交失败");
+                }
+            }, function () {
+            }, J.PostMethod);
+        }
+        $(function () {
+            $("#addProCode").click(function () {
+                var proHtml = $("#proCode_template").html();
+                var length = $(".proCode").length;
+                proHtml = proHtml.replace(/{id}/g, length + 1);
+                $("#proCodePanel").append(proHtml);
+            });
+        })
+
+        function removePro(id) {
+            $("#code" + id).remove();
         }
     </script>
 </head>
@@ -129,15 +161,18 @@
                 <div class="conn">
                     <p style="height:5px"></p>
 
-                    <div class="DDH">请输入货号</div>
-                    <c:forEach var="item" varStatus="status" begin="1" end="${orderBean.proNum}">
+                    <div class="DDH">
+                        <span style="float: left">请输入货号</span>
+                        <a href="#" id="addProCode" style="float: right"><span><img style="margin-top: -5px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>
+                    </div>
+                    <div style="float: left;width: 90%" id="proCodePanel">
                         <p>
                             <label>
-                                <input class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 89%;" type=""/>
+                                <input class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 80%;" type=""/>
                             </label>
-                                <%--<a href="#"><span><img style="margin-top: 15px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>--%>
+
                         </p>
-                    </c:forEach>
+                    </div>
 
                     <p style="height:10px;clear:both"></p>
 
@@ -156,15 +191,32 @@
 <p style="height:10px;clear:both"></p>
 
 <div class="add_wei">
-    <p class="command" style="background-color:transparent;width:45%; float: left;">
-        <a class="wsws_back button" href="javascript:confirmShip()">确认发货</a>
-    </p>
+    <c:if test="${orderBean.sendId>0}">
+        <p class="command" style="background-color:transparent;padding: 0px 20%;">
+            <a class="wsws_back button" href="javascript:confirmShip()">确认发货</a>
+        </p>
+    </c:if>
 
-    <p class="command" style="background-color:transparent; ;width:45%; float: right;">
-        <a class="wsws_back button">给上级代理</a>
-    </p>
+    <c:if test="${orderBean.sendId==0}">
+        <p class="command" style="background-color:transparent;width:45%; float: left;">
+            <a class="wsws_back button" href="javascript:confirmShip()">确认发货</a>
+        </p>
+
+        <p class="command" style="background-color:transparent; ;width:45%; float: right;">
+            <a class="wsws_back button" href="javascript:transferOrder()">给上级代理</a>
+        </p>
+    </c:if>
 </div>
 
 </body>
 </html>
+
+<script type="text/html" id="proCode_template">
+    <p style="float: left;width: 90%" id="code{id}">
+        <label>
+            <input class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 89%;" type=""/>
+        </label>
+        <a href="#" onclick="removePro({id})" style="float: right"><span><img style="margin-top: 15px;float:right" src="<c:url value="/resources/images/jian.png"/>" width="27px"></span></a>
+    </p>
+</script>
 

@@ -147,6 +147,10 @@ function checkForm() {
         $.jBox.tip("请输入代理商微信号");
         return null;
     }
+    if (agentAddr.length == 0) {
+        $.jBox.tip("请输入代理商收货地址");
+        return null;
+    }
 
     var requestData = {
         agentId: agentId,

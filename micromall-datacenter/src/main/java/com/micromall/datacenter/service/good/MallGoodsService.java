@@ -17,4 +17,8 @@ public interface MallGoodsService {
     List<MallGoodBean> findAll(int customerId, String goodName);
 
     double getPriceByAgent(int agentLevel, String priceInfo);
+
+    List<MallGoodBean> setAgentPrice(List<MallGoodBean> goodList, int agentLevel);
+
+    String findPriceInfo(int goodId);
 }

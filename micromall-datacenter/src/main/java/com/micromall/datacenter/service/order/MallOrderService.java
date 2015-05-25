@@ -13,7 +13,7 @@ import java.util.List;
 public interface MallOrderService {
     MallOrderBean create(MallOrderBean bean, int goodId);
 
-    Page<MallOrderBean> findAll(MallOrderSearchViewModel searchViewModel, int pageIndex, int pageSize);
+    Page<MallOrderBean> findAll(MallOrderSearchViewModel searchViewModel, int pageIndex, int pageSize, int customerId);
 
     MallOrderBean findByOrderId(String orderId);
 
@@ -25,5 +25,5 @@ public interface MallOrderService {
 
     String createOrderId(int customerId);
 
-    Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType);
+    Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType, String orderId);
 }

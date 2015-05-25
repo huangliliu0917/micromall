@@ -23,12 +23,12 @@ public interface MallOrderDao extends JpaRepository<MallOrderBean, String>, JpaS
     @Query("delete from MallOrderItemBean items where items.ordersBean=?1")
     void removeOrderItems(MallOrderBean bean);
 
-    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and (orderBean.ownerId=?2 or orderBean.realShipId=?2)")
-    Page<MallOrderBean> findAll(int customerId, int agentId, Pageable pageable);
+    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and orderBean.deliverPath like %?2% and orderBean.orderId like %?3%")
+    Page<MallOrderBean> findAll(int customerId, String agentId, String orderId, Pageable pageable);
 
-    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and (orderBean.ownerId=?2 and orderBean.sendId>0) or (orderBean.realShipId=?2 and orderBean.sendId=0)")
-    Page<MallOrderBean> findOutOrder(int customerId, int agentId, Pageable pageable);
+    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and (orderBean.ownerId=?2 and orderBean.sendId>0) or (orderBean.realShipId=?2 and orderBean.sendId=0) and orderBean.orderId like %?3%")
+    Page<MallOrderBean> findOutOrder(int customerId, int agentId, String orderId, Pageable pageable);
 
-    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and orderBean.ownerId=?2 and orderBean.sendId=0")
-    Page<MallOrderBean> findInOrder(int customerId, int agentId, Pageable pageable);
+    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and orderBean.ownerId=?2 and orderBean.sendId=0 and orderBean.orderId like %?3%")
+    Page<MallOrderBean> findInOrder(int customerId, int agentId, String orderId, Pageable pageable);
 }

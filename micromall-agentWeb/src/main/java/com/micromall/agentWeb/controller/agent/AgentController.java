@@ -55,4 +55,13 @@ public class AgentController extends BaseController {
 
         return "agent/agent_edit";
     }
+
+    @RequestMapping("/personalSetting")
+    public String personalSetting(Model model) {
+        MallAgentBean preBean = agentService.findByAgentId(getAgentId());
+        model.addAttribute("agentBean", preBean);
+        model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("editAgentId", getAgentId());
+        return "agent/personal_setting";
+    }
 }

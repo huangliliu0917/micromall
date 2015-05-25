@@ -36,17 +36,16 @@ public class OrderController extends BaseController {
     @RequestMapping("/order/createOrder")
     public String createOrder(@RequestParam(value = "sendId", required = false, defaultValue = "0") int sendId, Model model) {
         List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), "");
-        model.addAttribute("goodList", goodList);
-        ShipInfoViewModel shipInfo = new ShipInfoViewModel();
         MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
+        ShipInfoViewModel shipInfo = new ShipInfoViewModel();
+
         if (sendId > 0) {
             MallUserBean userBean = userService.findByUserId(sendId);
             shipInfo.setShipAddr(userBean.getUserAddr());
             shipInfo.setShipMobile(userBean.getUserMobile());
             shipInfo.setShipName(userBean.getUserName());
-
         } else {
-
+            goodList = goodsService.setAgentPrice(goodList, agentBean.getAgentLevel().getLevelId());
             shipInfo.setShipAddr(agentBean.getAgentAddr());
             shipInfo.setShipMobile(agentBean.getAgentAccount());
             shipInfo.setShipName(agentBean.getName());
@@ -55,6 +54,7 @@ public class OrderController extends BaseController {
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("agentBean", agentBean);
         model.addAttribute("sendId", sendId);
+        model.addAttribute("goodList", goodList);
 
         return "order/create_order";
     }
@@ -69,11 +69,15 @@ public class OrderController extends BaseController {
 
     @RequestMapping("/order/orderList")
     public String orderList(@RequestParam(value = "orderType", required = false, defaultValue = "0") int orderType,
-                            @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex, Model model) {
-        Page<MallOrderBean> pageInfo = orderService.findAll(getCustomerId(), getAgentId(), pageIndex, pageSize, orderType);
+                            @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
+                            @RequestParam(value = "orderId", required = false, defaultValue = "") String orderId, Model model) {
+        Page<MallOrderBean> pageInfo = orderService.findAll(getCustomerId(), getAgentId(), pageIndex, pageSize, orderType, orderId);
         model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("agentId", getAgentId());
+        model.addAttribute("orderType", orderType);
+        model.addAttribute("orderId", orderId);
 
         return "order/order_list";
     }

@@ -141,4 +141,9 @@ public class MallAgentServiceImpl implements MallAgentService {
     public Page<MallAgentBean> findBySearchKey(int customerId, String searchKey, int pageIndex, int pageSize, int superAgentId) {
         return dao.findBySearchKey(customerId, searchKey, superAgentId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "agentId")));
     }
+
+    @Transactional(readOnly = true)
+    public MallAgentLevelBean findAgentLevel(int agentId) {
+        return dao.findAgentLevel(agentId);
+    }
 }
