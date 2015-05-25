@@ -17,7 +17,7 @@ public class IndexController extends BaseController {
     @Autowired
     private MallBaseConfigService configService;
 
-    @RequestMapping("/index")
+    @RequestMapping({"","index"})
     public ModelAndView pageLoad() {
         ModelMap modelMap = new ModelMap();
         MallBaseConfigBean configBean = configService.findByCustomerId(getCustomerId());

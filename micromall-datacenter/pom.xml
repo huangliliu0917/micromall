@@ -83,10 +83,14 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.5</version>
         </dependency>
+        <!-- Need for deploy on glassfish and abort of exception
+SEVERE: Class [ com/mysema/query/dml/UpdateClause ] not found.
+Error while loading [ class org.springframework.data.jpa.repository.support.QueryDslRepositorySupport ]
+		 -->
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-            <version>4.0</version>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>3.2.1</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
