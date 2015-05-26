@@ -71,10 +71,10 @@
         <input type="" id="name" name="mobile" value="${agentBean.name}" placeholder="代理人姓名"></label></p>
 
     <p><label>
-        <input type="" id="agentPassword" name="mobile" value="" placeholder="登录密码"></label></p>
+        <input type="password" id="agentPassword" name="mobile" value="" placeholder="登录密码"></label></p>
 
     <p><label>
-        <input type="" id="confirmPass" name="mobile" value="" placeholder="确认登录密码"></label></p>
+        <input type="password" id="confirmPass" name="mobile" value="" placeholder="确认登录密码"></label></p>
 
     <p>
         <select id="agentLevel" style="width: 100%;background-color: #e7e9eb;border: 0px;color: #000;">
