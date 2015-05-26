@@ -2,6 +2,8 @@ package com.micromall.datacenter.utils.impl;
 
 import com.micromall.datacenter.utils.StringUtil;
 import com.micromall.datacenter.utils.UploadResourceServer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
@@ -14,9 +16,15 @@ import java.util.Date;
 /**
  * Created by Administrator on 2015/5/21.
  */
-@Component
+@Component("localResource")
 public class LocalUploadResourceServer implements UploadResourceServer {
-    private String serverUri = "http://localhost:8080/admin";
+
+    @Autowired
+    private void setEnv(Environment env) {
+        this.serverUri = env.getProperty("micromall.resouceUri", "http://localhost:8080/admin");
+    }
+
+    private String serverUri;
 
     public String saveResource(InputStream data, String savePath, String orignalFile, int customerId) throws IOException {
         FileOutputStream outputStream = null;
