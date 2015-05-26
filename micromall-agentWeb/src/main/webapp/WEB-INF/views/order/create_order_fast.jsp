@@ -60,9 +60,9 @@
             var goodId = $("#selGoodId").val();
             var num = $("#num").val();
             var orderName = $("#orderName").val() + "(" + num + ")";
-            var shipAddr = $("#shipAddr").val();
-            var shipName = $("#shipName").val();
-            var shipMobile = $("#shipMobile").val();
+            var shipAddr = $("#shipAddr").html();
+            var shipName = $("#shipName").html();
+            var shipMobile = $("#shipMobile").html();
             var totalPrice = $("#totalPrice").html();
 
             if (num.length == 0) {
@@ -136,11 +136,12 @@
     <dl class="dingdandiss_dl dl_tabel">
 
         <dt class="ui_color_weak ui_align_right">收货地址：</dt>
-        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipAddr" placeholder="" disabled="disabled" value="${shipInfo.shipAddr}"></dd>
+        <dd class="" id="shipAddr">${shipInfo.shipAddr}</dd>
+        <dd><input style="border: solid 0px;color: #000;" type="text" id="shipAddr" placeholder=""></dd>
         <dt class="ui_color_weak ui_align_right">收件人：</dt>
-        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipName" placeholder="" disabled="disabled" value="${shipInfo.shipName}"></dd>
+        <dd class="" id="shipName">${shipInfo.shipName}</dd>
         <dt class="ui_color_weak ui_align_right">联系电话：</dt>
-        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipMobile" placeholder="" disabled="disabled" value="${shipInfo.shipMobile}"></dd>
+        <dd class="" id="shipMobile">${shipInfo.shipMobile}</dd>
     </dl>
 </div>
 

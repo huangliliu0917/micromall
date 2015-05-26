@@ -2,13 +2,16 @@ package com.micromall.agentWeb.controller.order.api;
 
 import com.micromall.agentWeb.controller.BaseController;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
+import com.micromall.datacenter.bean.agent.MallUserBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.agent.MallUserService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +31,8 @@ public class OrderApiController extends BaseController {
     private MallOrderService orderService;
     @Autowired
     private MallAgentService agentService;
+    @Autowired
+    private MallUserService userService;
 
     @RequestMapping("/orderApi/createOrder")
     @ResponseBody
@@ -54,6 +59,29 @@ public class OrderApiController extends BaseController {
             responseData.put("msg", e.getMessage());
         }
         responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping("/orderApi/createFastRegUser")
+    public Map<Object, Object> createOrderFastRegUser(MallOrderBean orderBean, MallUserBean userBean, Model model) {
+        int result = 0;
+        try {
+            //ÓÃ»§Â¼Èë
+            MallAgentBean agentBean = new MallAgentBean();
+            agentBean.setAgentId(getAgentId());
+            userBean.setAgent(agentBean);
+            userBean.setCustomerId(getCustomerId());
+            userBean.setIsDelete(0);
+            MallUserBean returnUser = userService.save(userBean);
+
+            orderBean.setAddTime(new Date());
+            orderBean.setCustomerId(getCustomerId());
+            orderBean.setDeliverPath("|" + getAgentId() + "|");
+            orderBean.setRealShipId(getAgentId());
+            orderBean.setOrderStatus(0);
+        } catch (Exception e) {
+
+        }
         return responseData;
     }
 
