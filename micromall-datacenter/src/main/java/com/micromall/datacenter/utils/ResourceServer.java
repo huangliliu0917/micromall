@@ -7,7 +7,7 @@ import java.io.InputStream;
  * 定义一个可以上传 并且 可以以URI形式访问的资源存储站
  * Created by Administrator on 2015/5/21.
  */
-public interface UploadResourceServer {
+public interface ResourceServer {
 
     /**
      * 保存资源 并且返回它的token

@@ -1,7 +1,7 @@
 package com.micromall.datacenter.utils.impl;
 
 import com.micromall.datacenter.utils.StringUtil;
-import com.micromall.datacenter.utils.UploadResourceServer;
+import com.micromall.datacenter.utils.ResourceServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -19,7 +19,7 @@ import java.util.Date;
  */
 @Profile("!prod")
 @Component
-public class LocalUploadResourceServer implements UploadResourceServer {
+public class LocalResourceServer implements ResourceServer {
 
     @Autowired
     private void setEnv(Environment env) {

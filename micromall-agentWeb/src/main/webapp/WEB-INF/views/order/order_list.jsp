@@ -24,6 +24,7 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/jquery.utils.js" />"></script>
     <title>进出货管理</title>
     <script type="text/javascript">
+        var customerId = ${customerId};
         $(function () {
             $("#searchBtn").click(function () {
                 $("#searchForm").submit();

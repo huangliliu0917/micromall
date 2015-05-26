@@ -1,6 +1,6 @@
 package com.micromall.agentWeb.bean;
 
-import com.micromall.datacenter.utils.UploadResourceServer;
+import com.micromall.datacenter.utils.ResourceServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -15,7 +15,7 @@ import javax.servlet.ServletContext;
 public class AppService implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private UploadResourceServer uploadResourceServer;
+    private ResourceServer uploadResourceServer;
     @Autowired
     private ServletContext servletContext;
 
