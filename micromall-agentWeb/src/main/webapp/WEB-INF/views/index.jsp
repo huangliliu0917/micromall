@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/weishang.css" />">
     <title>微商管理</title>
     <script type="text/javascript">
+        var customerId = ${customerId};
         function goMenu(uri) {
             window.location.href = uri;
         }
@@ -92,8 +93,7 @@
     <p style="text-align:center;">
         <a href="#"><span class="wj_i">关于长生鸟</span></a></p>
 </div>
-
-</div>
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>
 

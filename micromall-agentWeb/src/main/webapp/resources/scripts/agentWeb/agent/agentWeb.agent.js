@@ -13,7 +13,11 @@ var agentHandler = {
             J.GetJsonRespons(agentHandler.ajaxUrl + "saveAgent", requestData, function (json) {
                 loading.close();
                 if (json.result == 1) {
-                    SimplePrompt.showPrompt("保存成功");
+                    //SimplePrompt.showPrompt("保存成功");
+                    SimplePrompt.showPromptWithFunc("保存成功", function () {
+                        SimplePrompt.hide();
+                        window.location.href = returnUrl;
+                    })
                 } else if (json.result == 2) {
                     SimplePrompt.showPrompt("该手机号码已注册");
                 } else {

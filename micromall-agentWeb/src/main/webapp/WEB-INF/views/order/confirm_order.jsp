@@ -207,7 +207,7 @@
         </p>
     </c:if>
 </div>
-
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>
 

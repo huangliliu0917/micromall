@@ -1,0 +1,35 @@
+.box .righti .buttonss{
+background-color: #44cc9a;
+-webkit-background-color: #44cc9a;
+-moz-background-color: #44cc9a;
+text-align: center;
+padding: 4px 5px;
+width: 79px;
+color: #FFF;
+font-size: 14px;
+border: 1px #44cc9a solid;
+font-family: "Î¢ÈíÑÅºÚ";
+
+}
+.box {
+background: rgba(60, 60, 60, 0.9);
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+height: 40px;
+z-index:11111;
+
+}
+.box .lefti {
+line-height:42px;
+color: #fff;
+float: left;
+font-size: 14px;
+}
+.box .righti {
+margin-top: 9px;
+color: #fff;
+float: right;
+margin-right: 8px;
+}

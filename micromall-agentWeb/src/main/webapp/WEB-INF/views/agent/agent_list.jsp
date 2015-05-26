@@ -137,7 +137,7 @@
 
 <!---------------------/////////弹窗////////------------------------------------>
 
-<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 0;left: 0;right: 0;margin: auto;display: none;">
+<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 44px;left: 0;right: 0;margin: auto;display: none;">
     <input type="hidden" id="selAgentId"/>
 
     <p onclick="javascript:closeMore()" style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;">×</p>
@@ -164,6 +164,7 @@
         </div>
     </div>
 </div>
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 <!---------------------/////////弹窗end////////------------------------------------>
 </body>
 </html>

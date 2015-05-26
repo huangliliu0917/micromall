@@ -28,6 +28,7 @@
     <script type="text/javascript">
         var customerId = ${customerId};
         var editAgentId = ${editAgentId};
+        var returnUrl = "<c:url value="/agentList?customerId=${customerId}"/>";
 
         $(function () {
             agentHandler.init("<c:url value="/agentApi/" />")
@@ -121,6 +122,7 @@
     </div>
 
 </div>
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>
 

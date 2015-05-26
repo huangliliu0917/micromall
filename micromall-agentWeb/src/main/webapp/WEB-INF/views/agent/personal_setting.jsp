@@ -102,5 +102,6 @@
     </div>
 
 </div>
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>

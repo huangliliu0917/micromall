@@ -185,6 +185,7 @@
 
 
 </div>
+<%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>
 <script type="text/html" id="selPanel_template">

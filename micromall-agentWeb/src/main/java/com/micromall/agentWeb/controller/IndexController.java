@@ -28,7 +28,7 @@ public class IndexController extends BaseController {
         return "login";
     }
 
-    @RequestMapping("/index")
+    @RequestMapping({"/index", ""})
     public String indexLoad(ModelMap modelMap) {
         modelMap.put("customerId", getCustomerId());
         return "index";
