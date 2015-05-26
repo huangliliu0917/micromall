@@ -31,13 +31,13 @@ public class ApacheUploadResourceServer implements UploadResourceServer{
     @Autowired
     private void setEnv(Environment env) {
         this.serverUri = env.getProperty("micromall.resourcesUri", (String)null);
-        this.resourceHome =  env.getProperty("micromall.resourcesUri", (String)null);
+        this.resourceHome =  env.getProperty("micromall.resourcesHome", (String)null);
     }
 
 
     public String saveResource(InputStream data, String savePath, String orginalName, int customerId) throws IOException {
         if (serverUri==null || resourceHome==null)
-            throw new IllegalStateException("请设置micromall.resourcesUri和micromall.resourcesUri");
+            throw new IllegalStateException("请设置micromall.resourcesUri和micromall.resourcesHome属性");
         FileOutputStream outputStream = null;
         String prefix = orginalName.substring(orginalName.lastIndexOf(".") + 1);
         Date now = new Date();
