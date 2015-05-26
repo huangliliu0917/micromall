@@ -3,12 +3,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-              <property name="locations">
-                     <list>
-                            <!-- dataSourse连接池相关属性，代码不在此贴出，会放在打包好的项目里面 -->
-                            <value>classpath:dbsource.properties</value>
-                     </list>
-              </property>
-       </bean>
+       <beans profile="prod">
+              <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+                     <property name="locations">
+                            <list>
+                                   <!-- dataSourse连接池相关属性，代码不在此贴出，会放在打包好的项目里面 -->
+                                   <value>classpath:dbsourceprod.properties</value>
+                            </list>
+                     </property>
+              </bean>
+       </beans>
+       <beans profile="!prod">
+              <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+                     <property name="locations">
+                            <list>
+                                   <!-- dataSourse连接池相关属性，代码不在此贴出，会放在打包好的项目里面 -->
+                                   <value>classpath:dbsource.properties</value>
+                            </list>
+                     </property>
+              </bean>
+       </beans>
 </beans>
