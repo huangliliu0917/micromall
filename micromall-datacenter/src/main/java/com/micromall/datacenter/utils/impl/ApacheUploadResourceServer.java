@@ -15,27 +15,36 @@ import java.io.InputStream;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2015/5/21.
+ * Created by CJ on 5/26/15.
+ *
+ * 资源投放到apache服务器
+ *
+ * @author CJ
  */
-@Profile("!prod")
+@Profile("prod")
 @Component
-public class LocalUploadResourceServer implements UploadResourceServer {
+public class ApacheUploadResourceServer implements UploadResourceServer{
+
+    private String serverUri;
+    private String resourceHome;
 
     @Autowired
     private void setEnv(Environment env) {
-        this.serverUri = env.getProperty("micromall.resouceUri", "http://localhost:8080/admin");
+        this.serverUri = env.getProperty("micromall.resourcesUri", (String)null);
+        this.resourceHome =  env.getProperty("micromall.resourcesUri", (String)null);
     }
 
-    private String serverUri;
 
-    public String saveResource(InputStream data, String savePath, String orignalFile, int customerId) throws IOException {
+    public String saveResource(InputStream data, String savePath, String orginalName, int customerId) throws IOException {
+        if (serverUri==null || resourceHome==null)
+            throw new IllegalStateException("请设置micromall.resourcesUri和micromall.resourcesUri");
         FileOutputStream outputStream = null;
-        String prefix = orignalFile.substring(orignalFile.lastIndexOf(".") + 1);
+        String prefix = orginalName.substring(orginalName.lastIndexOf(".") + 1);
         Date now = new Date();
         String fileFolder = "/uploaded/image/" + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
         String fileName = StringUtil.DateFormat(now, "yyyyMMddHHmmSS") + "." + prefix;
         try {
-            File targetFile = new File(savePath + fileFolder, fileName);
+            File targetFile = new File(resourceHome + fileFolder, fileName);
             if (!targetFile.getParentFile().exists()) {
                 targetFile.getParentFile().mkdirs();
             }
@@ -52,6 +61,6 @@ public class LocalUploadResourceServer implements UploadResourceServer {
     }
 
     public String resourceUri(String token) {
-        return serverUri + token;
+        return this.serverUri+token;
     }
 }
