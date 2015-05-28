@@ -26,7 +26,9 @@
         var returnUrl = "<c:url value="/good/goodList" />";
         var uploadUrl = "<c:url value="/upload" />"
         $(function () {
-
+            if (goodId > 0) {
+                $("#previewImg").show();
+            }
         })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/good/admin.good.js" />"></script>
@@ -59,7 +61,7 @@
                                     <span class="title"><i class="red">*</i>商品图片：</span>
                                     <input type="file" id="btnFile" name="btnFile" hidden="hidden" onchange="goodHandler.uploadImg()"/>
                                     <input type="hidden" id="goodImg" readonly="readonly" style="width: 300px" value="${goodBean.goodImg}"/>
-                                    <img id="previewImg" src="${uploadResourceServer.resourceUri(goodBean.goodImg)}"/>
+                                    <img id="previewImg" style="height: 130px;width: 130px;display: none;" src="${uploadResourceServer.resourceUri(goodBean.goodImg)}"/>
 
                                     <div class="fg-button clearfix" style="float:right;">
                                         <a href="javascript:$('#btnFile').click();">上传图片</a>

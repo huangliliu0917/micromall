@@ -536,19 +536,3 @@ Index.loadlist = function (obj, pageIndex, pageSize, totalCount) {
         Index.loadlist(o, p, s, t)
     });
 }
-
-function refreshCode() {
-    $("#verifyCodeImg").attr("src", "/verifyCode?" + Math.random());
-}
-
-function goNewDetail(newId) {
-    window.open("../web/NewDetail?newId=" + newId);
-}
-
-function goIndex() {
-    window.location.href = "../web/Index";
-}
-function goNewList(cateId) {
-    window.location.href = "../web/NewList?cateId=" + cateId;
-}
-var siteDomain = "http://www.ichinaspot.com";

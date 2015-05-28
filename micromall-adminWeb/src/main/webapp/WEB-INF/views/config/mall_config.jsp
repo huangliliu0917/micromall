@@ -23,16 +23,20 @@
     <script type="text/javascript">
         var customerId = ${customerId};
         var ajaxUrl = "<c:url value="/config/saveConfig" />";
-        var uploadUrl = "<c:url value="/upload" />"
+        var uploadUrl = "<c:url value="/upload" />";
         $(function () {
+            <c:if test="${configBean!=null}">
+            $("#previewLogo").show();
+            </c:if>
             $("#btnFile").change(function () {
-                $("#goodImg").val("");
+                $("#logo").val("");
                 $.jBox.tip("正在上传...", "loading");
                 fileUpload(null, uploadUrl, function (json) {
                     if (json.result == 1) {
                         $.jBox.tip("上传成功", "success");
                         $("#logo").val(json.file);
                         $("#previewLogo").attr("src", json.fileUri);
+                        $("#previewLogo").show();
                     } else {
                         $.jBox.tip("上传失败", "error");
                     }
@@ -102,9 +106,9 @@
                                 </li>
                                 <li style="width: 500px;">
                                     <span class="title"><i class="red">*</i>商家Logo：</span>
-                                    <input type="file" id="btnFile" name="btnFile" hidden="hidden" onchange="goodHandler.uploadImg()"/>
+                                    <input type="file" id="btnFile" name="btnFile" hidden="hidden"/>
                                     <input type="hidden" id="logo" readonly="readonly" style="width: 300px" value="${configBean.logo}"/>
-                                    <img id="previewLogo" src="${uploadResourceServer.resourceUri(configBean.logo)}"/>
+                                    <img id="previewLogo" style="display: none;" src="${uploadResourceServer.resourceUri(configBean.logo)}"/>
 
                                     <div class="fg-button clearfix" style="float:right;">
                                         <a href="javascript:$('#btnFile').click();">上传图片</a>

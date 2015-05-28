@@ -111,24 +111,47 @@
     <div class="bdd">
         <ul>
             <c:forEach items="${pageInfo.getContent()}" var="agentBean">
-                <li class="tttt">
-                    <div class="conn">
-                        <div class="pic">
-                            <a href="javascript:showMore(${agentBean.agentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
-                        </div>
-                        <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${agentBean.agentAccount}</p>
+                <c:choose>
+                    <c:when test="${agentBean.superAgentId==currentAgent}">
+                        <li class="tttt">
+                            <div class="conn">
+                                <div class="pic">
+                                    <a href="javascript:showMore(${agentBean.agentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
+                                </div>
+                                <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${agentBean.agentAccount}</p>
 
-                        <p style="color:#000;line-height: 20px;">姓名：${agentBean.name}</p>
+                                <p style="color:#000;line-height: 20px;">姓名：${agentBean.name}</p>
 
-                        <p style="color:#000;line-height: 20px;">级别：${agentBean.agentLevel.levelName}</p>
-                            <%--<p style="color:#000;">下线代理：4</p>--%>
-                    </div>
-                    <p style="height:20px"></p>
+                                <p style="color:#000;line-height: 20px;">级别：${agentBean.agentLevel.levelName}</p>
+                                    <%--<p style="color:#000;">下线代理：4</p>--%>
+                            </div>
+                            <p style="height:20px"></p>
 
-                    <p style="height:4px; border-top:1px dotted #ddd; clear:both"></p>
+                            <p style="height:4px; border-top:1px dotted #ddd; clear:both"></p>
 
-                    <div class="DDDH"><span style="float:left; color:#999">${agentBean.addTime}</span></div>
-                </li>
+                            <div class="DDDH"><span style="float:left; color:#999">${agentBean.addTime}</span></div>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="tttt">
+                            <div class="conn">
+                                <div class="pic">
+                                    <a href="javascript:showMore(${agentBean.agentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
+                                </div>
+                                <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${agentBean.name}</p>
+
+                                <p style="color:#000;line-height: 20px;">级别：${agentBean.agentLevel.levelName}</p>
+                                    <%--<p style="color:#000;">下线代理：4</p>--%>
+                            </div>
+                            <p style="height:20px"></p>
+
+                            <p style="height:4px; border-top:1px dotted #ddd; clear:both"></p>
+
+                            <div class="DDDH"><span style="float:left; color:#999">${agentBean.addTime}</span></div>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+
             </c:forEach>
         </ul>
     </div>
@@ -146,6 +169,12 @@
 
     <div class="ws_wrap">
         <div class="add_wei">
+            <p class="command" style="background-color:transparent; padding:0px 20%;">
+                <a href="javascript:goUri('<c:url value="/order/createAgentOrderOut?customerId=${customerId}&agentId=" />')" class="wsws_back button">发起订单</a>
+            </p>
+
+            <p style="height:20px"></p>
+
             <p class="command" style="background-color:transparent; padding:0px 20%;">
                 <a href="javascript:goUri('<c:url value="/agentList?customerId=${customerId}&superAgentId=" />')" class="wsws_back button">查看下级代理</a>
             </p>

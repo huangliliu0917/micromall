@@ -40,10 +40,16 @@
 <body style="background-color:#e4e7ea">
 <div id="setstatus_dialog" style="padding: 20px;display: none;padding-left: 100px;padding-right: 100px;">
     审核：<select id="setAgentStatus">
-    <option value="-1">请选择</option>
     <option value="1">通过</option>
     <option value="2">未通过</option>
 </select>
+
+    <div>
+        <p style="margin-top: 10px;">
+            <span id="tipSpan">拒绝理由</span>：
+        </p>
+        <textarea id="refuseReason"></textarea>
+    </div>
 </div>
 <div class="contentpanel">
     <div class="block">
@@ -131,8 +137,9 @@
                                 <td align="center">${agentBean.addTime}</td>
                                 <td align="center">
                                     <a href="<c:url value="/agent/agentList?superAgentId=${agentBean.agentId}" />">查看下级代理</a> |
+                                    <a href="<c:url value="/user/userList?agentId=${agentBean.agentId}" />">查看通讯录</a> |
                                     <a href="<c:url value="/agent/agentEdit?agentId=${agentBean.agentId}" />">编辑</a> |
-                                    <a href="javascript:agentHandler.setAgentStatus(${agentBean.agentId},${agentBean.agentStatus})">审核</a> |
+                                    <a href="javascript:agentHandler.setAgentStatus(${agentBean.agentId},${agentBean.agentStatus},'${agentBean.refuseReason}')">审核</a> |
                                     <a href="javascript:agentHandler.setDelete(${agentBean.agentId},${agentBean.isDelete});">${agentBean.isDelete==0?"冻结":"恢复"}</a>
                                 </td>
                             </tr>

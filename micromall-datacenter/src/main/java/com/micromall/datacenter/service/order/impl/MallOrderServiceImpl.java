@@ -175,7 +175,8 @@ public class MallOrderServiceImpl implements MallOrderService {
                     }
                 }
                 int resultIndex = index;
-                if (orderBean.getOwnerId() != agentId) {
+//                if (orderBean.getOwnerId() != agentId) {
+                if (deliverPath.length > 2) {
                     resultIndex = index - 1;
                 }
                 double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
@@ -183,5 +184,16 @@ public class MallOrderServiceImpl implements MallOrderService {
             }
         }
         return pageInfo;
+    }
+
+    /**
+     * 得到发货通知数量
+     *
+     * @param customerId
+     * @param agentId
+     * @return
+     */
+    public int findCountInOrder(int customerId, int agentId) {
+        return dao.findCountInOrder(customerId, agentId);
     }
 }

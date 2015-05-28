@@ -53,7 +53,7 @@
 <div style="background-color:#545454;height:44px;">
     <p style="color:#fff; float:right;margin-top: 10px;margin-right: 10px;" onclick="javascript:window.location.href='<c:url value="/userEdit?customerId=${customerId}"/>'">新增通讯录</p>
 
-    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/userEdit?customerId=${customerId}"/>'">我要发货</p>
+    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/order/createOrderFastReg?customerId=${customerId}"/>'">我要发货</p>
 
     <p style=" float:right;margin-top:5px;margin-right: 10px;">
         <input style="height: 32px;background-color: #545454;border: solid 1px #7E7E7E;color: #fff;padding-left: 7px;width: 123px;" type="" id="mobile" name="mobile" value="" placeholder="搜索">

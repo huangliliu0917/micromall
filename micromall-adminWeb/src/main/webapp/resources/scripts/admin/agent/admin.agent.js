@@ -58,15 +58,27 @@ var agentHandler = {
             return true;
         });
     },
-    setAgentStatus: function (agentId, currentStatus) {
+    setAgentStatus: function (agentId, currentStatus, refuseReason) {
         $("#setAgentStatus").val(currentStatus);
-        J.ShowDialog("setstatus_dialog", "审核", function () {
-            var self = this;
+        $("#refuseReason").val(refuseReason);
+        if (currentStatus == 2) {
+            $("#tipSpan").html("拒绝理由");
+        } else {
+            $("#tipSpan").html("通过理由");
+        }
 
+        J.ShowDialog("setstatus_dialog", "审核", function () {
+            var refuseReason = $("#refuseReason").val();
+            var status = $("#setAgentStatus").val()
+            if (refuseReason.length == 0) {
+                $.jBox.tip("请输入理由");
+                return;
+            }
             $.jBox.tip("正在提交...", "loading");
             J.GetJsonRespons(agentHandler.ajaxUrl + "setAgentStatus", {
                 agentId: agentId,
-                status: $("#setAgentStatus").val()
+                status: status,
+                refuseReason: refuseReason
             }, function (json) {
                 if (json.result == 1) {
                     $.jBox.tip("操作成功", "success");
@@ -109,9 +121,11 @@ function checkForm() {
     var agentArea = $.trim($("#agentArea").val());
     var agentChannel = $.trim($("#agentChannel").val());
     var agentCardId = $.trim($("#agentCardId").val());
+    var agentCardImg = $("#agentCardImg").val();
     var agentQQ = $.trim($("#agentQQ").val());
     var agentWeixin = $.trim($("#agentWeixin").val());
     var agentAddr = $.trim($("#agentAddr").val());
+    var agentTaobaoId = $.trim($("#agentTaobaoId").val());
 
     if (agentMobile.length == 0) {
         $.jBox.tip("请输入代理人手机号");
@@ -143,6 +157,14 @@ function checkForm() {
         $.jBox.tip("请选择上级代理");
         return null;
     }
+    if (agentCardId.length == 0) {
+        $.jBox.tip("请输入身份证号码");
+        return null;
+    }
+    if (agentCardImg.length == 0) {
+        $.jBox.tip("请上传手持身份证照片");
+        return null;
+    }
     if (agentWeixin.length == 0) {
         $.jBox.tip("请输入代理商微信号");
         return null;
@@ -165,7 +187,9 @@ function checkForm() {
         agentWeixin: agentWeixin,
         agentAddr: agentAddr,
         agentCertificate: "",
-        levelId: agentLevel
+        levelId: agentLevel,
+        agentCardImg: agentCardImg,
+        agentTaobaoId: agentTaobaoId
     }
 
     return requestData;
@@ -193,5 +217,15 @@ $(function () {
 
     $("#agentLevel").change(function () {
         agentHandler.setSuperAgent($(this).val(), 0);
+    })
+
+    $("#setAgentStatus").change(function () {
+        if ($(this).val() == 2) {
+            $("#tipSpan").html("拒绝理由");
+
+        } else {
+            $("#tipSpan").html("通过理由");
+        }
+        $("#refuseReason").val("");
     })
 })

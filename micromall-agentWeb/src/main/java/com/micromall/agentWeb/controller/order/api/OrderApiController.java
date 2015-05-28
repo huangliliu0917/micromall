@@ -63,25 +63,58 @@ public class OrderApiController extends BaseController {
     }
 
     @RequestMapping("/orderApi/createFastRegUser")
-    public Map<Object, Object> createOrderFastRegUser(MallOrderBean orderBean, MallUserBean userBean, Model model) {
+    @ResponseBody
+    public Map<Object, Object> createOrderFastRegUser(MallOrderBean orderBean, int goodId, Model model) {
         int result = 0;
         try {
-            //用户录入
-            MallAgentBean agentBean = new MallAgentBean();
-            agentBean.setAgentId(getAgentId());
-            userBean.setAgent(agentBean);
-            userBean.setCustomerId(getCustomerId());
-            userBean.setIsDelete(0);
-            MallUserBean returnUser = userService.save(userBean);
+            //查找用户，如果存在则选择该用户，如果不存在新建
+            MallUserBean existsUser = userService.findByUserNameAndAgent(getCustomerId(), orderBean.getShipName(), getAgentId());
+            if (existsUser == null) {
+                //新建
+                MallUserBean userBean = new MallUserBean();
+                userBean.setUserName(orderBean.getShipName());
+                userBean.setIsDelete(0);
+                userBean.setCustomerId(getCustomerId());
+                userBean.setUserAddr(orderBean.getShipAddr());
+                userBean.setUserMobile(orderBean.getShipMobile());
+                existsUser = userService.save(userBean, getAgentId());
+            }
 
+            //创建订单
             orderBean.setAddTime(new Date());
             orderBean.setCustomerId(getCustomerId());
             orderBean.setDeliverPath("|" + getAgentId() + "|");
             orderBean.setRealShipId(getAgentId());
             orderBean.setOrderStatus(0);
+            orderBean.setOwnerId(getAgentId());
+            orderBean.setSendId(existsUser.getUserId());
+            orderService.create(orderBean, goodId);
+            result = 1;
         } catch (Exception e) {
-
+            responseData.put("msg", e.getMessage());
         }
+        responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping("/orderApi/createOrderAgentOut")
+    @ResponseBody
+    public Map<Object, Object> createOrderAgentOut(MallOrderBean orderBean, int goodId, int agentId, Model model) {
+        int result = 0;
+        try {
+            orderBean.setAddTime(new Date());
+            orderBean.setCustomerId(getCustomerId());
+            orderBean.setOrderStatus(0);
+            orderBean.setOwnerId(getAgentId());
+            orderBean.setDeliverPath("|" + agentId + "|" + getAgentId() + "|");
+            orderBean.setRealShipId(getAgentId());
+            orderBean.setSendId(0);
+            orderService.create(orderBean, goodId);
+            result = 1;
+        } catch (Exception e) {
+            responseData.put("msg", e.getMessage());
+        }
+        responseData.put("result", result);
         return responseData;
     }
 

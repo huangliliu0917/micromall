@@ -59,7 +59,7 @@
         <c:if test="${configBean==null}">
         goMenu('<c:url value="/config/mallConfig" />');
         </c:if>
-    })
+    });
 </script>
 <section>
     <div class="leftpanel">
@@ -97,8 +97,9 @@
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>商品管理</span></a>
                         <ul class="children" style="display: block">
                             <li onclick="goMenu('<c:url value="/agent/agentList"/>',this)" class="active"><a href="#"><i class="fa fa-caret-right"></i>代理商列表</a></li>
-                            <li onclick="goMenu('<c:url value="/agent/levelList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商等级管理</a></li>
                             <li onclick="goMenu('<c:url value="/agent/agentEdit"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加代理商</a></li>
+                            <li onclick="goMenu('<c:url value="/agent/levelList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商等级管理</a></li>
+                            <li onclick="goMenu('<c:url value="/agent/applyAgentList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商申请管理</a></li>
                         </ul>
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>商品管理</span></a>
@@ -116,8 +117,9 @@
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>微武器</span></a>
                         <ul class="children" style="display: block">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>图文</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>软文</a></li>
+                            <li onclick="goMenu('<c:url value="/weapon/weaponList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>微武器管理</a></li>
+                            <li onclick="goMenu('<c:url value="/weapon/weaponEdit"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加图文</a></li>
+                            <li onclick="goMenu('<c:url value="/weapon/weaponEdit?weaponType=1"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加软文</a></li>
                         </ul>
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>统计报表</span></a>
@@ -136,7 +138,7 @@
     <div class="mainpanel">
         <!-- headerbar -->
         <div style="clear:both"></div>
-        <iframe src="<c:url value="/agent/agentList" />" scrolling="no" frameborder="0" height="800px" id="contentFrame" width="100%"></iframe>
+        <iframe src="<c:url value="/agent/agentList" />" scrolling="no" frameborder="0" height="1000px" id="contentFrame" width="100%"></iframe>
     </div>
     <!-- mainpanel -->
 

@@ -20,7 +20,10 @@ public class MallUserServiceImpl implements MallUserService {
     @Autowired
     private MallUserDao dao;
 
-    public MallUserBean save(MallUserBean bean) {
+    public MallUserBean save(MallUserBean bean, int agentId) {
+        MallAgentBean agentBean = new MallAgentBean();
+        agentBean.setAgentId(agentId);
+        bean.setAgent(agentBean);
         return dao.save(bean);
     }
 
@@ -38,5 +41,12 @@ public class MallUserServiceImpl implements MallUserService {
     @Transactional(readOnly = true)
     public MallUserBean findByUserId(int userId) {
         return dao.findOne(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public MallUserBean findByUserNameAndAgent(int customerId, String userName, int agentId) {
+        MallAgentBean agentBean = new MallAgentBean();
+        agentBean.setAgentId(agentId);
+        return dao.findByUserNameAndAgent(customerId, userName, agentBean);
     }
 }

@@ -2,8 +2,11 @@ package com.micromall.datacenter.service.agent.impl;
 
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallAgentLevelBean;
+import com.micromall.datacenter.bean.config.MallBaseConfigBean;
 import com.micromall.datacenter.dao.agent.MallAgentDao;
 import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.config.MallBaseConfigService;
+import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
 import com.micromall.datacenter.viewModel.agent.MallAgentSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,8 @@ public class MallAgentServiceImpl implements MallAgentService {
 
     @Autowired
     private MallAgentDao dao;
+    @Autowired
+    private MallBaseConfigService configService;
 
     /**
      * 保存一个实体
@@ -117,9 +122,18 @@ public class MallAgentServiceImpl implements MallAgentService {
      * @param agentId
      * @param agentStatus
      */
-    public void updateAgentStatus(int agentId, int agentStatus) {
-        dao.updateAgentStatus(agentStatus, agentId);
-        dao.flush();
+    public void updateAgentStatus(int agentStatus, String refuseReason, int agentId) {
+        dao.updateAgentStatus(agentStatus, refuseReason, agentId);
+        //发送短信
+        MallAgentBean agentBean = this.findByAgentId(agentId);
+        MallAgentBean superAgent = this.findByAgentId(agentBean.getSuperAgentId());
+        MallBaseConfigBean configBean = configService.findByCustomerId(agentBean.getCustomerId());
+        if (agentStatus == 1) {
+            SMSHelper.send(agentBean.getAgentAccount(), String.format("恭喜您成为%s的代理商，当前代理级别为%s，您的上级代理是：%s，上级联系电话：%s。请关注公众号",
+                    configBean.getTitle(), agentBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+        } else {
+            SMSHelper.send(agentBean.getAgentAccount(), String.format("由于一些原因您无法成为%s的代理商，理由：%s", configBean.getTitle(), refuseReason));
+        }
     }
 
     @Transactional(readOnly = true)

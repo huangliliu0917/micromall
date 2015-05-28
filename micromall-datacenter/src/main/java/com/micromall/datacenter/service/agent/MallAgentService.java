@@ -19,7 +19,7 @@ public interface MallAgentService {
 
     void setDelete(int isDelete, int agentId);
 
-    void updateAgentStatus(int agentId, int agentStatus);
+    void updateAgentStatus(int agentStatus, String refuseReason, int agentId);
 
     MallAgentBean checkLogin(String account, String password, int customerId);
 

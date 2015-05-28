@@ -107,12 +107,18 @@
         <p class="command" style="background-color:transparent; padding:0px 20%;">
             <a class="wsws_back button" id="loginBtn">登陆</a>
         </p>
+
+        <p style="height: 10px;"></p>
+
+        <p class="command" style="background-color:transparent; padding:0px 20%;">
+            <a class="wsws_back button" href="<c:url value="/applyAgent?customerId=${customerId}" />">申请代理商</a>
+        </p>
     </div>
     <div>
 
         <p class="h20"></p>
         <a href="#"><p class="dl">代理查询</p></a>
-        <a href="#"><p class="wj">忘记密码？</p></a>
+        <a href="#"><p class="wj">找回密码</p></a>
     </div>
 
 </div>

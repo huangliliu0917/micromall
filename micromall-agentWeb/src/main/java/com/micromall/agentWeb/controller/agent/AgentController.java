@@ -37,6 +37,7 @@ public class AgentController extends BaseController {
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("superAgentId", superAgentId);
         model.addAttribute("searchKey", searchKey);
+        model.addAttribute("currentAgent", getAgentId());
 
         return "agent/agent_list";
     }

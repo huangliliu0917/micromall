@@ -2,8 +2,10 @@ package com.micromall.agentWeb.controller.agent.api;
 
 import com.micromall.agentWeb.bean.CookieHelper;
 import com.micromall.agentWeb.controller.BaseController;
+import com.micromall.datacenter.bean.agent.MallAgentApplyBean;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallUserBean;
+import com.micromall.datacenter.service.agent.MallAgentApplyService;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.agent.MallUserService;
 import com.micromall.datacenter.utils.StringUtil;
@@ -26,6 +28,8 @@ public class AgentApiController extends BaseController {
     private MallAgentService agentService;
     @Autowired
     private MallUserService userService;
+    @Autowired
+    private MallAgentApplyService applyService;
 
     private Map<Object, Object> responseData = new HashMap<Object, Object>();
 
@@ -44,6 +48,22 @@ public class AgentApiController extends BaseController {
                     result = 1;
                 }
             }
+        } catch (Exception e) {
+            responseData.put("msg", e.getMessage());
+        }
+        responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> logOut() {
+        int result = 0;
+        try {
+            CookieHelper.removeCookie(response, "account_" + getCustomerId());
+            CookieHelper.removeCookie(response, "password_" + getCustomerId());
+            CookieHelper.removeCookie(response, "agentId_" + getCustomerId());
+            result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
         }
@@ -125,12 +145,30 @@ public class AgentApiController extends BaseController {
     public Map<Object, Object> saveUser(MallUserBean userBean) {
         int result = 0;
         try {
-            MallAgentBean agentBean = new MallAgentBean();
-            agentBean.setAgentId(getAgentId());
-            userBean.setAgent(agentBean);
-            userBean.setCustomerId(getCustomerId());
-            userBean.setIsDelete(0);
-            userService.save(userBean);
+            MallUserBean existsUser = userService.findByUserNameAndAgent(getCustomerId(), userBean.getUserName(), getAgentId());
+            if (existsUser == null) {
+                userBean.setCustomerId(getCustomerId());
+                userBean.setIsDelete(0);
+                userService.save(userBean, getAgentId());
+                result = 1;
+            } else {
+                result = 2;
+            }
+        } catch (Exception e) {
+            responseData.put("msg", e.getMessage());
+        }
+        responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping(value = "/agentApi/agentApply", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> applyAgent(MallAgentApplyBean applyBean) {
+        int result = 0;
+        try {
+            applyBean.setApplyTime(new Date());
+            applyBean.setApplyStatus(0);
+            applyService.save(applyBean);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());

@@ -24,6 +24,7 @@ var goodHandler = {
                 $.jBox.tip("上传成功", "success");
                 $("#goodImg").val(json.file);
                 $("#previewImg").attr("src", json.fileUri);
+                $("#previewImg").show();
             } else {
                 $.jBox.tip("上传失败", "error");
             }

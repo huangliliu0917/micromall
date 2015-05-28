@@ -21,8 +21,8 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
     void setDelete(int isDelete, int agentId);
 
     @Modifying
-    @Query("update MallAgentBean agent set agent.agentStatus=?1 where agent.agentId=?2")
-    void updateAgentStatus(int agentStatus, int agentId);
+    @Query("update MallAgentBean agent set agent.agentStatus=?1,agent.refuseReason=?2 where agent.agentId=?3")
+    void updateAgentStatus(int agentStatus, String refuseReason, int agentId);
 
     @Query("select agent from MallAgentBean agent where agent.agentAccount=?1 and agent.agentPassword=?2 and agent.customerId=?3 and agent.isDelete=0 and agent.agentStatus=1")
     MallAgentBean checkLogin(String account, String password, int customerId);

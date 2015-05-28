@@ -19,11 +19,33 @@
     <meta name="description" content="">
     <link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/weishang.css" />">
+    <script type="text/javascript" src="<c:url value="/resources/scripts/jquery-1.7.2.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/loading/jquery.loading-0.1.js" />"></script>
     <title>微商管理</title>
     <script type="text/javascript">
         var customerId = ${customerId};
+        var ajaxUrl = "<c:url value="/logout" />";
         function goMenu(uri) {
             window.location.href = uri;
+        }
+
+        function logOut() {
+            loading.show("正在退出");
+            var op = {
+                type: "post",
+                url: ajaxUrl,
+                data: {
+                    customerId: customerId
+                },
+                dataType: 'json',
+                success: function (json) {
+                    loading.close();
+                    if (json.result == 1) {
+                        window.location.reload();
+                    }
+                }
+            };
+            $.ajax(op);
         }
     </script>
 </head>
@@ -60,11 +82,11 @@
 
 <ul class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/file-settings.png" />" width="100%"></li>
-    <li class="wenz1">进出货管理</li>
+    <li class="wenz1">进出货管理${unShipCount}</li>
 </ul>
 
 
-<ul class="ull">
+<ul class="ull" onclick="goMenu('<c:url value="/weapon/weaponList?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/diamond.png" />" width="100%"></li>
     <li class="wenz1">微武器</li>
 </ul>
@@ -91,7 +113,9 @@
     <p class="h20"></p>
 
     <p style="text-align:center;">
-        <a href="#"><span class="wj_i">关于长生鸟</span></a></p>
+        <a href="#"><span class="wj_i">关于长生鸟</span></a> |
+        <a href="javascript:logOut()"><span class="wj_i">退出登录</span></a>
+    </p>
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>

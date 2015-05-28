@@ -37,7 +37,7 @@
 <!---------------------/////////////////------------------------------------>
 
 <div style="background-color:#545454;height:44px;">
-    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/order/createOrder?customerId=${customerId}"/>'">我要进货</p>
+    <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/order/createAgentOrderIn?customerId=${customerId}"/>'">我要进货</p>
 
     <form id="searchForm" action="<c:url value="/order/orderList" />">
         <input type="hidden" value="${pageIndex}" id="pageIndex" name="pageIndex"/>

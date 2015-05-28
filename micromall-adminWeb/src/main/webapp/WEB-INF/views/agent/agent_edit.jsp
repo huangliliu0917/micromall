@@ -18,6 +18,8 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/jQuery.md5.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/jBox/jquery.jBox-2.3.min.js" />"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jBox/Skins/Green/jbox.css"/>">
+    <script type="text/javascript" src="<c:url value="/resources/scripts/ajaxfileupload.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/admin/admin.upload.js" />"></script>
     <title>编辑商品</title>
     <script type="text/javascript">
         var customerId = ${customerId};
@@ -25,6 +27,7 @@
         var ajaxUrl = "<c:url value="/agentApi/" />";
         var returnUrl = "<c:url value="/agent/agentList" />"
         var superAgentId = "${agentBean.superAgentId}";
+        var uploadUrl = "<c:url value="/upload" />";
 
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/agent/admin.agent.js" />"></script>
@@ -34,7 +37,25 @@
             <c:if test="${agentId>0}">
             $("#agentMobile").attr("disabled", "disabled");
             agentHandler.setSuperAgent(${agentBean.agentLevel.levelId}, superAgentId);
+
+            $("#previewCardImg").show();
+            $("#agentChannel").val("${agentBean.agentChannel}");
             </c:if>
+
+            $("#btnFile").change(function () {
+                $("#agentCardImg").val("");
+                $.jBox.tip("正在上传...", "loading");
+                fileUpload(null, uploadUrl, function (json) {
+                    if (json.result == 1) {
+                        $.jBox.tip("上传成功", "success");
+                        $("#agentCardImg").val(json.file);
+                        $("#previewCardImg").show();
+                        $("#previewCardImg").attr("src", json.fileUri);
+                    } else {
+                        $.jBox.tip("上传失败", "error");
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -88,16 +109,34 @@
                                     </select>
                                 </li>
                                 <li>
+                                    <span class="title"><i class="red">*</i>身份证：</span>
+                                    <input type="text" onkeydown="J.CertainNumber(event)" class="text" id="agentCardId" value="${agentBean.agentCardId}">
+                                </li>
+                                <li style="width: 500px;">
+                                    <span class="title"><i class="red">*</i>手持身份证照片：</span>
+                                    <input type="file" id="btnFile" name="btnFile" hidden="hidden"/>
+                                    <input type="hidden" id="agentCardImg" readonly="readonly" style="width: 300px" value="${agentBean.agentCardImg}"/>
+                                    <img id="previewCardImg" style="display: none;width: 200px;height: 130px;" src="${uploadResourceServer.resourceUri(agentBean.agentCardImg)}"/>
+
+                                    <div class="fg-button clearfix" style="float:right;">
+                                        <a href="javascript:$('#btnFile').click();">上传图片</a>
+                                    </div>
+                                </li>
+                                <li>
                                     <span class="title">覆盖地区：</span>
                                     <input type="text" class="text" id="agentArea" value="${agentBean.agentArea}">
                                 </li>
                                 <li>
                                     <span class="title">销售渠道：</span>
-                                    <input type="text" class="text" id="agentChannel" value="${agentBean.agentChannel}">
+                                    <select id="agentChannel">
+                                        <option value="未选择">请选择</option>
+                                        <option value="淘宝">淘宝</option>
+                                        <option value="微信">微信</option>
+                                    </select>
                                 </li>
                                 <li>
-                                    <span class="title">身份证：</span>
-                                    <input type="text" onkeydown="J.CertainNumber(event)" class="text" id="agentCardId" value="${agentBean.agentCardId}">
+                                    <span class="title">淘宝Id：</span>
+                                    <input type="text" class="text" id="agentTaobaoId" value="${agentBean.agentTaobaoId}">
                                 </li>
                                 <li>
                                     <span class="title">qq号码：</span>

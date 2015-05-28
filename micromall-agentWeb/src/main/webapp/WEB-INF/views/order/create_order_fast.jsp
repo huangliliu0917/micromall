@@ -26,12 +26,12 @@
     <title>发起订单</title>
     <script type="text/javascript">
         var customerId = ${customerId};
-        var ajaxUrl = "<c:url value="/orderApi/createOrder" />";
+        var ajaxUrl = "<c:url value="/orderApi/createFastRegUser" />";
 
         $(function () {
             $("#closeDialog").click(function () {
                 $("#selGood_dialog").hide();
-            })
+            });
 
             $("#num").keyup(function () {
                 var num = $("#num").val();
@@ -60,11 +60,22 @@
             var goodId = $("#selGoodId").val();
             var num = $("#num").val();
             var orderName = $("#orderName").val() + "(" + num + ")";
-            var shipAddr = $("#shipAddr").html();
-            var shipName = $("#shipName").html();
-            var shipMobile = $("#shipMobile").html();
+            var shipAddr = $("#shipAddr").val();
+            var shipName = $("#shipName").val();
+            var shipMobile = $("#shipMobile").val();
             var totalPrice = $("#totalPrice").html();
-
+            if (shipAddr.length == 0) {
+                SimplePrompt.showPrompt("请输入收货地址");
+                return;
+            }
+            if (shipName.length == 0) {
+                SimplePrompt.showPrompt("请输入收件人姓名");
+                return;
+            }
+            if (shipMobile.length == 0) {
+                SimplePrompt.showPrompt("请输入收件人手机");
+                return;
+            }
             if (num.length == 0) {
                 SimplePrompt.showPrompt("请输入数量");
                 return;
@@ -78,7 +89,7 @@
                 shipAddr: shipAddr,
                 shipName: shipName,
                 shipMobile: shipMobile,
-                sendId:${sendId},
+                sendId: 0,
                 totalPrice: totalPrice
             }
             J.GetJsonRespons(ajaxUrl + "", requestData, function (json) {
@@ -134,14 +145,14 @@
 
 <div class="dingdandiss_cell">
     <dl class="dingdandiss_dl dl_tabel">
-
+        <dt class="ui_color_weak ui_align_right" style="color:#ccc;">以下信息将自动新增到您的通讯录</dt>
+        <dd></dd>
         <dt class="ui_color_weak ui_align_right">收货地址：</dt>
-        <dd class="" id="shipAddr">${shipInfo.shipAddr}</dd>
-        <dd><input style="border: solid 0px;color: #000;" type="text" id="shipAddr" placeholder=""></dd>
+        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipAddr" placeholder="" value=""></dd>
         <dt class="ui_color_weak ui_align_right">收件人：</dt>
-        <dd class="" id="shipName">${shipInfo.shipName}</dd>
+        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipName" placeholder="" value=""></dd>
         <dt class="ui_color_weak ui_align_right">联系电话：</dt>
-        <dd class="" id="shipMobile">${shipInfo.shipMobile}</dd>
+        <dd><input style="border: solid 0px;color: #000;background-color: white;" type="text" id="shipMobile" placeholder="" value=""></dd>
     </dl>
 </div>
 

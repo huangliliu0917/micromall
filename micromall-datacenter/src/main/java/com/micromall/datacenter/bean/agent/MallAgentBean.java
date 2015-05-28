@@ -51,6 +51,12 @@ public class MallAgentBean {
     private int agentStatus;
     @Column(name = "Agent_Certificate")
     private String agentCertificate;
+    @Column(name = "Agent_CardImg")
+    private String agentCardImg;
+    @Column(name = "Agent_TaobaoId")
+    private String agentTaobaoId;
+    @Column(name = "RefuseContent")
+    private String refuseReason;
 
     public String getAgentAccount() {
         return agentAccount;
@@ -194,5 +200,29 @@ public class MallAgentBean {
 
     public void setAgentLevel(MallAgentLevelBean agentLevel) {
         this.agentLevel = agentLevel;
+    }
+
+    public String getAgentCardImg() {
+        return agentCardImg;
+    }
+
+    public void setAgentCardImg(String agentCardImg) {
+        this.agentCardImg = agentCardImg;
+    }
+
+    public String getAgentTaobaoId() {
+        return agentTaobaoId;
+    }
+
+    public void setAgentTaobaoId(String agentTaobaoId) {
+        this.agentTaobaoId = agentTaobaoId;
+    }
+
+    public String getRefuseReason() {
+        return refuseReason;
+    }
+
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
     }
 }

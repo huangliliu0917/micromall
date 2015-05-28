@@ -25,7 +25,7 @@ public class AccountInterceptor extends HandlerInterceptorAdapter {
         String requestUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
         String contextPath = request.getContextPath();
         String url = requestUrl.substring(contextPath.length());
-        if (requestUrl.toLowerCase().contains("login")) {
+        if (requestUrl.toLowerCase().contains("login") || requestUrl.toLowerCase().contains("apply")) {
             return true;
         }
 

@@ -13,6 +13,8 @@ var userHandler = {
                         SimplePrompt.hide();
                         window.location.href = returnUrl;
                     });
+                } else if (json.result == 2) {
+                    SimplePrompt.showPrompt("该用户手机已存在在您的通讯录中，无需添加");
                 } else {
                     SimplePrompt.showPrompt("保存失败");
                 }

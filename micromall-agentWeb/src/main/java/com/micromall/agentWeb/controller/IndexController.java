@@ -1,8 +1,9 @@
 package com.micromall.agentWeb.controller;
 
-import com.micromall.agentWeb.controller.BaseController;
+import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.config.MallBaseConfigService;
+import com.micromall.datacenter.service.order.MallOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,10 @@ public class IndexController extends BaseController {
     private MallAgentService agentService;
     @Autowired
     private MallBaseConfigService configService;
+    @Autowired
+    private MallOrderService orderService;
+    @Autowired
+    private MallAgentLevelService levelService;
 
     @RequestMapping("/login")
     public String loginLoad(@RequestParam(value = "returnUrl", required = false, defaultValue = "") String returnUrl, Model model) {
@@ -30,7 +35,16 @@ public class IndexController extends BaseController {
 
     @RequestMapping({"/index", ""})
     public String indexLoad(ModelMap modelMap) {
+        modelMap.put("unShipCount", orderService.findCountInOrder(getCustomerId(), getAgentId()));
         modelMap.put("customerId", getCustomerId());
         return "index";
+    }
+
+    @RequestMapping("/applyAgent")
+    public String applyLoad(Model model) {
+        model.addAttribute("levelList", levelService.findByCustomerId(getCustomerId()));
+        model.addAttribute("customerId", getCustomerId());
+
+        return "agent/agent_apply";
     }
 }
