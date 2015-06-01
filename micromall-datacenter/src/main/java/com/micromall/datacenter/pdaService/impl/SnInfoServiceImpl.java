@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SnInfoServiceImpl implements SnInfoService {
-    @Autowired
+    @Autowired(required = false)
     private SnInfoDao dao;
 
     @Transactional(readOnly = true)

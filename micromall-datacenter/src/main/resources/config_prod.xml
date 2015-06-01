@@ -14,8 +14,8 @@
               <property name="jpaVendorAdapter">
                      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                             <!--<property name="generateDdl" value="true" />-->
-                            <property name="database" value="${database.type}"/>
-                            <property name="databasePlatform" value="${database.dialect}"/>
+                            <property name="database" value="SQL_SERVER"/>
+                            <property name="databasePlatform" value="org.hibernate.dialect.SQLServer2008Dialect"/>
                             <property name="showSql" value="true"/>
                      </bean>
               </property>
@@ -33,7 +33,7 @@
                             <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
                             <entry key="hibernate.cache.use_second_level_cache" value="false"/>
                             <entry key="hibernate.cache.use_query_cache" value="false"/>
-                            <entry key="hibernate.hbm2ddl.auto" value="${database.hbm2ddl.auto}"/>
+                            <!--<entry key="hibernate.hbm2ddl.auto" value="${database.hbm2ddl.auto}"/>-->
                      </map>
               </property>
        </bean>
@@ -47,8 +47,8 @@
               <property name="jpaVendorAdapter">
                      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                             <!--<property name="generateDdl" value="true" />-->
-                            <property name="database" value="${database.type}"/>
-                            <property name="databasePlatform" value="${database.dialect}"/>
+                            <property name="database" value="MYSQL"/>
+                            <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect"/>
                             <property name="showSql" value="true"/>
                      </bean>
               </property>
@@ -66,7 +66,7 @@
                             <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
                             <entry key="hibernate.cache.use_second_level_cache" value="false"/>
                             <entry key="hibernate.cache.use_query_cache" value="false"/>
-                            <entry key="hibernate.hbm2ddl.auto" value="${database.hbm2ddl.auto}"/>
+                            <entry key="hibernate.hbm2ddl.auto" value="create"/>
                      </map>
               </property>
        </bean>
@@ -74,14 +74,14 @@
 
        <bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
               <!-- 指定连接数据库的驱动 -->
-              <property name="driverClass" value="${database.driver}"/>
+              <property name="driverClass" value="com.mysql.jdbc.Driver"/>
               <!-- 指定连接数据库的URL -->
-              <property name="jdbcUrl" value="${database.url}"/>
+              <property name="jdbcUrl" value="jdbc:mysql://localhost/micromall?useUnicode=true&amp;characterEncoding=UTF8"/>
               <!-- 指定连接数据库的用户名 -->
-              <property name="user" value="${database.user}"/>
+              <property name="user" value="micromall"/>
               <!-- 指定连接数据库的密码 -->
               <!--property name="password" value="!"/-->
-              <property name="password" value="${database.password}"/>
+              <property name="password" value="JZG6G2RDqaV9FHXh"/>
               <!-- 指定连接数据库连接池的最大连接数 -->
               <property name="maxPoolSize" value="40"/>
               <!-- 指定连接数据库连接池的最小连接数 -->

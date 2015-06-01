@@ -37,7 +37,7 @@
                 });
             });
             //setInterval("loadData()", 2000);
-            loadData();
+            //loadData();
         });
 
         function addPro() {
