@@ -36,6 +36,8 @@
                     $(this).dialog("close");
                 });
             });
+            //setInterval("loadData()", 2000);
+            loadData();
         });
 
         function addPro() {
@@ -91,6 +93,16 @@
             }, function () {
             }, J.PostMethod);
         }
+
+        function loadData() {
+            J.GetJsonRespons(ajaxUrl + "getShipProList", null, function (json) {
+                $("#snProList").hide();
+                $.each(json.snList, function (o, item) {
+                    $("#snProList").append('<li>${item.sn}</li>');
+                })
+            }, function () {
+            }, J.PostMethod);
+        }
     </script>
 </head>
 <body style="background-color:#e4e7ea">
@@ -99,8 +111,13 @@
         <!---->
         <form>
             <div class="waps-cpanel-content">
-                <div class="waps-step-web plb5" style="width: 362px;">
-                    <ul>
+                <div class="waps-step-web plb5" style="width: 622px;">
+                    <div style="float: left;">
+                        待选货品
+                        <ul id="snProList">
+                        </ul>
+                    </div>
+                    <ul style="float:right;">
                         <li>
                             <span class="title">
                                 请输入货号：

@@ -23,15 +23,17 @@ public class LocalResourceServer implements ResourceServer {
 
     @Autowired
     private void setEnv(Environment env) {
+        //this.serverUri = env.getProperty("micromall.resouceUri", "file:///D:");
         this.serverUri = env.getProperty("micromall.resouceUri", "http://localhost:8080/admin");
     }
 
     private String serverUri;
 
-    public String saveResource(InputStream data, String savePath, String orignalFile, int customerId) throws IOException {
+    public String saveResource(InputStream data, String orignalFile, int customerId) throws IOException {
         FileOutputStream outputStream = null;
         String prefix = orignalFile.substring(orignalFile.lastIndexOf(".") + 1);
         Date now = new Date();
+        String savePath = "D:";
         String fileFolder = "/uploaded/image/" + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
         String fileName = StringUtil.DateFormat(now, "yyyyMMddHHmmSS") + "." + prefix;
         try {

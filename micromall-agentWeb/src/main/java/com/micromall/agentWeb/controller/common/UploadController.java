@@ -1,6 +1,6 @@
-package com.micromall.adminWeb.controller.common;
+package com.micromall.agentWeb.controller.common;
 
-import com.micromall.adminWeb.controller.BaseController;
+import com.micromall.agentWeb.controller.BaseController;
 import com.micromall.datacenter.utils.ResourceServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

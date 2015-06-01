@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  * Created by CJ on 5/26/15.
- *
+ * <p>
  * 资源投放到apache服务器
  *
  * @author CJ
@@ -30,13 +30,13 @@ public class ApacheResourceServer implements ResourceServer {
 
     @Autowired
     private void setEnv(Environment env) {
-        this.serverUri = env.getProperty("micromall.resourcesUri", (String)null);
-        this.resourceHome =  env.getProperty("micromall.resourcesHome", (String)null);
+        this.serverUri = env.getProperty("micromall.resourcesUri", (String) null);
+        this.resourceHome = env.getProperty("micromall.resourcesHome", (String) null);
     }
 
 
-    public String saveResource(InputStream data, String savePath, String orginalName, int customerId) throws IOException {
-        if (serverUri==null || resourceHome==null)
+    public String saveResource(InputStream data, String orginalName, int customerId) throws IOException {
+        if (serverUri == null || resourceHome == null)
             throw new IllegalStateException("请设置micromall.resourcesUri和micromall.resourcesHome属性");
         FileOutputStream outputStream = null;
         String prefix = orginalName.substring(orginalName.lastIndexOf(".") + 1);
@@ -61,6 +61,6 @@ public class ApacheResourceServer implements ResourceServer {
     }
 
     public String resourceUri(String token) {
-        return this.serverUri+token;
+        return this.serverUri + token;
     }
 }

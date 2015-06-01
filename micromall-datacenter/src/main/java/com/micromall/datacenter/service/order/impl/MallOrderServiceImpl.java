@@ -1,13 +1,16 @@
 package com.micromall.datacenter.service.order.impl;
 
 import com.micromall.datacenter.bean.agent.MallAgentBean;
+import com.micromall.datacenter.bean.agent.MallUserBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
 import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.agent.MallUserService;
 import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.service.order.MallOrderService;
+import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,8 @@ public class MallOrderServiceImpl implements MallOrderService {
     private MallAgentService agentService;
     @Autowired
     private MallGoodsService goodsService;
+    @Autowired
+    private MallUserService userService;
 
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId) {
@@ -116,6 +121,14 @@ public class MallOrderServiceImpl implements MallOrderService {
         orderBean.setShipInfo(shipInfo);
         orderBean.setOrderStatus(1);
         dao.save(orderBean);
+
+        //发送短信提醒
+        if (orderBean.getSendId() > 0) {
+            MallUserBean userBean = userService.findByUserId(orderBean.getSendId());
+            SMSHelper.send(userBean.getUserMobile(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
+        } else {
+            //SMSHelper.send()
+        }
     }
 
     /**

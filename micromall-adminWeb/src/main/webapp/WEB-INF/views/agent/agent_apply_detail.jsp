@@ -66,6 +66,8 @@
                         if (json.result == 1) {
                             $.jBox.tip("操作成功", "success");
                             window.location.reload();
+                        } else if (json.result == 2) {
+                            $.jBox.tip("该手机号码已经是代理商", "error");
                         } else {
                             $.jBox.tip("操作失败", "error");
                         }
@@ -101,10 +103,7 @@
                 superAgentCount = json.list.length;
                 $.each(json.list, function (o, item) {
                     $dom.append('<option value="' + item.agentId + '">' + item.name + '</option>');
-                })
-                if (agentId > 0) {
-                    $("#superAgent").val(superAgentId);
-                }
+                });
             }, function () {
             }, J.PostMethod);
         }
@@ -188,6 +187,12 @@
                                     <label>${applyBean.cardId}</label>
                                 </li>
                                 <li>
+                                    <span class="title">手持身份证照片：</span>
+                                    <label>
+                                        <img style="width: 200px;height: 123px;" src="${uploadResourceServer.resourceUri(applyBean.cardIdImg)}"/>
+                                    </label>
+                                </li>
+                                <li>
                                     <span class="title">从事微商时间：</span>
                                     <lable>${applyBean.workOnTime}</lable>
                                 </li>
@@ -215,6 +220,26 @@
                                     <span class="title">申请理由：</span>
                                     <label>${applyBean.applyReason}</label>
                                 </li>
+                                <c:if test="${applyBean.applyStatus!=0}">
+                                    <span style="color:red">审核结果：</span>
+                                </c:if>
+
+                                <c:if test="${applyBean.applyStatus==1}">
+                                    <li>
+                                        <span class="title">分配等级：</span>
+                                        <label>${applyBean.resultLevel.levelName}</label>
+                                    </li>
+                                    <li>
+                                        <span class="title">分配上级：</span>
+                                        <label>${applyBean.resultReferrer}</label>
+                                    </li>
+                                </c:if>
+                                <c:if test="${applyBean.applyStatus!=0}">
+                                    <li>
+                                        <span class="title">${applyBean.applyStatus==1?"通过":"拒绝"}理由：</span>
+                                        <label>${applyBean.refuseReason}</label>
+                                    </li>
+                                </c:if>
                             </ul>
                         </div>
                         <c:if test="${applyBean.applyStatus!=1}">

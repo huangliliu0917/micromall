@@ -41,22 +41,22 @@
             $("#previewCardImg").show();
             $("#agentChannel").val("${agentBean.agentChannel}");
             </c:if>
-
-            $("#btnFile").change(function () {
-                $("#agentCardImg").val("");
-                $.jBox.tip("正在上传...", "loading");
-                fileUpload(null, uploadUrl, function (json) {
-                    if (json.result == 1) {
-                        $.jBox.tip("上传成功", "success");
-                        $("#agentCardImg").val(json.file);
-                        $("#previewCardImg").show();
-                        $("#previewCardImg").attr("src", json.fileUri);
-                    } else {
-                        $.jBox.tip("上传失败", "error");
-                    }
-                });
-            });
         });
+
+        function uploadImg() {
+            $("#agentCardImg").val("");
+            $.jBox.tip("正在上传...", "loading");
+            fileUpload(null, uploadUrl, function (json) {
+                if (json.result == 1) {
+                    $.jBox.tip("上传成功", "success");
+                    $("#agentCardImg").val(json.file);
+                    $("#previewCardImg").show();
+                    $("#previewCardImg").attr("src", json.fileUri);
+                } else {
+                    $.jBox.tip("上传失败", "error");
+                }
+            });
+        }
     </script>
 </head>
 <body style="background-color:#e4e7ea">
@@ -114,7 +114,7 @@
                                 </li>
                                 <li style="width: 500px;">
                                     <span class="title"><i class="red">*</i>手持身份证照片：</span>
-                                    <input type="file" id="btnFile" name="btnFile" hidden="hidden"/>
+                                    <input type="file" id="btnFile" name="btnFile" hidden="hidden" onchange="uploadImg()"/>
                                     <input type="hidden" id="agentCardImg" readonly="readonly" style="width: 300px" value="${agentBean.agentCardImg}"/>
                                     <img id="previewCardImg" style="display: none;width: 200px;height: 130px;" src="${uploadResourceServer.resourceUri(agentBean.agentCardImg)}"/>
 

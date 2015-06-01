@@ -23,10 +23,28 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/loading/jquery.loading-0.1.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/prompt/jquery.prompt.js" />"></script>
     <link rel="stylesheet" href="<c:url value="/resources/scripts/prompt/prompt.css" />">
+    <script type="text/javascript" src="<c:url value="/resources/scripts/ajaxfileupload.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/admin.upload.js" />"></script>
     <title>新增代理商</title>
     <script type="text/javascript">
         var customerId = ${customerId};
         var ajaxUrl = "<c:url value="/agentApi/agentApply" />";
+        var uploadUrl = "<c:url value="/upload?customerId=${customerId}" />";
+
+        function uploadImg() {
+            $("#cardIdImg").val("");
+            loading.show("正在上传");
+            fileUpload(null, uploadUrl, function (json) {
+                loading.close();
+                if (json.result == 1) {
+                    $("#cardIdImg").val(json.file);
+                    $("#previewImg").show();
+                    $("#previewImg").attr("src", json.fileUri);
+                } else {
+                    $.jBox.tip("上传失败", "error");
+                }
+            });
+        }
 
         $(function () {
             $("#btnSave").click(function () {
@@ -35,6 +53,7 @@
                 var weixin = $.trim($("#weixin").val());
                 var referrer = $.trim($("#referrer").val());
                 var cardId = $.trim($("#cardId").val());
+                var cardIdImg = $("#cardIdImg").val();
                 var workOnTime = $.trim($("#workOnTime").val());
                 var saleAmount = $.trim($("#saleAmount").val());
                 var workOnType = $.trim($("#workOnType").val());
@@ -62,6 +81,10 @@
                     SimplePrompt.showPrompt("请输入您的身份证号码");
                     return;
                 }
+                if (cardIdImg.length == 0) {
+                    SimplePrompt.showPrompt("请上传手持身份证照片");
+                    return;
+                }
                 if (applyReason.length == 0) {
                     SimplePrompt.showPrompt("请输入申请理由");
                     return;
@@ -79,7 +102,8 @@
                     area: area,
                     customerId: customerId,
                     applyLevelId: applyLevel,
-                    applyReason: applyReason
+                    applyReason: applyReason,
+                    cardIdImg: cardIdImg
                 }
                 loading.show("正在提交");
                 J.GetJsonRespons(ajaxUrl, requestData, function (json) {
@@ -131,6 +155,11 @@
 
     <p><label>
         <input type="" id="cardId" name="mobile" placeholder="身份证号码"></label></p>
+
+    <p><label>手持身份证照片<a href="javascript:$('#btnFile').click()" style="float: right;">上传</a><input type="file" id="btnFile" name="btnFile" hidden="hidden" onchange="uploadImg()"/>
+        <img id="previewImg" style="height: 20px;width: 20px;display: none;" src=""/>
+        <input type="hidden" id="cardIdImg"/>
+    </label></p>
 
     <p><label>
         <input type="" id="workOnTime" name="mobile" placeholder="从事微商时间"></label></p>

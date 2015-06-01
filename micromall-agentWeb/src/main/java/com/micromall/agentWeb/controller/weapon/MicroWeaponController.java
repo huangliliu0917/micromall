@@ -30,4 +30,12 @@ public class MicroWeaponController extends BaseController {
 
         return "weapon/weapon_list";
     }
+
+    @RequestMapping("/weapon/weaponDetail")
+    public String weaponDetail(int weaponId, Model model) {
+        MicroWeaponBean weaponBean = weaponService.findByWeaponId(weaponId);
+        model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("weaponBean", weaponBean);
+        return "weapon/weapon_detail";
+    }
 }

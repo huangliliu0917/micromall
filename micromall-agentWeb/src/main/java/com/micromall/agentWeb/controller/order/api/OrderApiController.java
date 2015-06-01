@@ -105,7 +105,7 @@ public class OrderApiController extends BaseController {
             orderBean.setAddTime(new Date());
             orderBean.setCustomerId(getCustomerId());
             orderBean.setOrderStatus(0);
-            orderBean.setOwnerId(getAgentId());
+            orderBean.setOwnerId(agentId);
             orderBean.setDeliverPath("|" + agentId + "|" + getAgentId() + "|");
             orderBean.setRealShipId(getAgentId());
             orderBean.setSendId(0);

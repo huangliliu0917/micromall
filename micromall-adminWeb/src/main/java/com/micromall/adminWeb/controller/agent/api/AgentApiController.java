@@ -134,7 +134,7 @@ public class AgentApiController extends BaseController {
             if (agentService.accountExist(mobile, getCustomerId())) {
                 result = 2;//手机号码已存在
             } else {
-                MallAgentApplyBean applyBean = applyService.findByApplyId(applyId);
+//                MallAgentApplyBean applyBean = applyService.findByApplyId(applyId);
                 applyService.updateApplyStataus(applyId, superAgentId, password, levelId, applyStatus, refuseReason);
                 result = 1;
             }

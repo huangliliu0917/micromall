@@ -41,6 +41,8 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
     public void updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason) {
         dao.updateApplyStatus(applyStatus, refuseReason, applyId);
         MallAgentApplyBean applyBean = findByApplyId(applyId);
+        applyBean.setApplyStatus(applyStatus);
+        applyBean.setRefuseReason(refuseReason);
 
         if (applyStatus == 1) {
             //审核通过
@@ -58,16 +60,22 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
             agentBean.setName(applyBean.getName());
             MallAgentBean resultBean = agentService.save(agentBean, levelId);
 
+            applyBean.setResultLevel(resultBean.getAgentLevel());
+            if (resultBean.getSuperAgentId() > 0) {
+                applyBean.setResultReferrer(agentService.findByAgentId(resultBean.getSuperAgentId()).getAgentAccount());
+            }
+
             //发送短信
-            MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
-            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-            SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，当前代理级别为%s。您的上级代理是：%s，上级联系电话：%s。请关注公众号登录，登录账号为您的手机号，登录密码为您手机号的末6位",
-                    configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+//            MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
+//            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
+//            SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，当前代理级别为%s。您的上级代理是：%s，上级联系电话：%s。请关注公众号登录，登录账号为您的手机号，登录密码为您手机号的末6位",
+//                    configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
         } else {
             //发送短信
-            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-            SMSHelper.send(applyBean.getMobile(), String.format("感谢您关注%s,抱歉您还无法成为我们代理商，理由：%s", configBean.getTitle(), applyBean.getRefuseReason()));
+//            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
+//            SMSHelper.send(applyBean.getMobile(), String.format("感谢您关注%s,抱歉您还无法成为我们代理商，理由：%s", configBean.getTitle(), applyBean.getRefuseReason()));
         }
+        this.save(applyBean);
     }
 
     @Transactional(readOnly = true)

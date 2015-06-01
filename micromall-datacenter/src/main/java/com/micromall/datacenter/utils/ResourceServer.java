@@ -16,7 +16,7 @@ public interface ResourceServer {
      * @param orginalName 原始名称
      * @return 一个唯一针对该资源的token 比如 uploaded/...agc.gif
      */
-    String saveResource(InputStream data, String savePath, String orginalName, int customerId) throws IOException;
+    String saveResource(InputStream data, String orginalName, int customerId) throws IOException;
 
     /**
      * 根据传入的token返回该资源的uri

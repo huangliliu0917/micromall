@@ -78,7 +78,7 @@
                     </c:forEach>
                 </div>
                 <p style="clear:both; height:5px"></p>
-                <a class="wpbuttons" href="#"><span>查看</span></a>
+                <a class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>
             </div>
             <p style="clear:both; height:5px"></p>
         </c:forEach>
@@ -91,7 +91,7 @@
                 <p style="width:68%;margin: 0 auto;padding: 9px 1px;text-overflow: ellipsis;overflow: hidden;display: inline-block;height: 56px;">
                         ${weaponBean.weaponContent}
                 </p>
-                <a class="wpbuttons" style="margin-top: 62px;" href="#"><span>查看</span></a>
+                <a class="wpbuttons" style="margin-top: 62px;" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>
 
                 <p style="clear:both; height:5px"></p>
 

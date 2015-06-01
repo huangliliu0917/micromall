@@ -45,6 +45,13 @@ public class MallAgentApplyBean {
     private String applyReason;
     @Transient
     private String applyLevelName;
+    @ManyToOne
+    @JoinColumn(name = "ResultLevelId")
+    private MallAgentLevelBean resultLevel;
+    @Column(name = "ResultReferrer")
+    private String resultReferrer;
+    @Column(name = "CardIdImg")
+    private String cardIdImg;
 
     public int getApplyId() {
         return applyId;
@@ -180,5 +187,29 @@ public class MallAgentApplyBean {
 
     public void setApplyLevelName(String applyLevelName) {
         this.applyLevelName = applyLevelName;
+    }
+
+    public String getResultReferrer() {
+        return resultReferrer;
+    }
+
+    public void setResultReferrer(String resultReferrer) {
+        this.resultReferrer = resultReferrer;
+    }
+
+    public MallAgentLevelBean getResultLevel() {
+        return resultLevel;
+    }
+
+    public void setResultLevel(MallAgentLevelBean resultLevel) {
+        this.resultLevel = resultLevel;
+    }
+
+    public String getCardIdImg() {
+        return cardIdImg;
+    }
+
+    public void setCardIdImg(String cardIdImg) {
+        this.cardIdImg = cardIdImg;
     }
 }
