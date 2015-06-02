@@ -4,24 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean name="pdaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <!-- 指定连接数据库的驱动 -->
-        <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-        <!-- 指定连接数据库的URL -->
-        <property name="jdbcUrl" value="jdbc:sqlserver://115.28.160.96:1433;DatabaseName=OneMent2"/>
-        <!-- 指定连接数据库的用户名 -->
-        <property name="user" value="sa"/>
-        <!-- 指定连接数据库的密码 -->
-        <!--property name="password" value="!"/-->
-        <property name="password" value="root"/>
-        <!-- 指定连接数据库连接池的最大连接数 -->
-        <property name="maxPoolSize" value="40"/>
-        <!-- 指定连接数据库连接池的最小连接数 -->
-        <property name="minPoolSize" value="1"/>
-        <!-- 指定连接数据库连接池的初始化连接数 -->
-        <property name="initialPoolSize" value="1"/>
-        <!-- 指定连接数据库连接池的连接的最大空闲时间 -->
-        <property name="maxIdleTime" value="20"/>
+    <bean id="pdaDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>jdbc/MicroMallPDA</value>
+        </property>
     </bean>
 
     <bean id="pdaEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
