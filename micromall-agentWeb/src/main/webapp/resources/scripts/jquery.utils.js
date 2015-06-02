@@ -32,6 +32,34 @@ $.fn.extend({
     }
 });
 
+var pageHandler = {
+    totalPage: 1,
+    pageIndex: 1,
+    pageUri: "",
+    init: function (totalPage, pageIndex, pageUri) {
+        this.totalPage = totalPage;
+        this.pageIndex = pageIndex;
+        this.pageUri = pageUri;
+        if (totalPage == 1) {
+            $("#pagePanel").hide();
+        } else {
+            $("#pagePanel").show();
+        }
+    },
+    previewPage: function () {
+        if (this.pageIndex > 1) {
+            this.pageIndex--;
+            window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
+        }
+    },
+    nextPage: function () {
+        if (this.pageIndex < this.totalPage) {
+            this.pageIndex++;
+            window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
+        }
+    }
+}
+
 var J = J || {};
 
 $.extend(

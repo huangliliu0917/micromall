@@ -57,9 +57,15 @@
             if (!index) {
                 return;
             }
-            var shipInfo = $.trim($("#shipInfo").val());
-            if (shipInfo.length == 0) {
-                SimplePrompt.showPrompt("请输入物流信息");
+//            var shipInfo = $.trim($("#shipInfo").val());
+//            if (shipInfo.length == 0) {
+//                SimplePrompt.showPrompt("请输入物流信息");
+//                return;
+//            }
+            var logiName = $("#logiName").val();
+            var logiNum = $.trim($("#logiNum").val());
+            if (logiNum.length == 0) {
+                SimplePrompt.showPrompt("请输入物流单号");
                 return;
             }
             loading.show("正在提交");
@@ -67,7 +73,8 @@
                 customerId: customerId,
                 orderId: orderId,
                 proCodes: proCodes,
-                shipInfo: shipInfo
+                logiName: logiName,
+                logiNum: logiNum
             }
 
             J.GetJsonRespons(ajaxUrl + "confirmShip", requestData, function (json) {
@@ -162,7 +169,7 @@
                     <p style="height:5px"></p>
 
                     <div class="DDH">
-                        <span style="float: left">请输入货号</span>
+                        <span style="float: left">请输入货品编号</span>
                         <a href="#" id="addProCode" style="float: right"><span><img style="margin-top: -5px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>
                     </div>
                     <div style="float: left;width: 90%" id="proCodePanel">
@@ -176,11 +183,43 @@
 
                     <p style="height:10px;clear:both"></p>
 
-                    <div class="DDH">请输入物流信息</div>
+                    <div class="DDH">请选择物流公司</div>
                     <p>
                         <label>
-                            <input style="padding:5px 15px 70px 0px;margin: 10px 0px;border: solid 1px #ddd;color: #000; width:95%" type="" id="shipInfo" value="" placeholder="物流名称：xxx；单号：xxxxxxxxx">
+                            <select style="margin-top: 10px;" id="logiName">
+                                <option value="中国邮政">中国邮政</option>
+                                <option value="申通快递">申通快递</option>
+                                <option value="圆通速递">圆通速递</option>
+                                <option value="顺丰速运">顺丰速运</option>
+                                <option value="天天快递">天天快递</option>
+                                <option value="韵达快递">韵达快递</option>
+                                <option value="中通速递">中通速递</option>
+                                <option value="龙邦物流">龙邦物流</option>
+                                <option value="宅急送">宅急送</option>
+                                <option value="全一快递">全一快递</option>
+                                <option value="汇通速递">汇通速递</option>
+                                <option value="民航快递">民航快递</option>
+                                <option value="亚风速递">亚风速递</option>
+                                <option value="快捷速递">快捷速递</option>
+                                <option value="DDS快递">DDS快递</option>
+                                <option value="华宇物流">华宇物流</option>
+                                <option value="中铁快运">中铁快运</option>
+                                <option value="FedEx">FedEx</option>
+                                <option value="UPS">UPS</option>
+                                <option value="DHL">DHL</option>
+                            </select>
                         </label>
+                    </p>
+
+                    <p style="height:10px;clear:both"></p>
+
+                    <div class="DDH">请输入物流单号</div>
+
+                    <p>
+                        <label>
+                            <input id="logiNum" class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 80%;" type=""/>
+                        </label>
+
                     </p>
                 </div>
             </li>

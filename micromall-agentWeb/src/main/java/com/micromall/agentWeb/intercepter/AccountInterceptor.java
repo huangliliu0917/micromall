@@ -23,28 +23,38 @@ public class AccountInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
-        String contextPath = request.getContextPath();
-        String url = requestUrl.substring(contextPath.length());
         String tempRequestUrl = requestUrl.toLowerCase();
         if (tempRequestUrl.contains("login") || tempRequestUrl.contains("apply") || tempRequestUrl.contains("upload")) {
             return true;
         }
 
+        //µÇÂ¼ÅÐ¶Ï
         String customerId = request.getParameter("customerId").toString();
+
+        Object loginToken = request.getSession().getAttribute("loginToken_" + customerId);
+
+        String redirectUri = "/agent/login?customerId=" + customerId + "&returnUrl=" + requestUrl;
+
+        if (loginToken != null) {
+            return true;
+        }
+
         String account = CookieHelper.getCookieVal(request, "account_" + customerId);
         String password = CookieHelper.getCookieVal(request, "password_" + customerId);
-        if (StringUtil.isEmpty(customerId) || StringUtil.isEmpty(account) || StringUtil.isEmpty(password)) {
-            response.sendRedirect("/agent/login?customerId=" + customerId + "&returnUrl=" + requestUrl);
+        if (StringUtil.isEmpty(account) || StringUtil.isEmpty(password)) {
+            response.sendRedirect(redirectUri);
             return false;
         } else {
             MallAgentBean agentBean = agentService.checkLogin(account, password, Integer.parseInt(customerId));
             if (agentBean != null) {
                 CookieHelper.setCookie(response, "account_" + customerId, account);
                 CookieHelper.setCookie(response, "password_" + customerId, password);
-                CookieHelper.setCookie(response, "agentId_" + customerId, String.valueOf(agentBean.getAgentId()));
+//                CookieHelper.setCookie(response, "agentId_" + customerId, String.valueOf(agentBean.getAgentId()));
+                request.getSession().setAttribute("loginToken_" + customerId, account);
+                request.getSession().setAttribute("agentId_" + customerId, agentBean.getAgentId());
                 return true;
             } else {
-                request.getRequestDispatcher("/login").forward(request, response);
+                response.sendRedirect(redirectUri);
                 return false;
             }
         }

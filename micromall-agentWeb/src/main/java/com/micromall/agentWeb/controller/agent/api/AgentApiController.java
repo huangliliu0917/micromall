@@ -62,7 +62,8 @@ public class AgentApiController extends BaseController {
         try {
             CookieHelper.removeCookie(response, "account_" + getCustomerId());
             CookieHelper.removeCookie(response, "password_" + getCustomerId());
-            CookieHelper.removeCookie(response, "agentId_" + getCustomerId());
+            request.getSession().setAttribute("loginToken_" + getCustomerId(), null);
+            request.getSession().setAttribute("agentId_" + getCustomerId(), null);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());

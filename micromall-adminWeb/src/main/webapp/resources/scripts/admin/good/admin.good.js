@@ -9,6 +9,8 @@ var goodHandler = {
             J.GetJsonRespons(ajaxUrl + "saveGood", requestData, function (json) {
                 if (json.result == 1) {
                     $.jBox.tip("保存成功", "success");
+                } else if (json.result == 2) {
+                    $.jBox.tip("该商品编号已存在");
                 } else {
                     $.jBox.tip("保存失败", "error");
                 }

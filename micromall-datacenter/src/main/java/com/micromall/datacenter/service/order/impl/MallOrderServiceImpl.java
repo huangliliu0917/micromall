@@ -3,12 +3,14 @@ package com.micromall.datacenter.service.order.impl;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallUserBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
+import com.micromall.datacenter.bean.orders.MallDeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.agent.MallUserService;
 import com.micromall.datacenter.service.good.MallGoodsService;
+import com.micromall.datacenter.service.order.MallDeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
@@ -25,6 +27,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.awt.print.Pageable;
 import java.util.*;
 
 /**
@@ -40,6 +43,8 @@ public class MallOrderServiceImpl implements MallOrderService {
     private MallGoodsService goodsService;
     @Autowired
     private MallUserService userService;
+    @Autowired
+    private MallDeliverItemService deliverItemService;
 
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId) {
@@ -105,10 +110,10 @@ public class MallOrderServiceImpl implements MallOrderService {
      *
      * @param orderBean
      * @param proCodes
-     * @param shipInfo
+     * @param
      */
     @Transactional
-    public void confirmShip(MallOrderBean orderBean, String[] proCodes, String shipInfo) {
+    public void confirmShip(MallOrderBean orderBean, String[] proCodes, String logiName, String logiNum) {
         Set<MallOrderItemBean> orderItems = new HashSet<MallOrderItemBean>();
         for (String proCode : proCodes) {
             MallOrderItemBean itemBean = new MallOrderItemBean();
@@ -118,16 +123,22 @@ public class MallOrderServiceImpl implements MallOrderService {
             orderItems.add(itemBean);
         }
         orderBean.setOrderItems(orderItems);
-        orderBean.setShipInfo(shipInfo);
+//        orderBean.setShipInfo(shipInfo);
+        orderBean.setLogiName(logiName);
+        orderBean.setLogiNum(logiNum);
         orderBean.setOrderStatus(1);
         dao.save(orderBean);
+
+        //修改配货单状态
+        deliverItemService.updateStatus(proCodes);
 
         //发送短信提醒
         if (orderBean.getSendId() > 0) {
             MallUserBean userBean = userService.findByUserId(orderBean.getSendId());
             SMSHelper.send(userBean.getUserMobile(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
         } else {
-            //SMSHelper.send()
+            MallAgentBean agentBean = agentService.findByAgentId(orderBean.getOwnerId());
+            SMSHelper.send(agentBean.getAgentAccount(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
         }
     }
 
@@ -169,12 +180,16 @@ public class MallOrderServiceImpl implements MallOrderService {
      */
     public Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType, String orderId) {
         Page<MallOrderBean> pageInfo = null;
+        List<Sort.Order> orderList = new ArrayList<Sort.Order>();
+        orderList.add(new Sort.Order(Sort.Direction.ASC, "orderStatus"));
+        orderList.add(new Sort.Order(Sort.Direction.DESC, "addTime"));
+
         if (orderType == 0) {
-            pageInfo = dao.findAll(customerId, "|" + agentId + "|", orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //全部
+            pageInfo = dao.findAll(customerId, "|" + agentId + "|", orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList))); //全部
         } else if (orderType == 1) {
-            pageInfo = dao.findInOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //进货
+            pageInfo = dao.findInOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList))); //进货
         } else {
-            pageInfo = dao.findOutOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "addTime"))); //出货
+            pageInfo = dao.findOutOrder(customerId, agentId, orderId, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList))); //出货
         }
         //不同代理商登录针对同一订单应该看到下级代理商的订单金额
         for (MallOrderBean orderBean : pageInfo.getContent()) {

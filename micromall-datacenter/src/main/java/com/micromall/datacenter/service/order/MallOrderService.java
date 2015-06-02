@@ -19,7 +19,7 @@ public interface MallOrderService {
 
     void updateOrderStatus(String orderId, int orderStatus);
 
-    void confirmShip(MallOrderBean orderBean, String[] proCodes, String shipInfo);
+    void confirmShip(MallOrderBean orderBean, String[] proCodes, String logiName, String logiNum);
 
     void transferOrder(String orderId, int transferTo);
 

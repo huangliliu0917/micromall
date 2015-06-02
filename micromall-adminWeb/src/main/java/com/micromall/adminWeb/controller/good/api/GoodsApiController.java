@@ -28,22 +28,26 @@ public class GoodsApiController extends BaseController {
     public Map<Object, Object> saveGood(MallGoodBean goodBean) {
         int result = 0;
         try {
-            if (goodBean.getGoodId() > 0) {
-                MallGoodBean preGood = goodsService.findByGoodId(goodBean.getGoodId());
-                preGood.setGoodName(goodBean.getGoodName());
-                preGood.setGoodCode(goodBean.getGoodCode());
-                preGood.setGoodImg(goodBean.getGoodImg());
-                preGood.setPriceInfo(goodBean.getPriceInfo());
-                preGood.setGoodDesc(goodBean.getGoodDesc());
-                preGood.setPrice(goodBean.getPrice());
-                goodBean = preGood;
+            if (goodsService.goodCodeExists(goodBean.getGoodCode(), getCustomerId())) {
+                result = 2;
             } else {
-                goodBean.setCustomerId(getCustomerId());
-                goodBean.setIsDelete(0);
-                goodBean.setAddTime(new Date());
+                if (goodBean.getGoodId() > 0) {
+                    MallGoodBean preGood = goodsService.findByGoodId(goodBean.getGoodId());
+                    preGood.setGoodName(goodBean.getGoodName());
+                    preGood.setGoodCode(goodBean.getGoodCode());
+                    preGood.setGoodImg(goodBean.getGoodImg());
+                    preGood.setPriceInfo(goodBean.getPriceInfo());
+                    preGood.setGoodDesc(goodBean.getGoodDesc());
+                    preGood.setPrice(goodBean.getPrice());
+                    goodBean = preGood;
+                } else {
+                    goodBean.setCustomerId(getCustomerId());
+                    goodBean.setIsDelete(0);
+                    goodBean.setAddTime(new Date());
+                }
+                goodsService.save(goodBean);
+                result = 1;
             }
-            goodsService.save(goodBean);
-            result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
         }

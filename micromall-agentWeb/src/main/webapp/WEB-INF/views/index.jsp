@@ -47,17 +47,45 @@
             };
             $.ajax(op);
         }
+        $(function () {
+            var orderNum = ${unShipCount};
+            if (orderNum > 0) {
+                $(".tipCircle").html(orderNum);
+                $(".tipCircle").show();
+            } else {
+                $(".tipCircle").hide();
+            }
+        })
     </script>
+    <style type="text/css">
+        #orderUl .tipCircle {
+            position: absolute;
+            border-radius: 50px;
+            background-color: crimson;
+            height: 20px;
+            width: 20px;
+            color: #fff;
+            text-align: center;
+            right: -7px;
+            margin-top: -10px;
+        }
+        .ull {
+            border: 1px solid #D7D7D7;
+            width: 43%;
+            margin: 10px;
+            float: left;
+            border-radius: 20px;}
+    </style>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body style="background-color:#fff; max-width:640px; margin:0 auto">
 <div>
 
     <p class="h20"></p>
 
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
-    <div class="all" style="padding:20px 40px 10px 40px">
+    <div class="all" ">
         <span class="wz0" style="font-size:40px;">微商管理</span>
 
         <p style="clear:both; height:30px"></p>
@@ -66,7 +94,7 @@
     <!---------------------/////////////////------------------------------------>
 </div>
 <!---------------------/////////////////------------------------------------>
-
+<div>
 <ul class="ull" onclick="goMenu('<c:url value="/agentList?customerId=${customerId}"/>')">
     <li class="png"><img src="<c:url value="/resources/images/user2.png" />" width="100%"></li>
     <li class="wenz1">代理商管理</li>
@@ -80,9 +108,11 @@
 
 <p class="h10" style="clear:both"></p>
 
-<ul class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
+<ul id="orderUl" style="position: relative" class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
+    <li class="tipCircle" style="display: none;"></li>
     <li class="png"><img src="<c:url value="/resources/images/file-settings.png" />" width="100%"></li>
-    <li class="wenz1">进出货管理${unShipCount}</li>
+    <li class="wenz1">进出货管理</li>
+
 </ul>
 
 
@@ -103,7 +133,7 @@
     <li class="png"><img src="<c:url value="/resources/images/settings.png" />" width="100%"></li>
     <li class="wenz1">个人资料</li>
 </ul>
-
+</div>
 
 <p style="clear:both"></p>
 <!---------------------/////////////////------------------------------------>

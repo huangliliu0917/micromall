@@ -36,7 +36,7 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.agent.js" />"></script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <div>
 
     <p class="h20"></p>

@@ -108,7 +108,7 @@
                                     <span class="title"><i class="red">*</i>商家Logo：</span>
                                     <input type="file" id="btnFile" name="btnFile" hidden="hidden"/>
                                     <input type="hidden" id="logo" readonly="readonly" style="width: 300px" value="${configBean.logo}"/>
-                                    <img id="previewLogo" style="display: none;" src="${uploadResourceServer.resourceUri(configBean.logo)}"/>
+                                    <img id="previewLogo" style="display: none;width: 100px;" src="${uploadResourceServer.resourceUri(configBean.logo)}"/>
 
                                     <div class="fg-button clearfix" style="float:right;">
                                         <a href="javascript:$('#btnFile').click();">上传图片</a>

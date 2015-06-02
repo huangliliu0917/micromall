@@ -27,11 +27,15 @@
     <title>我的代理商</title>
     <script type="text/javascript">
         var customerId = ${customerId};
+        var pageIndex =${pageIndex};
+        var totalPage = ${pageInfo.getTotalPages()};
+        var pageUri = "<c:url value="/agentList?customerId=${customerId}&superAgentId=${superAgentId}&searchKey=${searchKey}" />";
         $(function () {
             $("#searchBtn").click(function () {
                 $("#searchForm").submit();
-            })
-        })
+            });
+            pageHandler.init(totalPage, pageIndex, pageUri);
+        });
 
         function showMore(agentId) {
             $("#selAgentId").val(agentId);
@@ -82,11 +86,11 @@
     </script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <div id="content1"></div>
 <!---------------------/////////////////------------------------------------>
 
-<div style="background-color:#545454;height:44px;">
+<div class="topHeader">
     <p onclick="javascript:window.location.href='<c:url value="/agentEdit?customerId=${customerId}"/>'" style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;">新增代理</p>
 
     <form id="searchForm" action="<c:url value="/agentList" />">
@@ -95,7 +99,7 @@
             <input type="hidden" value="${customerId}" name="customerId" id="customerId"/>
             <input type="hidden" value="${superAgentId}" name="superAgentId" id="superAgentId"/>
 
-            <input style="height: 32px;background-color: #545454;border: solid 1px #7E7E7E;color: #fff;padding-left: 7px;width: 123px;" type="" id="searchKey" name="searchKey" value="${searchKey}" placeholder="登录名/姓名">
+            <input class="searchInput" type="" id="searchKey" name="searchKey" value="${searchKey}" placeholder="登录名/姓名">
             <span id="searchBtn"><img class="imgg" src="<c:url value="/resources/images/untitled10.png" />" width="20px"></span>
         </p>
     </form>
@@ -154,13 +158,19 @@
 
             </c:forEach>
         </ul>
+        <p style="text-align: center;margin-top: 10px;" id="pagePanel">
+            <span class="wapbuttoms"><a href="javascript:pageHandler.previewPage()" id="previewPage">上一页</a></span>
+            <span class="wapbuttoms"><a href="javascript:pageHandler.nextPage()" id="nextPage">下一页</a></span>
+        </p>
+
+        <p style="height:60px"></p>
     </div>
 </div>
 
 
 <!---------------------/////////弹窗////////------------------------------------>
 
-<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 44px;left: 0;right: 0;margin: auto;display: none;">
+<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 44px;left: 0;right: 0;margin: auto;display: none;border: solid 1px #E0E0E0;">
     <input type="hidden" id="selAgentId"/>
 
     <p onclick="javascript:closeMore()" style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;">×</p>

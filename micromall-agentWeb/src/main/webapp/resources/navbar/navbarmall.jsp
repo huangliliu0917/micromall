@@ -11,16 +11,34 @@
 </script>
 <!--底部导航-->
 <div class="wl_nav" id="mnav-bottommenu">
+
     <a href="javascript:navbarGo('<c:url value="/index?customerId=" />')" class="nav_more">首页</a>
     <a href="javascript:navbarGo('<c:url value="/agentList?customerId="/>')" class="nav_index">代理商</a>
     <a href="javascript:navbarGo('<c:url value="/userList?customerId="/>')" class="nav_me">通讯录</a>
     <a href="javascript:navbarGo('<c:url value="/order/orderList?customerId="/>')" class="nav_kefu">进出货</a>
+    <%--<span class="tipCircle" style="display: none;"></span>--%>
 
     <p style="clear: both"></p>
 </div>
 <style type="text/css">
     .wl_nav a {
         text-decoration: none;
+    }
+
+    .wl_nav {
+        overflow: hidden;
+        height: 49px;
+        border-top: 1px solid #eee;
+        position: fixed;
+        z-index: 900;
+        /* width: 100%; */
+        bottom: 0;
+        left: 0;
+        max-width: 640px;
+        min-width: 320px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
     }
 
     .bj {
@@ -37,6 +55,18 @@
 
     #header_sub {
         display: none;
+    }
+
+    #mnav-bottommenu .tipCircle {
+        position: absolute;
+        border-radius: 50px;
+        background-color: crimson;
+        height: 20px;
+        width: 20px;
+        color: #fff;
+        text-align: center;
+        right: 13px;
+        margin-top: 5px;
     }
 </style>
 <!--end底部导航-->

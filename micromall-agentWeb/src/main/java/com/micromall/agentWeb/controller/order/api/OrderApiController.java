@@ -123,16 +123,15 @@ public class OrderApiController extends BaseController {
      *
      * @param orderId
      * @param proCodes
-     * @param shipInfo
      * @return
      */
     @RequestMapping("/orderApi/confirmShip")
     @ResponseBody
-    public Map<Object, Object> confirmShip(String orderId, String proCodes, String shipInfo) {
+    public Map<Object, Object> confirmShip(String orderId, String proCodes, String logiName, String logiNum) {
         int result = 0;
         try {
             MallOrderBean orderBean = orderService.findByOrderId(orderId);
-            orderService.confirmShip(orderBean, proCodes.split(","), shipInfo);
+            orderService.confirmShip(orderBean, proCodes.split(","), logiName, logiNum);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());

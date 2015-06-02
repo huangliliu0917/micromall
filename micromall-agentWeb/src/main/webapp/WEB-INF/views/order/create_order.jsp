@@ -112,7 +112,7 @@
 
 </div>
 
-<div id="selGood_dialog" style="background:rgba(0,0,0,0.5); position:absolute;top: 10%;bottom: 0;height: 300px;max-width: 640px;min-width: 320px;overflow:scroll;overflow-x: hidden;display: none;">
+<div id="selGood_dialog">
     <p style="color:white;font-size: 18px;margin-left: 10px;float: left;margin-top: 10px;">选择商品</p>
 
     <p id="closeDialog" style="color:white;font-size: 30px;margin-right: 10px;float: right">×</p>

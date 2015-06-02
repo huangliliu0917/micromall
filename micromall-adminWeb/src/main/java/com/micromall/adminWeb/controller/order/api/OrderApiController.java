@@ -1,11 +1,12 @@
 package com.micromall.adminWeb.controller.order.api;
 
 import com.micromall.adminWeb.controller.BaseController;
+import com.micromall.datacenter.bean.orders.MallDeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.pdaBean.SnInfoBean;
 import com.micromall.datacenter.pdaService.SnInfoService;
 import com.micromall.datacenter.service.order.MallOrderService;
-import com.micromall.datacenter.service.order.WaitDeliverSnInfoService;
+import com.micromall.datacenter.service.order.MallDeliverItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class OrderApiController extends BaseController {
     @Autowired
     private SnInfoService infoService;
     @Autowired
-    private WaitDeliverSnInfoService deliverSnInfoService;
+    private MallDeliverItemService deliverSnInfoService;
 
     /**
      * 确认发货
@@ -41,11 +42,11 @@ public class OrderApiController extends BaseController {
      */
     @RequestMapping("/orderApi/confirmShip")
     @ResponseBody
-    public Map<Object, Object> confirmShip(String orderId, String proCodes, String shipInfo) {
+    public Map<Object, Object> confirmShip(String orderId, String proCodes, String logiName, String logiNum) {
         int result = 0;
         try {
             MallOrderBean orderBean = orderService.findByOrderId(orderId);
-            orderService.confirmShip(orderBean, proCodes.split(","), shipInfo);
+            orderService.confirmShip(orderBean, proCodes.split(","), logiName, logiNum);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
@@ -56,8 +57,8 @@ public class OrderApiController extends BaseController {
 
     @RequestMapping("/orderApi/getShipProList")
     @ResponseBody
-    public Map<Object, Object> getShipProList() {
-        List<SnInfoBean> snList = deliverSnInfoService.findAll(getCustomerId());
+    public Map<Object, Object> getShipProList(String agentMobile) {
+        List<MallDeliverItemBean> snList = deliverSnInfoService.findAll(getCustomerId(), agentMobile);
         responseData.put("snList", snList);
         return responseData;
     }

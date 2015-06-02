@@ -18,7 +18,7 @@ public class BaseController {
     @Autowired
     protected HttpServletResponse response;
 
-    protected int pageSize = 20;
+    protected int pageSize = 10;
 
     protected String getQueryString(String queryKey, String def) {
         String value = request.getParameter(queryKey);
@@ -40,7 +40,13 @@ public class BaseController {
     private int agentId;
 
     public int getAgentId() {
-        return CookieHelper.getCookieValInteger(request, "agentId_" + getCustomerId());
+        //return CookieHelper.getCookieValInteger(request, "agentId_" + getCustomerId());
+        Object agentIdObj = request.getSession().getAttribute("agentId_" + getCustomerId());
+        if (agentIdObj == null) {
+            return 0;
+        } else {
+            return Integer.parseInt(agentIdObj.toString());
+        }
     }
 
     protected int getCustomerId() {

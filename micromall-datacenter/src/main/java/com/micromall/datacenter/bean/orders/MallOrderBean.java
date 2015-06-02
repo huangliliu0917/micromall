@@ -54,6 +54,10 @@ public class MallOrderBean {
     private Date addTime;
     @Column(name = "Pro_Num")
     private int proNum;
+    @Column(name = "Logi_Name")
+    private String logiName;
+    @Column(name = "Logi_Num")
+    private String logiNum;
 
     public Date getAddTime() {
         return addTime;
@@ -205,5 +209,21 @@ public class MallOrderBean {
 
     public void setProNum(int proNum) {
         this.proNum = proNum;
+    }
+
+    public String getLogiName() {
+        return logiName;
+    }
+
+    public void setLogiName(String logiName) {
+        this.logiName = logiName;
+    }
+
+    public String getLogiNum() {
+        return logiNum;
+    }
+
+    public void setLogiNum(String logiNum) {
+        this.logiNum = logiNum;
     }
 }

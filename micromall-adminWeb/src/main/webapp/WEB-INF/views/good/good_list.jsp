@@ -58,7 +58,7 @@
                                         <a href="javascript:window.location.href=document.referrer">返回</a>
                                     </div>
                                     <div class="fg-button clearfix" style="float:right">
-                                        <a href="<c:url value="/agent/agentEdit" />">添加商品</a>
+                                        <a href="<c:url value="/good/goodEdit" />">添加商品</a>
                                     </div>
 
                                 </td>

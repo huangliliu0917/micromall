@@ -14,18 +14,17 @@ import java.util.List;
  * Created by Administrator on 2015/5/29.
  */
 @Service
-@Transactional
+@Transactional(value = "pdaTransactionManager")
 public class SnInfoServiceImpl implements SnInfoService {
     @Autowired(required = false)
     private SnInfoDao dao;
 
     @Transactional(readOnly = true)
-    public List<SnInfoBean> findBySnStatus(int status) {
-        return dao.findBySnStatus(status);
+    public List<SnInfoBean> findBySnStatusAndGno(int status, String gno) {
+        return dao.findBySnStatusAndGno(status, gno);
     }
 
-    public void updateStatus(String[] snList) {
-        List<String> snArray = Arrays.asList(snList);
-        dao.updateStatus(snArray);
+    public void updateStatus(List<String> snList) {
+        dao.updateStatus(snList);
     }
 }

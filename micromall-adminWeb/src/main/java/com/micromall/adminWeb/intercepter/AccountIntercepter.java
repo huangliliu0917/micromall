@@ -1,5 +1,7 @@
 package com.micromall.adminWeb.intercepter;
 
+import com.micromall.adminWeb.bean.CookieHelper;
+import com.micromall.datacenter.utils.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -17,8 +19,20 @@ public class AccountIntercepter extends HandlerInterceptorAdapter {
         String url = requestUrl.substring(contextPath.length());
 
         //to do check account
-        request.getSession().setAttribute("customerId", 5);
-        return true;
+        String customerIdStr = CookieHelper.getCookieVal(request, "UserID");
+        int customerId = 5;
+        if (StringUtil.isNotEmpty(customerIdStr)) {
+            customerId = Integer.parseInt(customerIdStr);
+            request.getSession().setAttribute("customerId", customerId);
+            return true;
+        } else {
+            //redirect
+            request.getSession().setAttribute("customerId", customerId);
+            return true;
+        }
+
+//        request.getSession().setAttribute("customerId", 5);
+//        return true;
     }
 
     @Override

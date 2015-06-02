@@ -1,5 +1,7 @@
 package com.micromall.datacenter.bean.orders;
 
+import com.micromall.datacenter.bean.goods.MallGoodBean;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,8 +9,8 @@ import java.util.Date;
  * Created by Administrator on 2015/5/29.
  */
 @Entity
-@Table(name = "WaitDeliverSnInfo")
-public class WaitDeliverSnInfoBean {
+@Table(name = "Micromall_DeliverItem")
+public class MallDeliverItemBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
@@ -25,6 +27,27 @@ public class WaitDeliverSnInfoBean {
     private int snStatus;
     @Column(name = "CustomerId")
     private int customerId;
+    @Column(name = "SnType")
+    private int snType;
+    @ManyToOne
+    @JoinColumn(name = "GoodId")
+    private MallGoodBean goodBean;
+
+    public int getSnType() {
+        return snType;
+    }
+
+    public void setSnType(int snType) {
+        this.snType = snType;
+    }
+
+    public MallGoodBean getGoodBean() {
+        return goodBean;
+    }
+
+    public void setGoodBean(MallGoodBean goodBean) {
+        this.goodBean = goodBean;
+    }
 
     public int getId() {
         return id;

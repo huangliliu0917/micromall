@@ -59,10 +59,21 @@
         <c:if test="${configBean==null}">
         goMenu('<c:url value="/config/mallConfig" />');
         </c:if>
+        $("#leftpanel").height($(window).height());
+        resizeWindow();
     });
+
+    window.onresize = function () {
+        resizeWindow();
+    }
+
+    function resizeWindow() {
+        $("#contentFrame").height($(window).height());
+
+    }
 </script>
 <section>
-    <div class="leftpanel">
+    <div style="overflow: auto;" id="leftpanel" class="leftpanel">
         <div class="logopanel">
             <img src="${uploadResourceServer.resourceUri(configBean.logo)}" height="40px" style="margin-left:15px">
             <span style="width:160px; text-overflow:ellipsis;white-space:nowrap; overflow:hidden;display:inline-block;">
@@ -94,7 +105,7 @@
 
 
                 <ul class="nav nav-pills nav-stacked nav-bracket">
-                    <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>商品管理</span></a>
+                    <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>代理商管理</span></a>
                         <ul class="children" style="display: block">
                             <li onclick="goMenu('<c:url value="/agent/agentList"/>',this)" class="active"><a href="#"><i class="fa fa-caret-right"></i>代理商列表</a></li>
                             <li onclick="goMenu('<c:url value="/agent/agentEdit"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加代理商</a></li>
@@ -138,7 +149,7 @@
     <div class="mainpanel">
         <!-- headerbar -->
         <div style="clear:both"></div>
-        <iframe src="<c:url value="/agent/agentList" />" scrolling="no" frameborder="0" height="1000px" id="contentFrame" width="100%"></iframe>
+        <iframe src="<c:url value="/agent/agentList"/>" scrolling="auto" frameborder="0" height="1000px" id="contentFrame" width="100%"></iframe>
     </div>
     <!-- mainpanel -->
 

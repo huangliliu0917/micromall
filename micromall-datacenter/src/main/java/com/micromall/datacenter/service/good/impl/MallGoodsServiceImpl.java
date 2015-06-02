@@ -2,6 +2,8 @@ package com.micromall.datacenter.service.good.impl;
 
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.dao.good.MallGoodsDao;
+import com.micromall.datacenter.pdaBean.PdaGoodBean;
+import com.micromall.datacenter.pdaService.PdaGoodService;
 import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.viewModel.good.GoodPriceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,14 +21,26 @@ import java.util.List;
 public class MallGoodsServiceImpl implements MallGoodsService {
     @Autowired
     private MallGoodsDao dao;
+    @Autowired
+    private PdaGoodService pdaGoodService;
 
     @Transactional
     public MallGoodBean save(MallGoodBean bean) {
+        PdaGoodBean pdaGoodBean = new PdaGoodBean();
+        pdaGoodBean.setQcode(bean.getGoodCode());
+        pdaGoodBean.setQname(bean.getGoodName());
+        pdaGoodBean.setLastName(new Date());
+        pdaGoodBean.setState(0);
+        pdaGoodBean.setPacks(1);
+        pdaGoodBean.setQtip(bean.getGoodDesc());
+        pdaGoodService.save(pdaGoodBean);
         return dao.save(bean);
     }
 
     @Transactional
     public void delete(int goodId) {
+        MallGoodBean goodBean = this.findByGoodId(goodId);
+        pdaGoodService.delete(goodBean.getGoodCode());
         dao.delete(goodId);
     }
 
@@ -91,5 +106,13 @@ public class MallGoodsServiceImpl implements MallGoodsService {
 
     public String findPriceInfo(int goodId) {
         return dao.findPriceInfo(goodId);
+    }
+
+    public boolean goodCodeExists(String goodCode, int customerId) {
+        return dao.goodCodeExists(goodCode, customerId) > 0 ? true : false;
+    }
+
+    public MallGoodBean findByGoodCode(int customerId, String goodCode) {
+        return dao.findByCustomerIdAndGoodCode(customerId, goodCode);
     }
 }

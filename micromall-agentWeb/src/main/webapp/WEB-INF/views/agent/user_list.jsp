@@ -28,6 +28,9 @@
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/agentApi/" />";
         var customerId = ${customerId};
+        var pageIndex =${pageIndex};
+        var totalPage = ${pageInfo.getTotalPages()};
+        var pageUri = "<c:url value="/userList?customerId=${customerId}" />";
         function showMore(userId) {
             $("#selUserId").val(userId);
             $("#more_dialog").show();
@@ -44,19 +47,23 @@
         function deleteUser() {
             userHandler.deleteUser($("#selUserId").val());
         }
+
+        $(function () {
+            pageHandler.init(totalPage, pageIndex, pageUri);
+        })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.user.js" />"></script>
 </head>
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <!---------------------/////////////////------------------------------------>
 
-<div style="background-color:#545454;height:44px;">
+<div class="topHeader">
     <p style="color:#fff; float:right;margin-top: 10px;margin-right: 10px;" onclick="javascript:window.location.href='<c:url value="/userEdit?customerId=${customerId}"/>'">新增通讯录</p>
 
     <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/order/createOrderFastReg?customerId=${customerId}"/>'">我要发货</p>
 
     <p style=" float:right;margin-top:5px;margin-right: 10px;">
-        <input style="height: 32px;background-color: #545454;border: solid 1px #7E7E7E;color: #fff;padding-left: 7px;width: 123px;" type="" id="mobile" name="mobile" value="" placeholder="搜索">
+        <input class="searchInput" type="" id="mobile" name="mobile" value="" placeholder="搜索">
         <span id="searchBtn"><img class="imgg" src="<c:url value="/resources/images/untitled10.png" />" width="20px"></span>
     </p>
 </div>
@@ -87,13 +94,20 @@
                 </li>
             </c:forEach>
         </ul>
+
+        <p style="text-align: center;margin-top: 10px;" id="pagePanel">
+            <span class="wapbuttoms"><a href="javascript:pageHandler.previewPage()" id="previewPage">上一页</a></span>
+            <span class="wapbuttoms"><a href="javascript:pageHandler.nextPage()" id="nextPage">下一页</a></span>
+        </p>
+
+        <p style="height:60px"></p>
     </div>
 </div>
 
 
 <!---------------------/////////弹窗////////------------------------------------>
 
-<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 44px;left: 0;right: 0;margin: auto;display:none;">
+<div id="more_dialog" style="background-color: #fff;position: fixed;bottom: 44px;left: 0;right: 0;margin: auto;display:none;border: solid 1px #E0E0E0;">
     <input type="hidden" id="selUserId"/>
 
     <p style="color: #A7A7A7;font-size: 30px;float: right;margin-right: 10px;" onclick="hideMore()">×</p>

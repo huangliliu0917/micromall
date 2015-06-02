@@ -23,6 +23,13 @@
     <title>微武器</title>
     <script type="text/javascript">
         var customerId =  ${customerId};
+        var pageIndex = ${pageIndex};
+        var totalPage = ${pageInfo.getTotalPages()};
+        var pageUri = "<c:url value="/weapon/weaponList?customerId=${customerId}&weaponType=${weaponType}" />";
+
+        $(function () {
+            pageHandler.init(totalPage, pageIndex, pageUri);
+        })
     </script>
     <style>
         .hp {
@@ -37,24 +44,22 @@
         }
 
         .wpbuttons {
-            border: solid 1px #ddd;
-            padding: 4px 10px;
             background-color: #ddd;
             float: right;
             margin-right: 10px;
-            margin-top: -43px;
+            margin-top: -30px;
         }
     </style>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <div>
     <p class="h20"></p>
 
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
     <div class="tabBoxs">
-            <span class="hd" style="position:fixed; top:0px; z-index:9999; left:0px; right:0px; margin:0 auto;background-color: #5A5A5A;">
+            <span class="hd toptop ">
              <a href="<c:url value="/weapon/weaponList?customerId=${customerId}" />" class="${weaponType==0?"on":""}">图文库</a>
              <a href="<c:url value="/weapon/weaponList?weaponType=1&customerId=${customerId}" />" class="${weaponType==1?"on":""}">软文库</a>
             </span>
@@ -78,7 +83,8 @@
                     </c:forEach>
                 </div>
                 <p style="clear:both; height:5px"></p>
-                <a class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>
+                <a class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span style="float: right;color: #fff;padding: 0px 12px;background-color:#FF7A00;">查看</span></a>
+                    <%--<a class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>--%>
             </div>
             <p style="clear:both; height:5px"></p>
         </c:forEach>
@@ -91,7 +97,8 @@
                 <p style="width:68%;margin: 0 auto;padding: 9px 1px;text-overflow: ellipsis;overflow: hidden;display: inline-block;height: 56px;">
                         ${weaponBean.weaponContent}
                 </p>
-                <a class="wpbuttons" style="margin-top: 62px;" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>
+                    <%--<a class="wpbuttons" style="margin-top: 62px;" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>--%>
+                <a style="margin-top: 71px;" class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span style="float: right;color: #fff;padding: 0px 12px;background-color:#FF7A00;">查看</span></a>
 
                 <p style="clear:both; height:5px"></p>
 
@@ -99,6 +106,13 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
+
+<p style="text-align: center;margin-top: 10px;" id="pagePanel">
+    <span class="wapbuttoms"><a href="javascript:pageHandler.previewPage()" id="previewPage">上一页</a></span>
+    <span class="wapbuttoms"><a href="javascript:pageHandler.nextPage()" id="nextPage">下一页</a></span>
+</p>
+
+<p style="height:60px"></p>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>

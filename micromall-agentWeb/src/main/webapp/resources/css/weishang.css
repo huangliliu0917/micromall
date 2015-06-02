@@ -11,7 +11,10 @@ body {
     color: #333;
     -webkit-text-size-adjust: 100%;
     -webkit-user-select: none;
-    user-select: none
+    user-select: none;
+    background-color: #fff;
+    max-width: 640px;
+    margin: 0 auto
 }
 
 .grzx_bar {
@@ -144,7 +147,7 @@ body {
 }
 
 .add_wei.submit3 {
-    background-color: #FF4700;
+    /*background-color: ;*/
 }
 
 .add_wei.wsws_back {
@@ -506,7 +509,7 @@ body {
     border: 0 none;
     font-size: 14px;
     width: 100%;
-    background: #e7e9eb;
+    background: #fff;
     -webkit-appearance: none;
     vertical-align: top;
     color: #333;
@@ -623,7 +626,7 @@ body {
 }
 
 .add_wei_shang .submit3 {
-    background-color: #FF4700;
+    background-color: #FF7A00;
 }
 
 .add_wei_shang .wsws_back {
@@ -736,8 +739,8 @@ body {
     height: 40px;
     line-height: 39px;
     font-size: 14px;
-    background-color: #5A5A5A;
-    border-bottom: 1px solid #5A5A5A;
+    background-color: #FF7A00;
+    border-bottom: 1px solid #FF7A00;
 }
 
 .tabBoxs .hd {
@@ -752,7 +755,7 @@ body {
 .tabBoxs .hd a {
     width: 200px;
     padding: 0 2px;
-    color: #fff;
+    color: #545454;
     margin: 0px 10px;
     font-size: 14px;
     text-align: center;
@@ -907,13 +910,13 @@ body {
 }
 
 .tabBoxs .hdi .on {
-    border-bottom: 2px solid #545454;
-    color: #545454;
+    border-bottom: 2px solid #FF7A00;
+    color: #FF7A00;
 }
 
 .tabBoxs .hdi a.on {
     display: block;
-    color: #545454; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
+    color: #FF7A00; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
 }
 
 .tabBoxs .hd {
@@ -936,7 +939,7 @@ body {
 .tabBoxs .hd a {
     width: 200px;
     padding: 0 2px;
-    color: #fff;
+    color: #545454;
     margin: 0px 10px;
     font-size: 14px;
     text-align: center;
@@ -957,13 +960,13 @@ body {
 }
 
 .tabBoxs .hd .on {
-    border-bottom: 2px solid #E6E6E6;
+    border-bottom: 2px solid #FF7A00;
     color: #FFFFFF;
 }
 
 .tabBoxs .hd a.on {
     display: block;
-    color: #fff; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
+    color: #FF7A00; /* 修复Android 4.0.x 默认浏览器当前样色无效果bug */
 }
 
 .tabBoxs .bdd ul {
@@ -972,8 +975,8 @@ body {
 
 .tabBoxs .bdd li {
     line-height: 33px;
-    border-bottom: 1px solid #dddddd;
-    border-top: 1px solid #dddddd;
+
+    border: 1px solid #dddddd;
     background-color: #fff;
     margin: 10px 0px
 }
@@ -1083,9 +1086,56 @@ body {
     margin-top: 24px;
 }
 
+.topHeader {
+    background-color: #FF7A00;
+    height: 44px;
+}
 
+.topHeader .searchInput {
+    height: 32px;
+    background-color: #fff;
+    border: solid 1px #fff;
+    color: #fff;
+    padding-left: 7px;
+    width: 123px;
+}
 
+.toptop {
+    position: fixed;
+    top: 0px;
+    z-index: 9999;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    background-color: #FF7A00;
+}
 
+#selGood_dialog {
+    top: 10%;
+    bottom: 0px;
+    height: auto;
+    max-width: 640px;
+    min-width: 320px;
+    display: none;
+    background: rgba(171, 171, 171, 0.498039);
+    padding: 2px;
+
+}
+
+.wapbuttoms {
+    padding: 5px 14px;
+    background-color: #FF7A00;
+    color: #fff;
+    margin-right: 10px;
+}
+
+#pagePanel a {
+    color: #fff;
+}
+
+#pagePanel {
+    display: none;
+}
 
 
 
