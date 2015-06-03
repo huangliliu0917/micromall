@@ -119,16 +119,28 @@
             }, function () {
             }, J.PostMethod);
         }
-
         function loadData() {
             J.GetJsonRespons(ajaxUrl + "getShipProList", {
                 agentMobile: "${orderBean.shipMobile}"
             }, function (json) {
-                $("#snProList").html("");
-                $.each(json.snList, function (o, item) {
-                    $("#snProList").append("<li style='float:left;'>" + item.sn + "（" + (item.snType == 0 ? "主码" : "副码") + "）：" + item.goodBean.goodName +
-                    "<input id='btn" + item.id + "' type='button'onclick='addPro(" + item.id + ",\"" + item.sn + "\")' value='选择' /></li>");
-                })
+                //$("#snProList").html("");
+                if (json.snList.length > 0) {
+                    $.each(json.snList, function (o, item) {
+                        var $hdSnId = $(".hdSnId");
+                        var index = true;
+                        $hdSnId.each(function () {
+                            if (item.id == $(this).val()) {
+                                index = false;
+                                return false;
+                            }
+                        });
+                        if (index) {
+                            $("#snProList").append("<li style='float:left;'>" + item.sn + "（" + (item.snType == 0 ? "主码" : "副码") + "）：" + item.goodBean.goodName +
+                            "<input id='btn" + item.id + "' type='button'onclick='addPro(" + item.id + ",\"" + item.sn + "\")' value='选择' />" +
+                            "<input class='hdSnId' type='hidden' value='" + item.id + "' /></li>");
+                        }
+                    });
+                }
             }, function () {
             }, J.PostMethod);
         }
