@@ -25,8 +25,8 @@ public interface MallGoodsDao extends JpaRepository<MallGoodBean, Integer>, JpaS
     @Query("select good.priceInfo from MallGoodBean good where good.goodId=?1")
     String findPriceInfo(int goodId);
 
-    @Query("select count(goodBean.goodId) from MallGoodBean goodBean where goodBean.goodCode=?1 and goodBean.customerId=?2")
-    int goodCodeExists(String goodCode, int customerId);
+    @Query("select count(goodBean.goodId) from MallGoodBean goodBean where goodBean.goodCode=?1 and goodBean.customerId=?2 and goodBean.goodId<>?3 and goodBean.isDelete=0")
+    int goodCodeExists(String goodCode, int customerId, int currentGoodId);
 
     MallGoodBean findByCustomerIdAndGoodCode(int customerId, String goodCode);
 }

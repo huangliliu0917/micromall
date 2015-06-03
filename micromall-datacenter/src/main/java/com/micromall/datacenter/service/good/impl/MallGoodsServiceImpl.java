@@ -26,14 +26,20 @@ public class MallGoodsServiceImpl implements MallGoodsService {
 
     @Transactional
     public MallGoodBean save(MallGoodBean bean) {
-        PdaGoodBean pdaGoodBean = new PdaGoodBean();
-        pdaGoodBean.setQcode(bean.getGoodCode());
-        pdaGoodBean.setQname(bean.getGoodName());
-        pdaGoodBean.setLastName(new Date());
-        pdaGoodBean.setState(0);
-        pdaGoodBean.setPacks(1);
-        pdaGoodBean.setQtip(bean.getGoodDesc());
-        pdaGoodService.save(pdaGoodBean);
+        if (bean.getGoodId() > 0) {
+            MallGoodBean originalBean = this.findByGoodId(bean.getGoodId());
+            pdaGoodService.update(bean.getGoodCode(), bean.getGoodName(), bean.getGoodDesc(), originalBean.getGoodCode());
+        } else {
+            PdaGoodBean pdaGoodBean = new PdaGoodBean();
+            pdaGoodBean.setQcode(bean.getGoodCode());
+            pdaGoodBean.setQname(bean.getGoodName());
+            pdaGoodBean.setLastName(new Date());
+            pdaGoodBean.setState(0);
+            pdaGoodBean.setPacks(1);
+            pdaGoodBean.setQtip(bean.getGoodDesc());
+            pdaGoodService.save(pdaGoodBean);
+        }
+
         return dao.save(bean);
     }
 
@@ -108,8 +114,8 @@ public class MallGoodsServiceImpl implements MallGoodsService {
         return dao.findPriceInfo(goodId);
     }
 
-    public boolean goodCodeExists(String goodCode, int customerId) {
-        return dao.goodCodeExists(goodCode, customerId) > 0 ? true : false;
+    public boolean goodCodeExists(String goodCode, int customerId, int currentGoodId) {
+        return dao.goodCodeExists(goodCode, customerId, currentGoodId) > 0 ? true : false;
     }
 
     public MallGoodBean findByGoodCode(int customerId, String goodCode) {

@@ -79,10 +79,10 @@
                         <c:if test="${orderBean.orderStatus==1}">
                             <span style="float:right; color:#FF7A00">已发货</span>
                         </c:if>
-                        <c:if test="${orderBean.orderStatus==0 && (orderBean.sendId>0 or orderBean.realShipId==agentId)}">
+                        <c:if test="${orderBean.orderStatus==0 && (orderBean.sendId>0 or orderBean.realShipAgent.agentId==agentId)}">
                             <a href="<c:url value="/order/confirmOrder?customerId=${customerId}&orderId=${orderBean.orderId}" />"><span style="float: right;color: #fff;padding: 0px 12px;background-color:#FF7A00;">发货</span></a>
                         </c:if>
-                        <c:if test="${orderBean.orderStatus==0&&orderBean.sendId==0 && orderBean.realShipId!=agentId}">
+                        <c:if test="${orderBean.orderStatus==0&&orderBean.sendId==0 && orderBean.realShipAgent.agentId!=agentId}">
                             <span style="float:right; color:#FF7A00">未发货</span>
                         </c:if>
                     </div>

@@ -28,7 +28,7 @@ public class GoodsApiController extends BaseController {
     public Map<Object, Object> saveGood(MallGoodBean goodBean) {
         int result = 0;
         try {
-            if (goodsService.goodCodeExists(goodBean.getGoodCode(), getCustomerId())) {
+            if (goodsService.goodCodeExists(goodBean.getGoodCode(), getCustomerId(), goodBean.getGoodId())) {
                 result = 2;
             } else {
                 if (goodBean.getGoodId() > 0) {

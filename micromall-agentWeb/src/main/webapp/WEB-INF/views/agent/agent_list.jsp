@@ -37,7 +37,12 @@
             pageHandler.init(totalPage, pageIndex, pageUri);
         });
 
-        function showMore(agentId) {
+        function showMore(agentId, superAgentId) {
+            if (superAgentId ==${currentAgent}) {
+                $(".directAgent").show();
+            } else {
+                $(".directAgent").hide();
+            }
             $("#selAgentId").val(agentId);
             $("#more_dialog").show();
         }
@@ -120,7 +125,7 @@
                         <li class="tttt">
                             <div class="conn">
                                 <div class="pic">
-                                    <a href="javascript:showMore(${agentBean.agentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
+                                    <a href="javascript:showMore(${agentBean.agentId},${agentBean.superAgentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
                                 </div>
                                 <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${agentBean.agentAccount}</p>
 
@@ -140,7 +145,7 @@
                         <li class="tttt">
                             <div class="conn">
                                 <div class="pic">
-                                    <a href="javascript:showMore(${agentBean.agentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
+                                    <a href="javascript:showMore(${agentBean.agentId},${agentBean.superAgentId})"><img src="<c:url value="/resources/images/wyNewPic.png" />"/></a>
                                 </div>
                                 <p style="color:#000; margin-bottom:2px;line-height: 54px;font-size: 20px;">${agentBean.name}</p>
 
@@ -179,7 +184,7 @@
 
     <div class="ws_wrap">
         <div class="add_wei">
-            <p class="command" style="background-color:transparent; padding:0px 20%;">
+            <p class="command directAgent" style="background-color:transparent; padding:0px 20%;">
                 <a href="javascript:goUri('<c:url value="/order/createAgentOrderOut?customerId=${customerId}&agentId=" />')" class="wsws_back button">发起订单</a>
             </p>
 
@@ -191,13 +196,13 @@
 
             <p style="height:20px"></p>
 
-            <p class="command" style="background-color:transparent; padding:0px 20%;">
+            <p class="command directAgent" style="background-color:transparent; padding:0px 20%;">
                 <a href="javascript:goUri('<c:url value="/agentEdit?customerId=${customerId}&editAgentId=" />')" class="wsws_back button">修改信息</a>
             </p>
 
             <p style="height:20px"></p>
 
-            <p class="command" style="background-color:transparent; padding:0px 20%;">
+            <p class="command directAgent" style="background-color:transparent; padding:0px 20%;">
                 <a href="javascript:setDelete()" class="wsws_back button" id="add">删除</a>
             </p>
         </div>

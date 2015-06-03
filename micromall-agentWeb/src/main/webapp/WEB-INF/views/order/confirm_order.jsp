@@ -122,7 +122,7 @@
     </script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <!---------------------/////////////////------------------------------------>
 
 <div id="leftTabBoxs" class="tabBoxs">

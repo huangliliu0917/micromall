@@ -47,13 +47,20 @@ public class MallOrderServiceImpl implements MallOrderService {
     private MallDeliverItemService deliverItemService;
 
     @Transactional
-    public MallOrderBean create(MallOrderBean bean, int goodId) {
+    public MallOrderBean create(MallOrderBean bean, int goodId, int realShipId) {
         if (StringUtil.isEmpty(bean.getOrderId())) {
             bean.setOrderId(this.createOrderId(bean.getCustomerId()));
         }
         MallGoodBean goodBean = new MallGoodBean();
         goodBean.setGoodId(goodId);
         bean.setGood(goodBean);
+        if (realShipId > 0) {
+            MallAgentBean agentBean = new MallAgentBean();
+            agentBean.setAgentId(realShipId);
+            bean.setRealShipAgent(agentBean);
+        } else {
+            bean.setRealShipAgent(null);
+        }
         return dao.save(bean);
     }
 
@@ -74,7 +81,12 @@ public class MallOrderServiceImpl implements MallOrderService {
                         list.add(criteriaBuilder.lessThanOrEqualTo(root.get("addTime").as(Date.class), StringUtil.DateFormat(searchViewModel.getEndTime(), StringUtil.DATE_PATTERN)));
                     }
                     if (searchViewModel.getOrderStatus() != -1) {
-                        list.add(criteriaBuilder.equal(root.get("orderStatus").as(Integer.class), searchViewModel.getOrderStatus()));
+                        if (searchViewModel.getOrderStatus() == 2) {
+                            list.add(criteriaBuilder.equal(root.get("orderStatus").as(Integer.class), 0));
+                            list.add(criteriaBuilder.isNull(root.get("realShipAgent").as(MallAgentBean.class)));
+                        } else {
+                            list.add(criteriaBuilder.equal(root.get("orderStatus").as(Integer.class), searchViewModel.getOrderStatus()));
+                        }
                     }
                     if (StringUtil.isNotEmpty(searchViewModel.getShipName())) {
                         list.add(criteriaBuilder.like(root.get("shipName").as(String.class), searchViewModel.getShipName()));
@@ -151,10 +163,11 @@ public class MallOrderServiceImpl implements MallOrderService {
     @Transactional
     public void transferOrder(String orderId, int transferTo) {
         MallOrderBean orderBean = dao.findOne(orderId);
-        orderBean.setRealShipId(transferTo);
+//        orderBean.setRealShipId(transferTo);
+        orderBean.setRealShipAgent(agentService.findByAgentId(transferTo));
 
         //重新设置相应的代理商价格
-        String deliverPath = orderBean.getDeliverPath().substring(1, orderBean.getDeliverPath().length() - 2); //形如：3|2|1
+        String deliverPath = orderBean.getDeliverPath().substring(1, orderBean.getDeliverPath().length() - 1); //形如：3|2|1
         String[] tempInfo = deliverPath.split("\\|");
         MallAgentBean agentBean = agentService.findByAgentId(Integer.parseInt(tempInfo[tempInfo.length - 1])); //已该代理商等级为准
         double price = goodsService.getPriceByAgent(agentBean.getAgentLevel().getLevelId(), orderBean.getGood().getPriceInfo()); //得到相应代理商等级的价格
@@ -165,7 +178,7 @@ public class MallOrderServiceImpl implements MallOrderService {
     }
 
     public String createOrderId(int customerId) {
-        return StringUtil.DateFormat(new Date(), "yyyyMMddHHmmSS") + (int) (Math.random() * 89 + 10);
+        return StringUtil.DateFormat(new Date(), "yyyyMMddHHmmss") + (int) (Math.random() * 89 + 10);
     }
 
     /**
@@ -206,9 +219,9 @@ public class MallOrderServiceImpl implements MallOrderService {
 //                if (orderBean.getOwnerId() != agentId) {
                 if (deliverPath.length > 2) {
                     resultIndex = index - 1;
+                    double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
+                    orderBean.setTotalPrice(orderBean.getProNum() * price);
                 }
-                double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
-                orderBean.setTotalPrice(orderBean.getProNum() * price);
             }
         }
         return pageInfo;
@@ -223,5 +236,20 @@ public class MallOrderServiceImpl implements MallOrderService {
      */
     public int findCountInOrder(int customerId, int agentId) {
         return dao.findCountInOrder(customerId, agentId);
+    }
+
+    /**
+     * 货品查询
+     *
+     * @param customerId
+     * @param snCode
+     * @return
+     */
+    public Page<MallOrderItemBean> findBySnCode(int customerId, String snCode, int pageIndex, int pageSize) {
+        return dao.findBySnCode(customerId, snCode, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "itemId")));
+    }
+
+    public Page<MallOrderBean> getAgentShipments(int pageIndex, int pageSize) {
+        return null;
     }
 }

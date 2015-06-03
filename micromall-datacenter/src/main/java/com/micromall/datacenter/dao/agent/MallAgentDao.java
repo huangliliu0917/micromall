@@ -38,4 +38,15 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
 
     @Query("select agent.agentLevel from MallAgentBean agent where agent.agentId=?1")
     MallAgentLevelBean findAgentLevel(int agentId);
+
+    @Modifying
+    @Query("update MallAgentBean agentBean set agentBean.agentPassword=?1 where agentBean.agentId=?2 and agentBean.agentPassword=?3")
+    void updatePassword(String newPass, int agentId, String originalPass);
+
+    @Query("select count(agentBean.agentId) from MallAgentBean agentBean where agentBean.superAgentId=?1")
+    int getUnderAgentNum(int superAgentId);
+
+    @Modifying
+    @Query("update MallAgentBean agentBean set agentBean.agentAddr=?1 where agentBean.agentId=?2")
+    void updateAddr(String newAddr, int agentId);
 }

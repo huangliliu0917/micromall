@@ -21,6 +21,10 @@ public class PdaGoodServiceImpl implements PdaGoodService {
     }
 
     public void delete(String goodCode) {
-        dao.delete(goodCode);
+        dao.setDelete(goodCode);
+    }
+
+    public void update(String currentQCode, String qName, String qTip, String oriQCode) {
+        dao.update(currentQCode, qName, qTip, oriQCode);
     }
 }

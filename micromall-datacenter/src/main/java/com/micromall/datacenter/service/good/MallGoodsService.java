@@ -22,7 +22,7 @@ public interface MallGoodsService {
 
     String findPriceInfo(int goodId);
 
-    boolean goodCodeExists(String goodCode, int customerId);
+    boolean goodCodeExists(String goodCode, int customerId, int currentGoodId);
 
     MallGoodBean findByGoodCode(int customerId, String goodCode);
 }

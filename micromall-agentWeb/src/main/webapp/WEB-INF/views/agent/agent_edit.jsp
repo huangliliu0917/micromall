@@ -44,7 +44,7 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.agent.js" />"></script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <div>
 
     <p class="h20"></p>
@@ -78,7 +78,7 @@
         <input type="password" id="confirmPass" name="mobile" value="" placeholder="确认登录密码"></label></p>
 
     <p>
-        <select id="agentLevel" style="width: 100%;background-color: #e7e9eb;border: 0px;color: #000;">
+        <select id="agentLevel" style="width: 100%;border: 0px;color: #000;">
             <option value="0">代理级别</option>
             <c:forEach items="${levelList}" var="levelBean">
                 <option value="${levelBean.levelId}">${levelBean.levelName}</option>

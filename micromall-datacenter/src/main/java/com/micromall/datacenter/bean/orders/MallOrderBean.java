@@ -1,5 +1,6 @@
 package com.micromall.datacenter.bean.orders;
 
+import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 
 import javax.persistence.*;
@@ -43,8 +44,9 @@ public class MallOrderBean {
     private int ownerId;
     @Column(name = "Send_Id")
     private int sendId;
-    @Column(name = "RealShip_Id")
-    private int realShipId;
+    @ManyToOne
+    @JoinColumn(name = "RealShip_Id")
+    private MallAgentBean realShipAgent;
     @Column(name = "Ship_Info")
     private String shipInfo;
     @Column(name = "DeliverPath")
@@ -56,6 +58,7 @@ public class MallOrderBean {
     private int proNum;
     @Column(name = "Logi_Name")
     private String logiName;
+
     @Column(name = "Logi_Num")
     private String logiNum;
 
@@ -179,14 +182,6 @@ public class MallOrderBean {
         this.sendId = sendId;
     }
 
-    public int getRealShipId() {
-        return realShipId;
-    }
-
-    public void setRealShipId(int realShipId) {
-        this.realShipId = realShipId;
-    }
-
     public String getShipInfo() {
         return shipInfo;
     }
@@ -225,5 +220,13 @@ public class MallOrderBean {
 
     public void setLogiNum(String logiNum) {
         this.logiNum = logiNum;
+    }
+
+    public MallAgentBean getRealShipAgent() {
+        return realShipAgent;
+    }
+
+    public void setRealShipAgent(MallAgentBean realShipAgent) {
+        this.realShipAgent = realShipAgent;
     }
 }

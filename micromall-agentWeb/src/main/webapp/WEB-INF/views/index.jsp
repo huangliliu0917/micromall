@@ -69,12 +69,14 @@
             right: -7px;
             margin-top: -10px;
         }
+
         .ull {
             border: 1px solid #D7D7D7;
             width: 43%;
             margin: 10px;
             float: left;
-            border-radius: 20px;}
+            border-radius: 20px;
+        }
     </style>
 </head>
 
@@ -85,54 +87,55 @@
 
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
-    <div class="all" ">
-        <span class="wz0" style="font-size:40px;">微商管理</span>
+    <div class="all"
+    ">
+    <span class="wz0" style="font-size:40px;">微商管理</span>
 
-        <p style="clear:both; height:30px"></p>
+    <p style="clear:both; height:30px"></p>
 
-    </div>
-    <!---------------------/////////////////------------------------------------>
+</div>
+<!---------------------/////////////////------------------------------------>
 </div>
 <!---------------------/////////////////------------------------------------>
 <div>
-<ul class="ull" onclick="goMenu('<c:url value="/agentList?customerId=${customerId}"/>')">
-    <li class="png"><img src="<c:url value="/resources/images/user2.png" />" width="100%"></li>
-    <li class="wenz1">代理商管理</li>
-</ul>
+    <ul class="ull" onclick="goMenu('<c:url value="/agentList?customerId=${customerId}"/>')">
+        <li class="png"><img src="<c:url value="/resources/images/user2.png" />" width="100%"></li>
+        <li class="wenz1">代理商管理</li>
+    </ul>
 
 
-<ul class="ull" onclick="goMenu('<c:url value="/userList?customerId=${customerId}"/>')">
-    <li class="png"><img src="<c:url value="/resources/images/shoujihaoer.png" />" width="100%"></li>
-    <li class="wenz1">我的通讯录管理</li>
-</ul>
+    <ul class="ull" onclick="goMenu('<c:url value="/userList?customerId=${customerId}"/>')">
+        <li class="png"><img src="<c:url value="/resources/images/shoujihaoer.png" />" width="100%"></li>
+        <li class="wenz1">我的通讯录管理</li>
+    </ul>
 
-<p class="h10" style="clear:both"></p>
+    <p class="h10" style="clear:both"></p>
 
-<ul id="orderUl" style="position: relative" class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
-    <li class="tipCircle" style="display: none;"></li>
-    <li class="png"><img src="<c:url value="/resources/images/file-settings.png" />" width="100%"></li>
-    <li class="wenz1">进出货管理</li>
+    <ul id="orderUl" style="position: relative" class="ull" onclick="goMenu('<c:url value="/order/orderList?customerId=${customerId}"/>')">
+        <li class="tipCircle" style="display: none;"></li>
+        <li class="png"><img src="<c:url value="/resources/images/file-settings.png" />" width="100%"></li>
+        <li class="wenz1">进出货管理</li>
 
-</ul>
-
-
-<ul class="ull" onclick="goMenu('<c:url value="/weapon/weaponList?customerId=${customerId}"/>')">
-    <li class="png"><img src="<c:url value="/resources/images/diamond.png" />" width="100%"></li>
-    <li class="wenz1">微武器</li>
-</ul>
-
-<p class="h10" style="clear:both"></p>
-
-<ul class="ull">
-    <li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>
-    <li class="wenz1">统计</li>
-</ul>
+    </ul>
 
 
-<ul class="ull" onclick="goMenu('<c:url value="/personalSetting?customerId=${customerId}"/>')">
-    <li class="png"><img src="<c:url value="/resources/images/settings.png" />" width="100%"></li>
-    <li class="wenz1">个人资料</li>
-</ul>
+    <ul class="ull" onclick="goMenu('<c:url value="/weapon/weaponList?customerId=${customerId}"/>')">
+        <li class="png"><img src="<c:url value="/resources/images/diamond.png" />" width="100%"></li>
+        <li class="wenz1">微武器</li>
+    </ul>
+
+    <p class="h10" style="clear:both"></p>
+
+    <ul class="ull">
+        <li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>
+        <li class="wenz1">统计</li>
+    </ul>
+
+
+    <ul class="ull" onclick="goMenu('<c:url value="/usercenter?customerId=${customerId}"/>')">
+        <li class="png"><img src="<c:url value="/resources/images/settings.png" />" width="100%"></li>
+        <li class="wenz1">个人中心</li>
+    </ul>
 </div>
 
 <p style="clear:both"></p>

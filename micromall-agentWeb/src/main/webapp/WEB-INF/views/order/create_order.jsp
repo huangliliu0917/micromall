@@ -59,7 +59,7 @@
         function createOrder() {
             var goodId = $("#selGoodId").val();
             var num = $("#num").val();
-            var orderName = $("#orderName").val() + "(" + num + ")";
+            var orderName = $("#orderName").val();
             var shipAddr = $("#shipAddr").val();
             var shipName = $("#shipName").val();
             var shipMobile = $("#shipMobile").val();
@@ -98,7 +98,7 @@
     </script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <!---------------------/////////////////------------------------------------>
 
 <div class="dingdandiss_cell" id="unSelPanel" style="display: block;" onclick="showSelDialog()">

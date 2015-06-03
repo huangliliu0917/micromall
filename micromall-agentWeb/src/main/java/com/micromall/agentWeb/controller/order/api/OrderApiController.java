@@ -42,18 +42,21 @@ public class OrderApiController extends BaseController {
             MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
             orderBean.setAddTime(new Date());
             orderBean.setCustomerId(getCustomerId());
+            int realShipId = 0;
             if (orderBean.getSendId() > 0) {
                 orderBean.setDeliverPath("|" + getAgentId() + "|");
-                orderBean.setRealShipId(getAgentId());
+                //orderBean.setRealShipId(getAgentId());
+                realShipId = getAgentId();
             } else {
                 orderBean.setDeliverPath("|" + getAgentId() + "|" + agentBean.getSuperAgentId() + "|");
-                orderBean.setRealShipId(agentBean.getSuperAgentId());
+//                orderBean.setRealShipId(agentBean.getSuperAgentId());
+                realShipId = agentBean.getSuperAgentId();
             }
             orderBean.setOrderStatus(0);
             orderBean.setOwnerId(getAgentId());
             //orderBean.setRealShipId(getAgentId());
 
-            orderService.create(orderBean, goodId);
+            orderService.create(orderBean, goodId, realShipId);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
@@ -84,11 +87,11 @@ public class OrderApiController extends BaseController {
             orderBean.setAddTime(new Date());
             orderBean.setCustomerId(getCustomerId());
             orderBean.setDeliverPath("|" + getAgentId() + "|");
-            orderBean.setRealShipId(getAgentId());
+            //orderBean.setRealShipId(getAgentId());
             orderBean.setOrderStatus(0);
             orderBean.setOwnerId(getAgentId());
             orderBean.setSendId(existsUser.getUserId());
-            orderService.create(orderBean, goodId);
+            orderService.create(orderBean, goodId, getAgentId());
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
@@ -107,9 +110,9 @@ public class OrderApiController extends BaseController {
             orderBean.setOrderStatus(0);
             orderBean.setOwnerId(agentId);
             orderBean.setDeliverPath("|" + agentId + "|" + getAgentId() + "|");
-            orderBean.setRealShipId(getAgentId());
+//            orderBean.setRealShipId(getAgentId());
             orderBean.setSendId(0);
-            orderService.create(orderBean, goodId);
+            orderService.create(orderBean, goodId, getAgentId());
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());

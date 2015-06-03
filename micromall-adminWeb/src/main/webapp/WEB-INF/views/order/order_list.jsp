@@ -147,6 +147,7 @@
                                     收件人手机：<input size="10" name="shipMobile" id="shipMobile" value="${searchViewModel.shipMobile}" placeholder="收件人手机" class="hasDatepicker">
                                     订单状态：<select id="orderStatus" name="orderStatus">
                                     <option value="-1">全部</option>
+                                    <option value="2">需要发货</option>
                                     <option value="0">未发货</option>
                                     <option value="1">已发货</option>
                                 </select><br><br>
@@ -183,9 +184,11 @@
                                 <td align="center">${orderBean.shipName}</td>
                                 <td align="center">${orderBean.shipMobile}</td>
                                 <td align="center"><fmt:formatDate value="${orderBean.addTime}" type="both"/></td>
-                                <td align="center">${orderBean.orderStatus==0?"未发货":"已发货"}</td>
                                 <td align="center">
-                                    <c:if test="${orderBean.realShipId==0&&orderBean.orderStatus==0}">
+                                        ${orderBean.orderStatus==1?"已发货":orderBean.realShipAgent==null?"<span style='color:red'>需要发货</span>":"未发货"}
+                                </td>
+                                <td align="center">
+                                    <c:if test="${orderBean.realShipAgent==null&&orderBean.orderStatus==0}">
                                         <a href="javascript:shipOrder('${orderBean.orderId}')">发货</a> |
                                     </c:if>
                                     <a href="<c:url value="/order/orderDetail?orderId=${orderBean.orderId}" />">订单详情</a>

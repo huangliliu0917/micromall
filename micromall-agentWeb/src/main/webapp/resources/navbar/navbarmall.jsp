@@ -15,7 +15,7 @@
     <a href="javascript:navbarGo('<c:url value="/index?customerId=" />')" class="nav_more">首页</a>
     <a href="javascript:navbarGo('<c:url value="/agentList?customerId="/>')" class="nav_index">代理商</a>
     <a href="javascript:navbarGo('<c:url value="/userList?customerId="/>')" class="nav_me">通讯录</a>
-    <a href="javascript:navbarGo('<c:url value="/order/orderList?customerId="/>')" class="nav_kefu">进出货</a>
+    <a href="javascript:navbarGo('<c:url value="/usercenter?customerId="/>')" class="nav_kefu">个人中心</a>
     <%--<span class="tipCircle" style="display: none;"></span>--%>
 
     <p style="clear: both"></p>

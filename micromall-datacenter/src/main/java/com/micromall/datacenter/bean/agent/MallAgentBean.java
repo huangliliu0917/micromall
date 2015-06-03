@@ -57,6 +57,8 @@ public class MallAgentBean {
     private String agentTaobaoId;
     @Column(name = "RefuseContent")
     private String refuseReason;
+    @Column(name = "Authorization_Code")
+    private String AuthorizationCode;
 
     public String getAgentAccount() {
         return agentAccount;
@@ -224,5 +226,13 @@ public class MallAgentBean {
 
     public void setRefuseReason(String refuseReason) {
         this.refuseReason = refuseReason;
+    }
+
+    public String getAuthorizationCode() {
+        return AuthorizationCode;
+    }
+
+    public void setAuthorizationCode(String authorizationCode) {
+        AuthorizationCode = authorizationCode;
     }
 }

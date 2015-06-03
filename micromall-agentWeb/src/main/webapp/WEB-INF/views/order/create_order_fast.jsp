@@ -59,7 +59,7 @@
         function createOrder() {
             var goodId = $("#selGoodId").val();
             var num = $("#num").val();
-            var orderName = $("#orderName").val() + "(" + num + ")";
+            var orderName = $("#orderName").val();
             var shipAddr = $("#shipAddr").val();
             var shipName = $("#shipName").val();
             var shipMobile = $("#shipMobile").val();

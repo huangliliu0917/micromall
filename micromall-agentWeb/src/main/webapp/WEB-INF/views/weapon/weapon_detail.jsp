@@ -20,6 +20,9 @@
     <meta name="description" content="">
     <link rel="stylesheet" href="css/common.css">
     <title></title>
+    <script type="text/javascript">
+        var customerId = ${customerId};
+    </script>
     <style>
         .wpcontent {
             background: none repeat scroll 0 0 #FFF9D5;

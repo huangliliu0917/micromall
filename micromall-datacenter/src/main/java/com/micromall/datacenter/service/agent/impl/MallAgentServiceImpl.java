@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2015/5/13.
@@ -43,6 +44,9 @@ public class MallAgentServiceImpl implements MallAgentService {
         MallAgentLevelBean levelBean = new MallAgentLevelBean();
         levelBean.setLevelId(levelId);
         bean.setAgentLevel(levelBean);
+        if (bean.getAgentId() == 0) {
+            bean.setAuthorizationCode(this.createAuthorizationCode());
+        }
         return dao.save(bean);
     }
 
@@ -159,5 +163,28 @@ public class MallAgentServiceImpl implements MallAgentService {
     @Transactional(readOnly = true)
     public MallAgentLevelBean findAgentLevel(int agentId) {
         return dao.findAgentLevel(agentId);
+    }
+
+    public void updatePassword(String newPass, int agentId, String originalPass) {
+        dao.updatePassword(newPass, agentId, originalPass);
+    }
+
+    public int getUnderAgentNum(int superAgentId) {
+        return dao.getUnderAgentNum(superAgentId);
+    }
+
+    public void updateAddr(String newAddr, int agentId) {
+        dao.updateAddr(newAddr, agentId);
+    }
+
+    private String createAuthorizationCode() {
+        String base = "ABCDEFGHIJKLMNOPQRSTUVWXWZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < 10; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
     }
 }

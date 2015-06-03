@@ -258,6 +258,12 @@
                                 </li>
                                 <c:if test="${orderBean.orderStatus==1}">
                                     <li>
+                                        <span class="title">发货人：</span>
+                                        <lable>${orderBean.realShipAgent==null?"商家发货":orderBean.realShipAgent.name}</lable>
+                                    </li>
+                                </c:if>
+                                <c:if test="${orderBean.orderStatus==1}">
+                                    <li>
                                         <span class="title">货号列表：</span>
                                         <ul>
                                             <c:forEach items="${orderBean.orderItems}" var="orderItem">
@@ -272,7 +278,7 @@
                                 </c:if>
                             </ul>
                         </div>
-                        <c:if test="${orderBean.orderStatus==0&&orderBean.realShipId==0}">
+                        <c:if test="${orderBean.orderStatus==0&&orderBean.realShipAgent==null}">
                             <div style="padding:20px 5% 20px 5%">
                                 <input type="button" value="发货" id="confirmBtn" class=" copybtn6">
                             </div>

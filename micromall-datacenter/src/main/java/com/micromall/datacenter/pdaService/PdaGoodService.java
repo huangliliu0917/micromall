@@ -9,4 +9,6 @@ public interface PdaGoodService {
     PdaGoodBean save(PdaGoodBean goodBean);
 
     void delete(String goodCode);
+
+    void update(String currentQCode, String qName, String qTip, String oriQCode);
 }

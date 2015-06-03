@@ -177,4 +177,39 @@ public class AgentApiController extends BaseController {
         responseData.put("result", result);
         return responseData;
     }
+
+    @RequestMapping(value = "/agentApi/updatePass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> updatePass(String newPass, String orignalPass) {
+        int result = 0;
+        try {
+            MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
+
+            //重新登录
+            agentService.updatePassword(newPass, getAgentId(), orignalPass);
+            CookieHelper.setCookie(response, "account_" + getCustomerId(), agentBean.getAgentAccount());
+            CookieHelper.setCookie(response, "password_" + getCustomerId(), newPass);
+            request.getSession().setAttribute("loginToken_" + getCustomerId(), agentBean.getAgentAccount());
+            request.getSession().setAttribute("agentId_" + getCustomerId(), agentBean.getAgentId());
+            result = 1;
+        } catch (Exception e) {
+            responseData.put("msg", e.getMessage());
+        }
+        responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping("/agentApi/updateAddr")
+    @ResponseBody
+    public Map<Object, Object> updateAddr(String newAddr) {
+        int result = 0;
+        try {
+            agentService.updateAddr(newAddr, getAgentId());
+            result = 1;
+        } catch (Exception e) {
+            responseData.put("msg", e.getMessage());
+        }
+        responseData.put("result", result);
+        return responseData;
+    }
 }

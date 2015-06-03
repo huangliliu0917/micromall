@@ -65,4 +65,16 @@ public class AgentController extends BaseController {
         model.addAttribute("editAgentId", getAgentId());
         return "agent/personal_setting";
     }
+
+    @RequestMapping("/usercenter")
+    public String userCenter(Model model) {
+        MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
+        MallAgentBean superAgent = agentService.findByAgentId(agentBean.getSuperAgentId());
+        int underAgentNum = agentService.getUnderAgentNum(getAgentId());
+        model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("agentBean", agentBean);
+        model.addAttribute("superAgent", superAgent);
+        model.addAttribute("underAgentNum", underAgentNum);
+        return "agent/user_center";
+    }
 }
