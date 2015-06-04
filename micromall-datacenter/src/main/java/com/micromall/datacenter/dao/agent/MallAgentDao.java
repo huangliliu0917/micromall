@@ -49,4 +49,7 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
     @Modifying
     @Query("update MallAgentBean agentBean set agentBean.agentAddr=?1 where agentBean.agentId=?2")
     void updateAddr(String newAddr, int agentId);
+
+    @Query("select count(agent.agentId) from MallAgentBean agent where agent.authorizationCode=?1 and agent.customerId=?2")
+    int codeExists(String code, int customerId);
 }

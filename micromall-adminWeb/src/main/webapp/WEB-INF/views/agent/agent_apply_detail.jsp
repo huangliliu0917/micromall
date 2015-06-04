@@ -214,14 +214,14 @@
                                 </li>
                                 <li>
                                     <span class="title">意向等级：</span>
-                                    <label>${applyBean.applyLevelId>0?appplyBean.applyLevelName:"未选择意向等级"}</label>
+                                    <label>${applyBean.applyLevelId>0?applyLevel.levelName:"未选择意向等级"}</label>
                                 </li>
                                 <li>
                                     <span class="title">申请理由：</span>
                                     <label>${applyBean.applyReason}</label>
                                 </li>
                                 <c:if test="${applyBean.applyStatus!=0}">
-                                    <span style="color:red">审核结果：</span>
+                                    <span style="color:red">审核结果：${applyBean.applyStatus==1?"审核通过":"审核失败"}</span>
                                 </c:if>
 
                                 <c:if test="${applyBean.applyStatus==1}">

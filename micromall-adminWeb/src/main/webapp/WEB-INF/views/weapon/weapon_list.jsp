@@ -92,7 +92,7 @@
 
                             <td align="right">
                                 <div class="fg-button clearfix" style="float:right">
-                                    <a href="javascript:window.location.href='<c:url value="/weapon/weaponEdit" />'">添加微武器</a>
+                                    <a href="javascript:window.location.href='<c:url value="/weapon/weaponEdit?weaponType=${weaponType}" />'">添加微武器</a>
                                 </div>
 
                             </td>
@@ -121,7 +121,7 @@
                                             <p style="clear: both"></p>
 
                                             <p style="float: right; margin-right: 10px;">
-                                                <a href="<c:url value="/weapon/weaponEdit?weaponId=${weaponBean.weaponId}"/>"> <span>编辑</span></a> |
+                                                <a href="<c:url value="/weapon/weaponEdit?weaponId=${weaponBean.weaponId}&weaponType=0"/>"> <span>编辑</span></a> |
                                                 <a href="javascript:delWeapon(${weaponBean.weaponId})"><span>删除</span></a>
                                             </p>
                                         </div>
@@ -152,7 +152,7 @@
                                             </p>
                                         </td>
                                         <td align="center">
-                                            <a href="<c:url value="/weapon/weaponEdit?weaponId=${weaponBean.weaponId}"/>">编辑</a> |
+                                            <a href="<c:url value="/weapon/weaponEdit?weaponId=${weaponBean.weaponId}&weaponType=1"/>">编辑</a> |
                                             <a href="javascript:delWeapon(${weaponBean.weaponId})">删除</a>
                                         </td>
                                     </tr>

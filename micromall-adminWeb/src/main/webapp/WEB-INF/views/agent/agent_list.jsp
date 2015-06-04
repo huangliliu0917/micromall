@@ -109,8 +109,8 @@
                     <table width="100%" class="table_appss tablept5" id="table_apps">
                         <thead>
                         <tr class="sdkbar" style="font-weight:bold;">
+                            <th align="center" rowspan="1" colspan="1">编号</th>
                             <th align="center" rowspan="1" colspan="1">手机</th>
-                            <th align="center" rowspan="1" colspan="1">证书</th>
                             <th align="center" rowspan="1" colspan="1">姓名</th>
                             <th align="center" rowspan="1" colspan="1">代理级别</th>
                             <th align="center" rowspan="1" colspan="1">审核</th>
@@ -126,9 +126,9 @@
                         <tbody>
                         <c:forEach items="${pageInfo.getContent()}" var="agentBean">
                             <tr height="28px" class="odd">
+                                <td align="center">${agentBean.authorizationCode}</td>
                                 <td align="center">${agentBean.agentAccount}
                                 </td>
-                                <td align="center"><img src="${agentBean.agentCertificate}"/></td>
                                 <td align="center">${agentBean.name}</td>
                                 <td align="center">${agentBean.agentLevel.levelName}</td>
                                 <td align="center">${agentBean.agentStatus==0?"待审核":agentBean.agentStatus==1?"审核通过":"审核失败"}</td>

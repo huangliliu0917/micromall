@@ -174,6 +174,11 @@
         .fontwp {
             margin-left: 10px;
         }
+
+        .upInput {
+            color: #000;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 
@@ -224,11 +229,25 @@
 </body>
 </html>
 <script type="text/html" id="update_pass_temp">
-    旧密码：<input style="color: #000" type="password" id="orignalPass"/><br><br>
-    新密码：<input style="color: #000" type="password" id="newPass"/><br><br>
-    确认新密码：<input style="color: #000" type="password" id="confirmPass"/>
+    <table style="border:0px;">
+        <tr style="height:45px;">
+            <td>旧密码：</td>
+            <td><input class="upInput" type="password" id="orignalPass"/></td>
+        </tr>
+        <tr style="height:45px;">
+            <td>新密码：</td>
+            <td><input class="upInput" type="password" id="newPass"/></td>
+        </tr>
+        <tr style="height:45px;">
+            <td>确认新密码：</td>
+            <td><input class="upInput" type="password" id="confirmPass"/></td>
+        </tr>
+    </table>
+    <%--旧密码：<input class="upInput" type="password" id="orignalPass"/><br><br>--%>
+    <%--新密码：<input class="upInput" type="password" id="newPass"/><br><br>--%>
+    <%--确认新密码：<input class="upInput" type="password" id="confirmPass"/>--%>
 </script>
 <script type="text/html" id="update_addr_temp">
-    收货地址：<input type="text" id="newAddr"/>
+    收货地址：<input type="text" class="upInput" id="newAddr"/>
 </script>
 

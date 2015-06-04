@@ -135,8 +135,8 @@
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>统计报表</span></a>
                         <ul class="children" style="display: block">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>1</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>2</a></li>
+                            <li onclick="goMenu('<c:url value="/statistics/agentShipments"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商出货量统计</a></li>
+                            <li onclick="goMenu('<c:url value="/statistics/goodShipments"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>商品出货量统计</a></li>
                         </ul>
                     </li>
                 </ul>

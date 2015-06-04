@@ -141,7 +141,7 @@
                             <tbody>
                             <tr>
                                 <td width="55%">
-                                    <input type="hidden" value="1" name="pageIndex" id="pageIndex"/>
+                                    <input type="hidden" value="${pageIndex}" name="pageIndex" id="pageIndex"/>
                                     订单号：<input size="10" name="orderId" id="orderId" value="${searchViewModel.orderId}" placeholder="订单号" class="hasDatepicker">
                                     收件人：<input size="10" name="shipName" id="shipName" value="${searchViewModel.shipName}" placeholder="收件人" class="hasDatepicker">
                                     收件人手机：<input size="10" name="shipMobile" id="shipMobile" value="${searchViewModel.shipMobile}" placeholder="收件人手机" class="hasDatepicker">

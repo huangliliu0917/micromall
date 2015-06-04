@@ -4,6 +4,7 @@ import com.micromall.adminWeb.controller.BaseController;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.service.order.MallOrderService;
+import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,11 +49,5 @@ public class OrderController extends BaseController {
         model.addAttribute("snCode", snCode);
 
         return "order/pro_search";
-    }
-
-    @RequestMapping("/order/test")
-    public String test(int pageIndex) {
-        Page<MallOrderBean> pageInfo = orderService.getAgentShipments(pageIndex, pageSize);
-        return null;
     }
 }

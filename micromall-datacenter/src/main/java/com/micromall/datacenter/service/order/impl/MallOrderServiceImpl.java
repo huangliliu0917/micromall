@@ -3,7 +3,6 @@ package com.micromall.datacenter.service.order.impl;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallUserBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
-import com.micromall.datacenter.bean.orders.MallDeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
@@ -14,6 +13,7 @@ import com.micromall.datacenter.service.order.MallDeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
+import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.awt.print.Pageable;
 import java.util.*;
 
 /**
@@ -247,9 +246,5 @@ public class MallOrderServiceImpl implements MallOrderService {
      */
     public Page<MallOrderItemBean> findBySnCode(int customerId, String snCode, int pageIndex, int pageSize) {
         return dao.findBySnCode(customerId, snCode, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "itemId")));
-    }
-
-    public Page<MallOrderBean> getAgentShipments(int pageIndex, int pageSize) {
-        return null;
     }
 }

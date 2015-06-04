@@ -82,9 +82,11 @@ public class AgentController extends BaseController {
 
     @RequestMapping("/agent/applyDetail")
     public String applyDetail(int applyId, Model model) {
+        MallAgentApplyBean applyBean = applyService.findByApplyId(applyId);
         model.addAttribute("applyId", applyId);
-        model.addAttribute("applyBean", applyService.findByApplyId(applyId));
+        model.addAttribute("applyBean", applyBean);
         model.addAttribute("levelList", levelService.findByCustomerId(getCustomerId()));
+        model.addAttribute("applyLevel", levelService.findByLevelId(applyBean.getApplyLevelId()));
 
         return "agent/agent_apply_detail";
     }

@@ -58,7 +58,7 @@ public class MallAgentBean {
     @Column(name = "RefuseContent")
     private String refuseReason;
     @Column(name = "Authorization_Code")
-    private String AuthorizationCode;
+    private String authorizationCode;
 
     public String getAgentAccount() {
         return agentAccount;
@@ -229,10 +229,11 @@ public class MallAgentBean {
     }
 
     public String getAuthorizationCode() {
-        return AuthorizationCode;
+        return authorizationCode;
     }
 
     public void setAuthorizationCode(String authorizationCode) {
-        AuthorizationCode = authorizationCode;
+        this.authorizationCode = authorizationCode;
     }
+
 }

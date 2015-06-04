@@ -37,6 +37,9 @@
                     $("#imgList").append("<li id='imgLi" + index + "'><img class='previewImg' src='" + json.fileUri + "'/>" +
                     "<img onclick='removeImg(" + index + ")' class='delImg' src='<c:url value="/resources/images/delImg.png" />'/>" +
                     "<input class='weaponImg' type='hidden' value='" + json.file + "' /></li>");
+                    if ($(".weaponImg").length >= 9) {
+                        $("#addImgLi").hide();
+                    }
                 } else {
                     $.jBox.tip("上传失败", "error");
                 }
@@ -45,6 +48,7 @@
 
         function removeImg(index) {
             $("#imgLi" + index).remove();
+            $("#addImgLi").show();
         }
 
         function checkImgCount() {
@@ -170,7 +174,7 @@
                                                 </li>
                                             </c:forEach>
                                         </div>
-                                        <li style="width:100px;height: 100px;border: 1px solid #ccc; margin-left: 5px; float: left" onclick="checkImgCount()">
+                                        <li id="addImgLi" style="width:100px;height: 100px;border: 1px solid #ccc; margin-left: 5px; float: left" onclick="checkImgCount()">
                                             <img style="width:100px;height: 100px;" id="addImg" src="<c:url value="/resources/images/addImg.png" />"/>
                                         </li>
                                     </ul>

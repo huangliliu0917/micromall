@@ -37,7 +37,7 @@
 <div class="contentpanel">
     <div class="block">
         <div class="h">
-            <p style="line-height:35px; padding-left:10px;"><i class="fa  fa-file-o"></i>代理商编辑 </p>
+            <p style="line-height:35px; padding-left:10px;"><i class="fa  fa-file-o"></i>商品编辑 </p>
 
         </div>
         <div class="cnt-wp">

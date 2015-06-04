@@ -485,7 +485,6 @@ body {
     border: 0 none;
     font-size: 14px;
     width: 100%;
-    background: #e7e9eb;
     -webkit-appearance: none;
     vertical-align: top;
     color: #333;
@@ -1095,9 +1094,9 @@ body {
     height: 32px;
     background-color: #fff;
     border: solid 1px #fff;
-    color: #fff;
     padding-left: 7px;
     width: 123px;
+    color: #000;
 }
 
 .toptop {
@@ -1137,6 +1136,14 @@ body {
     display: none;
 }
 
+.logiSelect {
+    margin-top: 10px;
+    margin-top: 10px;
+    border: solid 1px #ddd;
+    color: #888;
+    padding: 6px 30px 6px 0px;
+    font-size: 16px;
+}
 
 
 

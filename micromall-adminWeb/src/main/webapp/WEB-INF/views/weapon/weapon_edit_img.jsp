@@ -47,7 +47,7 @@
 
         $(function () {
             <c:if test="${weaponId>0}">
-            $("#previewImg").attr("src", ${uploadResourceServer.resourceUri(weaponBean.weaponImgs)});
+            $("#previewImg").attr("src", "${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}");
             </c:if>
             $("#saveSubmit").click(function () {
                 var weaponContent = $("#weaponContent").val().replace(/\r/g, "").replace(/\n/g, "");

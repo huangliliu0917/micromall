@@ -80,7 +80,7 @@
     </style>
 </head>
 
-<body style="background-color:#fff; max-width:640px; margin:0 auto">
+<body>
 <div>
 
     <p class="h20"></p>
@@ -126,10 +126,10 @@
 
     <p class="h10" style="clear:both"></p>
 
-    <ul class="ull">
-        <li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>
-        <li class="wenz1">统计</li>
-    </ul>
+    <%--<ul class="ull">--%>
+        <%--<li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>--%>
+        <%--<li class="wenz1">统计</li>--%>
+    <%--</ul>--%>
 
 
     <ul class="ull" onclick="goMenu('<c:url value="/usercenter?customerId=${customerId}"/>')">

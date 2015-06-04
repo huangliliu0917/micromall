@@ -120,7 +120,7 @@
     </script>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
+<body>
 <div>
 
     <p class="h20"></p>
@@ -175,7 +175,7 @@
 
     <p>
         <label>
-            <select id="applyLevel" style="width: 100%;background-color: #e7e9eb;border: 0px;color: #000;">
+            <select id="applyLevel" style="width: 100%;border: 0px;color: #000;">
                 <option value="0">意向等级</option>
                 <c:forEach items="${levelList}" var="levelBean">
                     <option value="${levelBean.levelId}">${levelBean.levelName}</option>
@@ -185,7 +185,7 @@
     </p>
     <p>
         <label>
-            <textarea id="applyReason" style="width: 100%;background-color: #e7e9eb;border: 0px;color: #000;" placeholder="申请理由"></textarea>
+            <textarea id="applyReason" style="width: 100%;border: 0px;color: #000;" placeholder="申请理由"></textarea>
         </label>
     </p>
 </div>

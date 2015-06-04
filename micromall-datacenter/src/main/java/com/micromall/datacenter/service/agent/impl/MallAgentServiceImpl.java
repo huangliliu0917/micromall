@@ -45,7 +45,7 @@ public class MallAgentServiceImpl implements MallAgentService {
         levelBean.setLevelId(levelId);
         bean.setAgentLevel(levelBean);
         if (bean.getAgentId() == 0) {
-            bean.setAuthorizationCode(this.createAuthorizationCode());
+            bean.setAuthorizationCode(this.createAuthorizationCode(bean.getCustomerId()));
         }
         return dao.save(bean);
     }
@@ -177,14 +177,19 @@ public class MallAgentServiceImpl implements MallAgentService {
         dao.updateAddr(newAddr, agentId);
     }
 
-    private String createAuthorizationCode() {
+    private String createAuthorizationCode(int customerId) {
         String base = "ABCDEFGHIJKLMNOPQRSTUVWXWZ0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < 10; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
+
+        while (true) {
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < 10; i++) {
+                int number = random.nextInt(base.length());
+                sb.append(base.charAt(number));
+            }
+            if (dao.codeExists(sb.toString(), customerId) == 0) {
+                return sb.toString();
+            }
         }
-        return sb.toString();
     }
 }

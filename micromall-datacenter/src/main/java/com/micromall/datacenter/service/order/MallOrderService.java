@@ -2,6 +2,7 @@ package com.micromall.datacenter.service.order;
 
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
+import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,4 @@ public interface MallOrderService {
      * @return
      */
     Page<MallOrderItemBean> findBySnCode(int customerId, String snCode, int pageIndex, int pageSize);
-
-    Page<MallOrderBean> getAgentShipments(int pageIndex, int pageSize);
 }

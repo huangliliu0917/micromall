@@ -2,9 +2,9 @@ package com.micromall.datacenter.dao.order;
 
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
+import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,8 +43,4 @@ public interface MallOrderDao extends JpaRepository<MallOrderBean, String>, JpaS
 
     @Query("select sum(orderBean.proNum) from MallOrderBean orderBean where orderBean.orderStatus=1 and orderBean.realShipAgent is null and orderBean.addTime between ?1 and ?2")
     int getShipments(Date beginTime, Date endTime);
-
-    @Query(value = "select orderBean from MallOrderBean orderBean " +
-            "left join MallAgentBean agentBean on orderBean.realShipAgent.agentId=agentBean.agentId")
-    Page<MallOrderBean> getAgentShipments(Pageable pageable);
 }

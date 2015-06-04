@@ -186,7 +186,7 @@
                     <div class="DDH">请选择物流公司</div>
                     <p>
                         <label>
-                            <select style="margin-top: 10px;" id="logiName">
+                            <select class="logiSelect" id="logiName">
                                 <option value="中国邮政">中国邮政</option>
                                 <option value="申通快递">申通快递</option>
                                 <option value="圆通速递">圆通速递</option>
