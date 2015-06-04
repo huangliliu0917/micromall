@@ -58,6 +58,10 @@
 
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
+    <form id="searchForm" action="<c:url value="/weapon/weaponList?weaponType=${weaponType}" />">
+        <input type="hidden" value="${pageIndex}" id="pageIndex" name="pageIndex">
+        <input type="hidden" value="${customerId}" name="customerId" id="customerId"/>
+    </form>
     <div class="tabBoxs">
             <span class="hd toptop ">
              <a href="<c:url value="/weapon/weaponList?customerId=${customerId}" />" class="${weaponType==0?"on":""}">图文库</a>

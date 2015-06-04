@@ -40,7 +40,7 @@ var pageHandler = {
         this.totalPage = totalPage;
         this.pageIndex = pageIndex;
         this.pageUri = pageUri;
-        if (totalPage == 1) {
+        if (totalPage <= 1) {
             $("#pagePanel").hide();
         } else {
             $("#pagePanel").show();
@@ -49,13 +49,17 @@ var pageHandler = {
     previewPage: function () {
         if (this.pageIndex > 1) {
             this.pageIndex--;
-            window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
+            $("#pageIndex").val(this.pageIndex);
+            //window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
+            $("#searchForm").submit();
         }
     },
     nextPage: function () {
         if (this.pageIndex < this.totalPage) {
             this.pageIndex++;
-            window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
+            $("#pageIndex").val(this.pageIndex);
+            $("#searchForm").submit();
+            //window.location.href = this.pageUri + "&pageIndex=" + this.pageIndex;
         }
     }
 }

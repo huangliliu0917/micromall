@@ -50,6 +50,9 @@
 
         $(function () {
             pageHandler.init(totalPage, pageIndex, pageUri);
+            $("#searchBtn").click(function () {
+                $("#searchForm").submit();
+            });
         })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/agentWeb/agent/agentWeb.user.js" />"></script>
@@ -62,10 +65,14 @@
 
     <p style="color:#fff; float:left;margin-top: 10px;margin-left: 10px;" onclick="javascript:window.location.href='<c:url value="/order/createOrderFastReg?customerId=${customerId}"/>'">我要发货</p>
 
-    <p style=" float:right;margin-top:5px;margin-right: 10px;">
-        <input class="searchInput" type="" id="mobile" name="mobile" value="" placeholder="搜索">
-        <span id="searchBtn"><img class="imgg" src="<c:url value="/resources/images/untitled10.png" />" width="20px"></span>
-    </p>
+    <form id="searchForm" action="<c:url value="/userList" />">
+        <p style=" float:right;margin-top:5px;margin-right: 10px;">
+            <input type="hidden" value="${pageIndex}" name="pageIndex" id="pageIndex"/>
+            <input type="hidden" value="${customerId}" name="customerId" id="customerId"/>
+            <input class="searchInput" type="" id="searchKey" name="searchKey" value="${searchKey}" placeholder="搜索">
+            <span id="searchBtn"><img class="imgg" src="<c:url value="/resources/images/untitled10.png" />" width="20px"></span>
+        </p>
+    </form>
 </div>
 
 <p style="clear:both;"></p>

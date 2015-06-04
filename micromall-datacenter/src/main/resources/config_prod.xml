@@ -21,7 +21,7 @@
                 <!--<property name="generateDdl" value="true" />-->
                 <property name="database" value="SQL_SERVER"/>
                 <property name="databasePlatform" value="org.hibernate.dialect.SQLServer2008Dialect"/>
-                <property name="showSql" value="true"/>
+                <!--<property name="showSql" value="true"/>-->
             </bean>
         </property>
         <property name="jpaDialect">
@@ -38,7 +38,7 @@
                 <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="false"/>
                 <entry key="hibernate.cache.use_query_cache" value="false"/>
-                <!--<entry key="hibernate.hbm2ddl.auto" value="${database.hbm2ddl.auto}"/>-->
+                <!--<entry key="hibernate.hbm2ddl.auto" value="none"/>-->
             </map>
         </property>
     </bean>
@@ -54,7 +54,7 @@
                 <!--<property name="generateDdl" value="true" />-->
                 <property name="database" value="MYSQL"/>
                 <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect"/>
-                <property name="showSql" value="true"/>
+                <!--<property name="showSql" value="true"/>-->
             </bean>
         </property>
         <property name="jpaDialect">
@@ -71,7 +71,7 @@
                 <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="false"/>
                 <entry key="hibernate.cache.use_query_cache" value="false"/>
-                <entry key="hibernate.hbm2ddl.auto" value="create"/>
+                <entry key="hibernate.hbm2ddl.auto" value="update"/>
             </map>
         </property>
     </bean>
