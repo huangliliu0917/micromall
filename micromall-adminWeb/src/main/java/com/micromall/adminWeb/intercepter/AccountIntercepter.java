@@ -27,12 +27,10 @@ public class AccountIntercepter extends HandlerInterceptorAdapter {
             return true;
         } else {
             //redirect
-            request.getSession().setAttribute("customerId", customerId);
-            return true;
+            response.sendRedirect("http://login.huobanplus.com");
+            //request.getSession().setAttribute("customerId", customerId);
+            return false;
         }
-
-//        request.getSession().setAttribute("customerId", 5);
-//        return true;
     }
 
     @Override

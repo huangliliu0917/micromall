@@ -52,4 +52,6 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
 
     @Query("select count(agent.agentId) from MallAgentBean agent where agent.authorizationCode=?1 and agent.customerId=?2")
     int codeExists(String code, int customerId);
+
+    MallAgentBean findByAgentAccountAndCustomerId(String agentAccount, int customerId);
 }

@@ -5,6 +5,7 @@ import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallAgentLevelBean;
 import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.config.MallBaseConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ public class AgentController extends BaseController {
     private MallAgentService agentService;
     @Autowired
     private MallAgentLevelService levelService;
+    @Autowired
+    private MallBaseConfigService configService;
 
     @RequestMapping("/agentList")
     public String agentList(@RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey,
@@ -55,6 +58,16 @@ public class AgentController extends BaseController {
         model.addAttribute("levelList", levelList);
 
         return "agent/agent_edit";
+    }
+
+    @RequestMapping("/certificates")
+    public String certificates(String agentAccount, Model model) {
+        MallAgentBean agentBean = agentService.findByAgentAccountAndCustomerId(agentAccount, getCustomerId());
+        model.addAttribute("agentBean", agentBean);
+        model.addAttribute("customerId", getCustomerId());
+        model.addAttribute("configBean", configService.findByCustomerId(getCustomerId()));
+
+        return "certificates";
     }
 
     @RequestMapping("/personalSetting")

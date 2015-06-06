@@ -24,7 +24,7 @@ public class AccountInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestUrl = request.getRequestURL().toString() + "?" + request.getQueryString();
         String tempRequestUrl = requestUrl.toLowerCase();
-        if (tempRequestUrl.contains("login") || tempRequestUrl.contains("apply") || tempRequestUrl.contains("upload")) {
+        if (tempRequestUrl.contains("login") || tempRequestUrl.contains("apply") || tempRequestUrl.contains("upload") || tempRequestUrl.contains("certificates")) {
             return true;
         }
 

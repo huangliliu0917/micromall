@@ -22,6 +22,8 @@
     <script type="text/javascript" src="<c:url value="/resources/scripts/jquery.utils.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/jQuery.md5.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/loading/jquery.loading-0.1.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/artDialog/dialog-min.js" />"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/scripts/artDialog/ui-dialog.css" />">
 
     <title>微商登录</title>
     <script type="text/javascript">
@@ -57,6 +59,30 @@
                 }, J.PostMethod);
             })
         })
+
+        var certificates = function () {
+            var ctfDialog = dialog({
+                title: "代理查询",
+                content: $("#certificates_template").html(),
+                okValue: "确定",
+                ok: function () {
+                    var agentAccount = $.trim($("#agentAccount").val());
+                    if (agentAccount.length == 0) {
+                        alert("请输入代理商手机号");
+                        return false;
+                    }
+                    if (!J.IsMobile(agentAccount)) {
+                        alert("手机号码格式不正确");
+                        return false;
+                    }
+                    window.location.href = '<c:url value="/certificates?customerId=${customerId}" />' + '&agentAccount=' + agentAccount;
+                },
+                cancelValue: '取消',
+                cancel: function () {
+                }
+            });
+            ctfDialog.show();
+        }
     </script>
 </head>
 
@@ -117,11 +143,15 @@
     <div>
 
         <p class="h20"></p>
-        <a href="#"><p class="dl">代理查询</p></a>
-        <a href="#"><p class="wj">找回密码</p></a>
+        <a href="javascript:certificates()"><p class="dl">代理查询</p></a>
+        <%--<a href="#"><p class="wj">关于${configBean.title}</p></a>--%>
     </div>
 
 </div>
 </body>
 </html>
+
+<script type="text/html" id="certificates_template">
+    代理商手机：<input style="color: #000;border: 1px solid #ddd;height: 27px;width: 200px;" id="agentAccount" type="tel"/>
+</script>
 

@@ -8,7 +8,8 @@ var goodHandler = {
             $.jBox.tip("正在保存...", "loading");
             J.GetJsonRespons(ajaxUrl + "saveGood", requestData, function (json) {
                 if (json.result == 1) {
-                    $.jBox.tip("保存成功", "success");
+                    $.jBox.tip("保存成功", "loading");
+                    window.location.href = returnUrl;
                 } else if (json.result == 2) {
                     $.jBox.tip("该商品编号已存在");
                 } else {

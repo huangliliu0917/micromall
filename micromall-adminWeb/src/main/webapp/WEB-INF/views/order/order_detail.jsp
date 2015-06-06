@@ -44,8 +44,8 @@
                     $(this).dialog("close");
                 });
             });
-            setInterval("loadData()", 1000);
-            //loadData();
+            //setInterval("loadData()", 1000);
+            loadData();
         });
 
         function addPro(id, snCode) {

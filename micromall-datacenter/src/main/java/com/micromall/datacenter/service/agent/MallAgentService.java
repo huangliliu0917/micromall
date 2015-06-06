@@ -59,4 +59,13 @@ public interface MallAgentService {
     int getUnderAgentNum(int superAgentId);
 
     void updateAddr(String newAddr, int agentId);
+
+    /**
+     * 通过account和customerid得到实体
+     *
+     * @param agentAccount
+     * @param customerId
+     * @return
+     */
+    MallAgentBean findByAgentAccountAndCustomerId(String agentAccount, int customerId);
 }

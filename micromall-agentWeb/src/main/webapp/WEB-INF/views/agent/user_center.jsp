@@ -178,6 +178,8 @@
         .upInput {
             color: #000;
             border: 1px solid #ddd;
+            height: 27px;
+            width: 200px;
         }
     </style>
 </head>
@@ -211,7 +213,7 @@
 
     <div class="add_wei_shang_ii bottom">
         <div onclick="updatePass()" class="my_menu_btn2">
-            <a href=""><span class="fontwp">修改密码</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+            <a><span class="fontwp">修改密码</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
 
         <div class="my_menu_btn2">
@@ -219,7 +221,7 @@
         </div>
 
         <div onclick="updateAddr()" class="my_menu_btn2">
-            <a href=""><span class="fontwp">修改我的地址</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+            <a><span class="fontwp">修改我的地址</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
 
 

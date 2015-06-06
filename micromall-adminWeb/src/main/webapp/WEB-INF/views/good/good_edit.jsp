@@ -55,7 +55,7 @@
                                 </li>
                                 <li>
                                     <span class="title"><i class="red">*</i>商品编号：</span>
-                                    <input type="text" class="text" id="goodCode" value="${goodBean.goodCode}"/>（中国商品编号一般都69开头13位）
+                                    <input type="text" readonly="readonly" class="text" id="goodCode" value="${goodBean==null?createCode:goodBean.goodCode}"/>
                                 </li>
                                 <li style="width: 500px;">
                                     <span class="title"><i class="red">*</i>商品图片：</span>

@@ -29,4 +29,6 @@ public interface MallGoodsDao extends JpaRepository<MallGoodBean, Integer>, JpaS
     int goodCodeExists(String goodCode, int customerId, int currentGoodId);
 
     MallGoodBean findByCustomerIdAndGoodCode(int customerId, String goodCode);
+
+    int countByCustomerId(int customerId);
 }

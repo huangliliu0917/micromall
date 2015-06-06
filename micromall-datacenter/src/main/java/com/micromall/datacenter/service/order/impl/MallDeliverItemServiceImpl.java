@@ -48,7 +48,7 @@ public class MallDeliverItemServiceImpl implements MallDeliverItemService {
 
     public List<MallDeliverItemBean> findAll(int customerId, String agentMobile) {
         //ÄÃµ½Êý¾Ý
-        List<SnInfoBean> snInfoBeans = infoService.findBySnStatusAndGno(0, agentMobile);
+        List<SnInfoBean> snInfoBeans = infoService.findBySnStatusAndGno(0, agentMobile, customerId);
         List<String> snList = new ArrayList<String>();
         for (SnInfoBean bean : snInfoBeans) {
             snList.add(bean.getSn());

@@ -25,4 +25,20 @@ public interface MallGoodsService {
     boolean goodCodeExists(String goodCode, int customerId, int currentGoodId);
 
     MallGoodBean findByGoodCode(int customerId, String goodCode);
+
+    /**
+     * 未删除的商品数量
+     *
+     * @param customerId
+     * @return
+     */
+    int countByCustomerId(int customerId);
+
+    /**
+     * 得到商品编号
+     *
+     * @param customerId
+     * @return
+     */
+    String getGoodCode(int customerId);
 }

@@ -177,6 +177,10 @@ public class MallAgentServiceImpl implements MallAgentService {
         dao.updateAddr(newAddr, agentId);
     }
 
+    public MallAgentBean findByAgentAccountAndCustomerId(String agentAccount, int customerId) {
+        return dao.findByAgentAccountAndCustomerId(agentAccount, customerId);
+    }
+
     private String createAuthorizationCode(int customerId) {
         String base = "ABCDEFGHIJKLMNOPQRSTUVWXWZ0123456789";
         Random random = new Random();

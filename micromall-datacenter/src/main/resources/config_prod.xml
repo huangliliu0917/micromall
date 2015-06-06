@@ -71,7 +71,7 @@
                 <entry key="hibernate.bytecode.use_reflection_optimizer" value="true"/>
                 <entry key="hibernate.cache.use_second_level_cache" value="false"/>
                 <entry key="hibernate.cache.use_query_cache" value="false"/>
-                <entry key="hibernate.hbm2ddl.auto" value="update"/>
+                <!--<entry key="hibernate.hbm2ddl.auto" value="create"/>-->
             </map>
         </property>
     </bean>

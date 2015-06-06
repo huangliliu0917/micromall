@@ -121,4 +121,14 @@ public class MallGoodsServiceImpl implements MallGoodsService {
     public MallGoodBean findByGoodCode(int customerId, String goodCode) {
         return dao.findByCustomerIdAndGoodCode(customerId, goodCode);
     }
+
+    public int countByCustomerId(int customerId) {
+        return dao.countByCustomerId(customerId);
+    }
+
+    public String getGoodCode(int customerId) {
+        String suffix = "000" + (countByCustomerId(customerId) + 1);
+        suffix = suffix.substring(suffix.length() - 3, suffix.length());
+        return customerId + suffix;
+    }
 }

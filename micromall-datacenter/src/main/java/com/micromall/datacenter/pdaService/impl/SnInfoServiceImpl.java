@@ -20,8 +20,8 @@ public class SnInfoServiceImpl implements SnInfoService {
     private SnInfoDao dao;
 
     @Transactional(readOnly = true)
-    public List<SnInfoBean> findBySnStatusAndGno(int status, String gno) {
-        return dao.findBySnStatusAndGno(status, gno);
+    public List<SnInfoBean> findBySnStatusAndGno(int status, String gno, int customerId) {
+        return dao.findBySnStatusAndGno(String.valueOf(customerId), status, gno);
     }
 
     public void updateStatus(List<String> snList) {

@@ -14,7 +14,8 @@ import java.util.List;
  */
 public interface SnInfoDao extends JpaRepository<SnInfoBean, Integer> {
 
-    List<SnInfoBean> findBySnStatusAndGno(int status, String gno);
+    @Query("select snInfo from SnInfoBean snInfo where substring(snInfo.qcode,1,(length(snInfo.qcode)-3))=?1 and snInfo.snStatus=?2 and snInfo.gno=?3 ")
+    List<SnInfoBean> findBySnStatusAndGno(String customerId, int status, String gno);
 
     @Modifying
     @Query("update SnInfoBean infoBean set infoBean.snStatus=1 where infoBean.sn in :sns")

@@ -42,6 +42,8 @@ public class GoodsController extends BaseController {
         ModelMap modelMap = new ModelMap();
         if (goodId > 0) {
             modelMap.put("goodBean", goodsService.findByGoodId(goodId));
+        } else {
+            modelMap.put("createCode", goodsService.getGoodCode(getCustomerId()));
         }
         modelMap.put("goodId", goodId);
         List<MallAgentLevelBean> levelBeanList = levelService.findByCustomerId(getCustomerId());
