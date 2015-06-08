@@ -33,7 +33,7 @@ public class AccountInterceptor extends HandlerInterceptorAdapter {
 
         Object loginToken = request.getSession().getAttribute("loginToken_" + customerId);
 
-        String redirectUri = "/agent/login?customerId=" + customerId + "&returnUrl=" + requestUrl;
+        String redirectUri = "login?customerId=" + customerId + "&returnUrl=" + requestUrl;
 
         if (loginToken != null) {
             return true;

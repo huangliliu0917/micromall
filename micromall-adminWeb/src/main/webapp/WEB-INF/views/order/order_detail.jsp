@@ -44,8 +44,10 @@
                     $(this).dialog("close");
                 });
             });
-            //setInterval("loadData()", 1000);
-            loadData();
+            <c:if test="${orderBean.orderStatus==0&&orderBean.realShipAgent==null}">
+            setInterval("loadData()", 1000);
+            </c:if>
+            //loadData();
         });
 
         function addPro(id, snCode) {
