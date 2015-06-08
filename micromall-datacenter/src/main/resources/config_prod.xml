@@ -8,6 +8,9 @@
         <property name="jndiName">
             <value>jdbc/MicroMallPDA</value>
         </property>
+        <property name="resourceRef">
+            <value>true</value>
+        </property>
     </bean>
 
     <bean id="pdaEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -79,6 +82,9 @@
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName">
             <value>jdbc/MicroMall</value>
+        </property>
+        <property name="resourceRef">
+            <value>true</value>
         </property>
     </bean>
 </beans>
