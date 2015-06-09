@@ -96,7 +96,7 @@
     <c:otherwise>
         <c:forEach items="${pageInfo.getContent()}" var="weaponBean">
             <div class="boxxr">
-                <p class="pngi" style="margin: 16px -43px 6px 16px;"><img src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}" width="75px" height="75px"></p>
+                <p class="pngi" style="margin: 16px 3px 6px 16px;"><img src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}" width="75px" height="75px"></p>
 
                 <p style="width:68%;margin: 0 auto;padding: 9px 1px;text-overflow: ellipsis;overflow: hidden;display: inline-block;height: 56px;">
                         ${weaponBean.weaponContent}

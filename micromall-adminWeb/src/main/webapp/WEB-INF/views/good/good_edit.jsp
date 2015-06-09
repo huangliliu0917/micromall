@@ -28,7 +28,13 @@
         $(function () {
             if (goodId > 0) {
                 $("#previewImg").show();
+                //设置价格
+
+                <c:forEach items="${goodBean.priceViewModelList}" var="viewModel">
+                $("#level${viewModel.levelId}_price").val(${viewModel.price});
+                </c:forEach>
             }
+
         })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/good/admin.good.js" />"></script>
@@ -75,7 +81,8 @@
                                     <span class="title"><i class="red">*</i>代理商进价：</span>
                                     <ul style="margin-left: 20px;">
                                         <c:forEach items="${levelList}" var="levelBean" varStatus="index">
-                                            <li>${levelBean.levelName}：<input type="text" class="text priceClass" value="${goodBean.priceViewModelList.get(index.index).price}"/>
+                                            <li>${levelBean.levelName}：
+                                                <input type="text" id="level${levelBean.levelId}_price" class="text priceClass" value=""/>
                                                 <input type="hidden" value="${levelBean.levelId}" class="levelClass"/>
                                                 <input type="hidden" value="${levelBean.levelName}" class="levelNameClass"/></li>
                                         </c:forEach>

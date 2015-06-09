@@ -46,6 +46,7 @@ public class AgentController extends BaseController {
         modelMap.put("pageIndex", pageIndex);
         modelMap.put("superAgentId", superAgentId);
         modelMap.put("searchParams", searchParams);
+        modelMap.put("agentStatus", agentStatus);
         pageInfo.getTotalElements();
 
         List<MallAgentLevelBean> levelList = levelService.findByCustomerId(getCustomerId());

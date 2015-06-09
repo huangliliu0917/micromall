@@ -44,9 +44,14 @@ public class MallUserServiceImpl implements MallUserService {
     }
 
     @Transactional(readOnly = true)
-    public MallUserBean findByUserNameAndAgent(int customerId, String userName, int agentId) {
+    public MallUserBean findByUserNameAndAgent(int customerId, String userMobile, int agentId) {
         MallAgentBean agentBean = new MallAgentBean();
         agentBean.setAgentId(agentId);
-        return dao.findByUserNameAndAgent(customerId, userName, agentBean);
+        return dao.findByUserNameAndAgent(customerId, userMobile, agentBean);
+    }
+
+    @Transactional(readOnly = true)
+    public long userExists(int customerId, String userMobile, int agentId, int userId) {
+        return dao.userExists(customerId, userMobile, agentId, userId);
     }
 }

@@ -71,7 +71,7 @@ public class OrderApiController extends BaseController {
         int result = 0;
         try {
             //查找用户，如果存在则选择该用户，如果不存在新建
-            MallUserBean existsUser = userService.findByUserNameAndAgent(getCustomerId(), orderBean.getShipName(), getAgentId());
+            MallUserBean existsUser = userService.findByUserNameAndAgent(getCustomerId(), orderBean.getShipMobile(), getAgentId());
             if (existsUser == null) {
                 //新建
                 MallUserBean userBean = new MallUserBean();

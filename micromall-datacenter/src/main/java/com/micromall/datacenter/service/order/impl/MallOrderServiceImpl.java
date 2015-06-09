@@ -216,10 +216,15 @@ public class MallOrderServiceImpl implements MallOrderService {
                 }
                 int resultIndex = index;
 //                if (orderBean.getOwnerId() != agentId) {
-                if (deliverPath.length > 2) {
-                    resultIndex = index - 1;
-                    double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
+                if (agentId == orderBean.getOwnerId()) {
+                    double price = goodsService.getPriceByAgent(agentService.findByAgentId(agentId).getAgentLevel().getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
                     orderBean.setTotalPrice(orderBean.getProNum() * price);
+                } else {
+                    if (deliverPath.length > 2) {
+                        resultIndex = index - 1;
+                        double price = goodsService.getPriceByAgent(agentService.findAgentLevel(Integer.parseInt(deliverPath[resultIndex])).getLevelId(), goodsService.findPriceInfo(orderBean.getGood().getGoodId()));
+                        orderBean.setTotalPrice(orderBean.getProNum() * price);
+                    }
                 }
             }
         }

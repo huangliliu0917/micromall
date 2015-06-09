@@ -57,6 +57,14 @@ public interface StatisticsDao extends JpaRepository<MallOrderBean, String> {
             "orderBean.realShipAgent.agentLevel.levelName,orderBean.realShipAgent.authorizationCode")
     Page<AgentShipmentsViewModel> getAgentShipments(int customerId, int levelId, String agentMobile, Date beginTime, Date endTime, Pageable pageable);
 
+    /**
+     * 商品出货量统计
+     *
+     * @param customerId
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
     @Query(value = "select new com.micromall.datacenter.viewModel.log.GoodShipmentsViewModel" +
             "(orderBean.good.goodName as goodName,orderBean.good.price as price," +
             "sum(orderBean.proNum) as num,orderBean.good.goodCode as goodCode)" +

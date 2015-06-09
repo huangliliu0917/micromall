@@ -14,10 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AccountIntercepter extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String requestUrl = request.getRequestURI();
-        String contextPath = request.getContextPath();
-        String url = requestUrl.substring(contextPath.length());
-
         //to do check account
         String customerIdStr = CookieHelper.getCookieVal(request, "UserID");
         int customerId = 5;
@@ -26,9 +22,10 @@ public class AccountIntercepter extends HandlerInterceptorAdapter {
             request.getSession().setAttribute("customerId", customerId);
             return true;
         } else {
-            //redirect
+//            request.getSession().setAttribute("customerId", customerId);
+//            return true;
             response.sendRedirect("http://login.huobanplus.com");
-            //request.getSession().setAttribute("customerId", customerId);
+
             return false;
         }
     }

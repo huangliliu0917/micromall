@@ -17,5 +17,7 @@ public interface MallUserService {
 
     MallUserBean findByUserId(int userId);
 
-    MallUserBean findByUserNameAndAgent(int customerId, String userName, int agentId);
+    MallUserBean findByUserNameAndAgent(int customerId, String userMobile, int agentId);
+
+    long userExists(int customerId, String userMobile, int agentId, int userId);
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Administrator on 2015/5/16.
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseController {
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
 
     protected int pageSize = 20;
 
@@ -40,5 +43,13 @@ public class BaseController {
 
     protected void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public HttpServletResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(HttpServletResponse response) {
+        this.response = response;
     }
 }

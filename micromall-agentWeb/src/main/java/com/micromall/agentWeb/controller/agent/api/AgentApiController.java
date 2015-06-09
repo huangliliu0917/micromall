@@ -146,10 +146,11 @@ public class AgentApiController extends BaseController {
     public Map<Object, Object> saveUser(MallUserBean userBean) {
         int result = 0;
         try {
-            MallUserBean existsUser = userService.findByUserNameAndAgent(getCustomerId(), userBean.getUserName(), getAgentId());
-            if (existsUser == null) {
-                userBean.setCustomerId(getCustomerId());
-                userBean.setIsDelete(0);
+            if (userService.userExists(getCustomerId(), userBean.getUserMobile(), getAgentId(), userBean.getUserId()) == 0) {
+                if (userBean.getUserId() > 0) {
+                    userBean.setCustomerId(getCustomerId());
+                    userBean.setIsDelete(0);
+                }
                 userService.save(userBean, getAgentId());
                 result = 1;
             } else {

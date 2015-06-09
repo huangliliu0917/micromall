@@ -168,7 +168,7 @@
 <div class="dingdandiss_cell">
     <dl class="dingdandiss_dl dl_tabel">
         <dt class="ui_color_weak ui_align_right">数量：</dt>
-        <dd><input style="border: solid 0px;color: #000;" type="number" id="num" placeholder=""></dd>
+        <dd><input style="border: solid 0px;color: #000;" type="tel" id="num" placeholder=""></dd>
     </dl>
 </div>
 

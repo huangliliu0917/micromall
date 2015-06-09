@@ -22,6 +22,9 @@ public interface MallUserDao extends JpaRepository<MallUserBean, Integer>, JpaSp
     @Query("select user from MallUserBean user where user.isDelete=0 and user.customerId=?1 and (user.userMobile like %?2% or user.userName like %?2%) and user.agent=?3")
     Page<MallUserBean> findAll(int customerId, String searchKey, MallAgentBean agentBean, Pageable pageable);
 
-    @Query("select user from MallUserBean user where user.isDelete=0 and user.customerId=?1 and user.userName=?2 and user.agent=?3")
-    MallUserBean findByUserNameAndAgent(int customerId, String userName, MallAgentBean agentBean);
+    @Query("select user from MallUserBean user where user.isDelete=0 and user.customerId=?1 and user.userMobile=?2 and user.agent=?3")
+    MallUserBean findByUserNameAndAgent(int customerId, String userMobile, MallAgentBean agentBean);
+
+    @Query("select count(user.userId) from MallUserBean user where user.isDelete=0 and user.customerId=?1 and user.userMobile=?2 and user.agent.agentId=?3 and user.userId<>?4")
+    long userExists(int customerId, String userMobile, int agentId, int userId);
 }

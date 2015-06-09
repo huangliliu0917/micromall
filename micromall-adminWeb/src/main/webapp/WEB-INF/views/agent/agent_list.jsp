@@ -29,7 +29,7 @@
         $(function () {
             agentHandler.init(ajaxUrl);
             $("#agentLevel").val(${searchParams.agentLevel});
-            $("#agentStatus").val(${searchParams.agentStatus});
+            $("#agentStatus").val(${agentStatus});
             if (superAgentId > 0) {
                 $("#backBtn").show();
             }
@@ -80,7 +80,7 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-                                    审核状态：<select id="agentStatus" id="agentStatus">
+                                    审核状态：<select id="agentStatus" name="agentStatus">
                                     <option value="-1">请选择</option>
                                     <option value="0">待审核</option>
                                     <option value="1">审核通过</option>

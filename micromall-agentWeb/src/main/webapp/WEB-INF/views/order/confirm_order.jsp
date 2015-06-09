@@ -217,7 +217,7 @@
 
                     <p>
                         <label>
-                            <input id="logiNum" class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 80%;" type=""/>
+                            <input id="logiNum" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 80%;" type=""/>
                         </label>
 
                     </p>
