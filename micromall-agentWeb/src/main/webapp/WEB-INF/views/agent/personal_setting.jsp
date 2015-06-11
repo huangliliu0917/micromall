@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/weishang.css" />">
     <script type="text/javascript" src="<c:url value="/resources/scripts/jquery-1.7.2.min.js" />"></script>
-    
+
     <title>新增代理商</title>
     <script type="text/javascript">
         var customerId = ${customerId};
@@ -96,6 +96,7 @@
 <%--</div>--%>
 
 <%--</div>--%>
+<p style="height:60px"></p>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>

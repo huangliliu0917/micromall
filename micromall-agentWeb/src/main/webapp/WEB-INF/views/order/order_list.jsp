@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!doctype html>
 <html>
@@ -76,6 +77,9 @@
             <c:forEach items="${pageInfo.getContent()}" var="orderBean">
                 <li class="tttt">
                     <div class="DDH">单号：${orderBean.orderId}
+                        <c:if test="${fn:length(fn:split(orderBean.deliverPath,'|'))>2 && orderBean.realShipAgent.agentId!=agentId}">
+                            <span style="float:right; color:#FF7A00;margin-left: 10px;">已转交给上级</span>
+                        </c:if>
                         <c:if test="${orderBean.orderStatus==1}">
                             <span style="float:right; color:#FF7A00">已发货</span>
                         </c:if>

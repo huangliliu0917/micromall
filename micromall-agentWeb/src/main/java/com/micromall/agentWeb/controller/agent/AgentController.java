@@ -51,7 +51,7 @@ public class AgentController extends BaseController {
             model.addAttribute("agentBean", agentService.findByAgentId(editAgentId));
         }
         MallAgentBean currentAgent = agentService.findByAgentId(getAgentId());
-        List<MallAgentLevelBean> levelList = levelService.findByCustomerIdAndSortNumGreaterThan(getCustomerId(), currentAgent.getAgentLevel().getSortNum());
+        List<MallAgentLevelBean> levelList = levelService.findByCustomerIdAndSortNumGreaterThan(getCustomerId(), currentAgent.getAgentLevel().getSortNum() + 1);
 
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("editAgentId", editAgentId);

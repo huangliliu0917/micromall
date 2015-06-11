@@ -29,6 +29,11 @@ public class AgentLevelApiController extends BaseController {
     public Map<Object, Object> saveAgent(MallAgentLevelBean levelBean) {
         int result = 0;
         try {
+            if (levelBean.getLevelId() > 0) {
+                MallAgentLevelBean editLevel = levelService.findByLevelId(levelBean.getLevelId());
+                editLevel.setLevelName(levelBean.getLevelName());
+                levelBean = editLevel;
+            }
             levelService.save(levelBean);
             result = 1;
         } catch (Exception e) {

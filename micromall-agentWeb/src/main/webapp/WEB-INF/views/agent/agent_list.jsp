@@ -167,9 +167,10 @@
             <span class="wapbuttoms"><a href="javascript:pageHandler.previewPage()" id="previewPage">上一页</a></span>
             <span class="wapbuttoms"><a href="javascript:pageHandler.nextPage()" id="nextPage">下一页</a></span>
         </p>
-
         <p style="height:60px"></p>
+
     </div>
+
 </div>
 
 

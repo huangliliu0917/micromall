@@ -19,8 +19,10 @@ public class MallAgentLevelServiceImpl implements MallAgentLevelService {
     private MallAgentLevelDao dao;
 
     public MallAgentLevelBean save(MallAgentLevelBean bean) {
-        int count = getCount(bean.getCustomerId());
-        bean.setSortNum(count);
+        if (bean.getLevelId() == 0) {
+            int count = getCount(bean.getCustomerId());
+            bean.setSortNum(count);
+        }
         return dao.save(bean);
     }
 
@@ -42,7 +44,7 @@ public class MallAgentLevelServiceImpl implements MallAgentLevelService {
     @Transactional(readOnly = true)
     public boolean deletable(int levelId) {
         int num = dao.levelUsedNum(levelId);
-        return num == 0 ? true : false;
+        return num == 0;
     }
 
     @Transactional(readOnly = true)

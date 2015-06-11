@@ -22,11 +22,11 @@ public class AccountIntercepter extends HandlerInterceptorAdapter {
             request.getSession().setAttribute("customerId", customerId);
             return true;
         } else {
-//            request.getSession().setAttribute("customerId", customerId);
-//            return true;
-            response.sendRedirect("http://login.huobanplus.com");
-
-            return false;
+            request.getSession().setAttribute("customerId", customerId);
+            return true;
+//            response.sendRedirect("http://login.huobanplus.com");
+//
+//            return false;
         }
     }
 

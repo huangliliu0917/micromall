@@ -43,7 +43,7 @@
     <p class="h20"></p>
     <!---------------------/////////////////------------------------------------>
     <div class="all" style="padding:20px 40px 10px 40px">
-        <span class="wz0" style="font-size:40px;">${userId>0?"编辑":"新增"}通讯录用户</span>
+        <span class="wz0" style="font-size:40px;">${userId>0?"编辑":"新增"}用户</span>
 
         <p style="clear:both; height:30px"></p>
 

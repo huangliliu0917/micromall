@@ -28,7 +28,7 @@ public interface StatisticsDao extends JpaRepository<MallOrderBean, String> {
             "orderBean.realShipAgent.agentLevel.levelName as levelName," +
             "orderBean.realShipAgent.authorizationCode as authorizationCode)" +
             " from MallOrderBean orderBean " +
-            " where orderBean.customerId=?1 " +
+            " where orderBean.customerId=?1 and orderBean.orderStatus=1" +
 //            "and orderBean.realShipAgent.agentLevel.levelId=?2" +
             " and orderBean.realShipAgent.addTime>=?3 and orderBean.realShipAgent.addTime<=?4" +
             " and (orderBean.realShipAgent.agentAccount  like %?2% or orderBean.realShipAgent.name like %?2%)" +

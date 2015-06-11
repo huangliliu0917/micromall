@@ -170,7 +170,7 @@
 
                     <div class="DDH">
                         <span style="float: left">请输入货品编号</span>
-                        <a href="#" id="addProCode" style="float: right"><span><img style="margin-top: -5px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>
+                        <a id="addProCode" style="float: right"><span><img style="margin-top: -5px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>
                     </div>
                     <div style="float: left;width: 90%" id="proCodePanel">
                         <p>
@@ -245,6 +245,7 @@
             <a class="wsws_back button" href="javascript:transferOrder()">给上级代理</a>
         </p>
     </c:if>
+    <p style="height:60px"></p>
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
@@ -255,7 +256,7 @@
         <label>
             <input class="proCodes" style="padding: 10px 0px;margin-top: 10px;border: solid 1px #ddd;color: #000;width: 89%;" type=""/>
         </label>
-        <a href="#" onclick="removePro({id})" style="float: right"><span><img style="margin-top: 15px;float:right" src="<c:url value="/resources/images/jian.png"/>" width="27px"></span></a>
+        <a onclick="removePro({id})" style="float: right"><span><img style="margin-top: 15px;float:right" src="<c:url value="/resources/images/jian.png"/>" width="27px"></span></a>
     </p>
 </script>
 

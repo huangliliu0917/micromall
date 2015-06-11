@@ -120,7 +120,6 @@
             <a href="javascript:agentHandler.saveAgent()" class="wsws_back button" id="btnSave">保存</a>
         </p>
     </div>
-
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>

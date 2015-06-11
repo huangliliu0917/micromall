@@ -44,10 +44,11 @@
 
 <p style="height:20px;"></p>
 
-<div style="margin-left: 9px; margin-top: 29px;text-align:center;">
+<div style="margin-top: 29px;text-align:center;">
     <c:forEach items="${weaponBean.imgList}" var="img">
-        <img style="width: 100%;" src="${uploadResourceServer.resourceUri(img)}">
+        <img style="width: 96%;" src="${uploadResourceServer.resourceUri(img)}">
     </c:forEach>
+    <p style="height:27px"></p>
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>

@@ -32,7 +32,7 @@ public interface MallOrderDao extends JpaRepository<MallOrderBean, String>, JpaS
     @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and ((orderBean.ownerId=?2 and orderBean.sendId>0) or (orderBean.realShipAgent.agentId=?2 and orderBean.sendId=0)) and orderBean.orderId like %?3%")
     Page<MallOrderBean> findOutOrder(int customerId, int agentId, String orderId, Pageable pageable);
 
-    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and orderBean.ownerId=?2 and orderBean.sendId=0 and orderBean.realShipAgent.agentId<>orderBean.ownerId and orderBean.orderId like %?3%")
+    @Query("select orderBean from MallOrderBean orderBean where orderBean.customerId=?1 and orderBean.ownerId=?2 and orderBean.sendId=0 and (orderBean.realShipAgent is null or orderBean.realShipAgent.agentId<>orderBean.ownerId) and orderBean.orderId like %?3%")
     Page<MallOrderBean> findInOrder(int customerId, int agentId, String orderId, Pageable pageable);
 
     @Query("select count(orderBean.orderId) from MallOrderBean orderBean where orderBean.orderStatus=0 and orderBean.customerId=?1 and ((orderBean.ownerId=?2 and orderBean.sendId>0) or (orderBean.realShipAgent.agentId=?2 and orderBean.sendId=0))")
