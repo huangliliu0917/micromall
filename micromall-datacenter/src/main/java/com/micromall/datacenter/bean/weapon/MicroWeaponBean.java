@@ -20,6 +20,9 @@ public class MicroWeaponBean {
     private String weaponContent;
     @Column(name = "CustomerId")
     private int customerId;
+    @Column(name = "Weapon_Title")
+    private String weaponTitle;
+
     @Transient
     private String[] imgList;
 
@@ -69,5 +72,13 @@ public class MicroWeaponBean {
 
     public void setImgList(String[] imgList) {
         this.imgList = imgList;
+    }
+
+    public String getWeaponTitle() {
+        return weaponTitle;
+    }
+
+    public void setWeaponTitle(String weaponTitle) {
+        this.weaponTitle = weaponTitle;
     }
 }

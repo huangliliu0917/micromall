@@ -36,7 +36,7 @@ public class AgentController extends BaseController {
     @RequestMapping("/agent/agentList")
     public ModelAndView agentList(MallAgentSearchViewModel searchParams,
                                   @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
-                                  @RequestParam(value = "superAgentId", required = false, defaultValue = "-1") int superAgentId,
+                                  @RequestParam(value = "superAgentId", required = false, defaultValue = "0") int superAgentId,
                                   @RequestParam(value = "agentStatus", required = false, defaultValue = "-1") int agentStatus) {
         ModelMap modelMap = new ModelMap();
         searchParams.setAgentStatus(agentStatus);

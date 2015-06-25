@@ -94,7 +94,7 @@
                                 </li>
                                 <li>
                                     <span class="title"><i class="red">*</i>代理级别：</span>
-                                    <select id="agentLevel">
+                                    <select ${agentId>0?"disabled='disabled'":""} id="agentLevel">
                                         <option value="0">请选择</option>
                                         <c:forEach items="${levelList}" var="levelBean" varStatus="index">
                                             <option value="${levelBean.levelId}" ${agentBean.agentLevel.levelId==levelBean.levelId?"selected='selected'":""}>${levelBean.levelName}

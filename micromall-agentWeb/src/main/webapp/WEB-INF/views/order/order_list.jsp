@@ -121,7 +121,7 @@
 
                     <div class="DDDH"><span style="float:left; color:#999"><fmt:formatDate value="${orderBean.addTime}" type="both"/></span><span style="float:right">数量：${orderBean.proNum}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        金额：￥${orderBean.totalPrice}</span></div>
+                        金额：<fmt:formatNumber value="${orderBean.totalPrice}" pattern="￥.00"/></span></div>
                 </li>
             </c:forEach>
         </ul>

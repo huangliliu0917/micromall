@@ -187,12 +187,13 @@ public class AgentApiController extends BaseController {
             MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
 
             //重新登录
-            agentService.updatePassword(newPass, getAgentId(), orignalPass);
-            CookieHelper.setCookie(response, "account_" + getCustomerId(), agentBean.getAgentAccount());
-            CookieHelper.setCookie(response, "password_" + getCustomerId(), newPass);
-            request.getSession().setAttribute("loginToken_" + getCustomerId(), agentBean.getAgentAccount());
-            request.getSession().setAttribute("agentId_" + getCustomerId(), agentBean.getAgentId());
-            result = 1;
+            result = agentService.updatePassword(newPass, getAgentId(), orignalPass);
+            if(result>0) {
+                CookieHelper.setCookie(response, "account_" + getCustomerId(), agentBean.getAgentAccount());
+                CookieHelper.setCookie(response, "password_" + getCustomerId(), newPass);
+                request.getSession().setAttribute("loginToken_" + getCustomerId(), agentBean.getAgentAccount());
+                request.getSession().setAttribute("agentId_" + getCustomerId(), agentBean.getAgentId());
+            }
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
         }

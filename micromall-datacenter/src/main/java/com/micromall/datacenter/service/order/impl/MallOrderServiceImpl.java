@@ -8,14 +8,15 @@ import com.micromall.datacenter.bean.orders.MallOrderItemBean;
 import com.micromall.datacenter.dao.order.MallOrderDao;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.agent.MallUserService;
+import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.good.MallGoodsService;
-import com.micromall.datacenter.service.order.MallDeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
-import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -43,7 +44,9 @@ public class MallOrderServiceImpl implements MallOrderService {
     @Autowired
     private MallUserService userService;
     @Autowired
-    private MallDeliverItemService deliverItemService;
+    private Environment environment;
+    @Autowired
+    private DeliverItemService deliverItemService;
 
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId, int realShipId) {
@@ -140,16 +143,18 @@ public class MallOrderServiceImpl implements MallOrderService {
         orderBean.setOrderStatus(1);
         dao.save(orderBean);
 
-        //修改配货单状态
-        deliverItemService.updateStatus(proCodes);
+        //修改出货状态
+        deliverItemService.setDelivered(orderBean.getOrderId());
 
-        //发送短信提醒
-        if (orderBean.getSendId() > 0) {
-            MallUserBean userBean = userService.findByUserId(orderBean.getSendId());
-            SMSHelper.send(userBean.getUserMobile(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
-        } else {
-            MallAgentBean agentBean = agentService.findByAgentId(orderBean.getOwnerId());
-            SMSHelper.send(agentBean.getAgentAccount(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
+        if (environment.acceptsProfiles("prod")) {
+            //发送短信提醒
+            if (orderBean.getSendId() > 0) {
+                MallUserBean userBean = userService.findByUserId(orderBean.getSendId());
+                SMSHelper.send(userBean.getUserMobile(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
+            } else {
+                MallAgentBean agentBean = agentService.findByAgentId(orderBean.getOwnerId());
+                SMSHelper.send(agentBean.getAgentAccount(), String.format("您订购的：%s，数量：%s已经发货，请注意查收，感谢您的关注", orderBean.getOrderName(), orderBean.getProNum()));
+            }
         }
     }
 
@@ -190,6 +195,7 @@ public class MallOrderServiceImpl implements MallOrderService {
      * @param orderType
      * @return
      */
+    @Transactional(readOnly = true)
     public Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType, String orderId) {
         Page<MallOrderBean> pageInfo = null;
         List<Sort.Order> orderList = new ArrayList<Sort.Order>();
@@ -238,6 +244,7 @@ public class MallOrderServiceImpl implements MallOrderService {
      * @param agentId
      * @return
      */
+    @Transactional(readOnly = true)
     public int findCountInOrder(int customerId, int agentId) {
         return dao.findCountInOrder(customerId, agentId);
     }
@@ -249,7 +256,50 @@ public class MallOrderServiceImpl implements MallOrderService {
      * @param snCode
      * @return
      */
+    @Transactional(readOnly = true)
     public Page<MallOrderItemBean> findBySnCode(int customerId, String snCode, int pageIndex, int pageSize) {
         return dao.findBySnCode(customerId, snCode, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "itemId")));
+    }
+
+    @Transactional
+    public void updateDeliver(String orderId, int deliverStatus) {
+        dao.updateDeliver(orderId, deliverStatus);
+    }
+
+    public Page<MallOrderBean> findOrderList(final int customerId, final String searchKey, final int deliverStatus, final int isToday, int pageIndex, int pageSize) {
+        List<Sort.Order> orderList = new ArrayList<Sort.Order>();
+        orderList.add(new Sort.Order(Sort.Direction.ASC, "deliverStatus"));
+        orderList.add(new Sort.Order(Sort.Direction.DESC, "addTime"));
+        Specification<MallOrderBean> specification = new Specification<MallOrderBean>() {
+            public Predicate toPredicate(Root<MallOrderBean> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate p1 = cb.equal(root.get("customerId").as(Integer.class), customerId);
+                Predicate p2 = cb.like(root.get("shipName").as(String.class), searchKey);
+                Predicate p3 = cb.like(root.get("shipMobile").as(String.class), searchKey);
+                Predicate p4 = cb.equal(root.get("deliverStatus").as(Integer.class), deliverStatus);
+                List<Predicate> list = new ArrayList<Predicate>();
+                list.add(cb.isNull(root.get("realShipAgent").as(MallAgentBean.class)));
+                list.add(p1);
+                if (deliverStatus != -1) {
+                    list.add(p4);
+                }
+                //今日订单
+                if (isToday == 1) {
+                    String currentDay = DateUtil.formatDate(new Date(), StringUtil.DATE_PATTERN);
+                    list.add(cb.greaterThanOrEqualTo(root.get("addTime").as(Date.class), StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN)));
+                }
+                query.where(cb.and(cb.and(list.toArray(new Predicate[list.size()])), cb.or(p2, p3)));
+                return query.getRestriction();
+            }
+        };
+        return dao.findAll(specification, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList)));
+    }
+
+    public int countByDeliverStatus(int customerId, int deliverStatus) {
+        return dao.countByCustomerIdAndDeliverStatusAndRealShipAgentIsNull(customerId, deliverStatus);
+    }
+
+    public int countByTodayOrders(int customerId) {
+        String currentDay = StringUtil.DateFormat(new Date(), StringUtil.DATE_PATTERN);
+        return dao.countByCustomerIdAndAddTimeGreaterThanAndRealShipAgentIsNull(customerId, StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN));
     }
 }

@@ -29,6 +29,10 @@ public class LocalResourceServer implements ResourceServer {
 
     private String serverUri;
 
+    public String getServerUri() {
+        return serverUri;
+    }
+
     public String saveResource(InputStream data, String orignalFile, int customerId) throws IOException {
         FileOutputStream outputStream = null;
         String prefix = orignalFile.substring(orignalFile.lastIndexOf(".") + 1);

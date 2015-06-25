@@ -2,15 +2,16 @@ package com.micromall.datacenter.service.agent.impl;
 
 import com.micromall.datacenter.bean.agent.MallAgentApplyBean;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
-import com.micromall.datacenter.bean.agent.MallAgentLevelBean;
 import com.micromall.datacenter.bean.config.MallBaseConfigBean;
 import com.micromall.datacenter.dao.agent.MallAgentApplyDao;
 import com.micromall.datacenter.service.agent.MallAgentApplyService;
 import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.config.MallBaseConfigService;
+import com.micromall.datacenter.utils.PersistenceManager;
 import com.micromall.datacenter.utils.SMSHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,12 +34,14 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
     private MallBaseConfigService configService;
     @Autowired
     private MallAgentLevelService levelService;
+    @Autowired
+    private Environment env;
 
     public MallAgentApplyBean save(MallAgentApplyBean applyBean) {
         return dao.save(applyBean);
     }
 
-    public void updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason) {
+    public MallAgentApplyBean updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason) {
         dao.updateApplyStatus(applyStatus, refuseReason, applyId);
         MallAgentApplyBean applyBean = findByApplyId(applyId);
         applyBean.setApplyStatus(applyStatus);
@@ -64,18 +67,21 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
             if (resultBean.getSuperAgentId() > 0) {
                 applyBean.setResultReferrer(agentService.findByAgentId(resultBean.getSuperAgentId()).getAgentAccount());
             }
-
-            //发送短信
-//            MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
-//            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-//            SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，当前代理级别为%s。您的上级代理是：%s，上级联系电话：%s。请关注公众号登录，登录账号为您的手机号，登录密码为您手机号的末6位",
-//                    configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+            if (env.acceptsProfiles("prod")) {
+                //发送短信
+                MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
+                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
+                SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，当前代理级别为%s。您的上级代理是：%s，上级联系电话：%s。请关注公众号登录，登录账号为您的手机号，登录密码为您手机号的末6位",
+                        configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+            }
         } else {
-            //发送短信
-//            MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-//            SMSHelper.send(applyBean.getMobile(), String.format("感谢您关注%s,抱歉您还无法成为我们代理商，理由：%s", configBean.getTitle(), applyBean.getRefuseReason()));
+            if (env.acceptsProfiles("prod")) {
+                //发送短信
+                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
+                SMSHelper.send(applyBean.getMobile(), String.format("感谢您关注%s,抱歉您还无法成为我们代理商，理由：%s", configBean.getTitle(), applyBean.getRefuseReason()));
+            }
         }
-        this.save(applyBean);
+        return this.save(applyBean);
     }
 
     @Transactional(readOnly = true)

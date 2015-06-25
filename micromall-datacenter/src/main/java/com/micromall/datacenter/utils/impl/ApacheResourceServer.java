@@ -63,4 +63,8 @@ public class ApacheResourceServer implements ResourceServer {
     public String resourceUri(String token) {
         return this.serverUri + token;
     }
+
+    public String getServerUri() {
+        return serverUri;
+    }
 }

@@ -138,7 +138,12 @@
 
                             <p style="height:4px; border-top:1px dotted #ddd; clear:both"></p>
 
-                            <div class="DDDH"><span style="float:left; color:#999">${agentBean.addTime}</span></div>
+                            <div class="DDDH">
+                                <span style="float:left; color:#999">${agentBean.addTime}</span>
+                                <c:if test="${agentBean.agentStatus!=1}">
+                                    <span style="float:right; color:#FF7A00">${agentBean.agentStatus==0?"待审核":"审核失败"}</span>
+                                </c:if>
+                            </div>
                         </li>
                     </c:when>
                     <c:otherwise>
@@ -156,7 +161,12 @@
 
                             <p style="height:4px; border-top:1px dotted #ddd; clear:both"></p>
 
-                            <div class="DDDH"><span style="float:left; color:#999">${agentBean.addTime}</span></div>
+                            <div class="DDDH">
+                                <span style="float:left; color:#999">${agentBean.addTime}</span>
+                                <c:if test="${agentBean.agentStatus!=1}">
+                                    <span style="float:right; color:#FF7A00">${agentBean.agentStatus==0?"待审核":"审核失败"}</span>
+                                </c:if>
+                            </div>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -167,6 +177,7 @@
             <span class="wapbuttoms"><a href="javascript:pageHandler.previewPage()" id="previewPage">上一页</a></span>
             <span class="wapbuttoms"><a href="javascript:pageHandler.nextPage()" id="nextPage">下一页</a></span>
         </p>
+
         <p style="height:60px"></p>
 
     </div>

@@ -26,4 +26,11 @@ public interface ResourceServer {
      */
     String resourceUri(String token);
 
+    /**
+     * 得到资源路径
+     *
+     * @return
+     */
+    String getServerUri();
+
 }

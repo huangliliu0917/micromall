@@ -75,7 +75,7 @@
                             alert("修改成功");
                             window.location.reload();
                         } else {
-                            alert("修改失败");
+                            alert("修改失败，请检查旧密码输入是否正确");
                         }
                     }, function () {
                     }, J.PostMethod);
@@ -223,7 +223,9 @@
         <div onclick="updateAddr()" class="my_menu_btn2">
             <a><span class="fontwp">修改我的地址</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
-
+        <div class="my_menu_btn2">
+            <a href="<c:url value="/certificates?customerId=${customerId}&agentAccount=${agentBean.agentAccount}" />"><span class="fontwp">查看我的代理证书</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+        </div>
 
     </div>
 </div>

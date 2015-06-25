@@ -19,84 +19,31 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jBox/Skins/Green/jbox.css"/>">
     <script type="text/javascript" src="<c:url value="/resources/scripts/jqueryui/jquery-ui-1.8.20.min.js" />"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jqueryui/jquery-ui-1.10.3.custom.min.css"/>">
-    <title>编辑商品</title>
-    <script type="text/javascript">
-        var returnUrl = "<c:url value="/order/orderList" />"
-    </script>
-    <style type="text/css">
-        #snProList a {
-            border: 1px solid #ccc;
-            padding: 5px;
-            margin-left: 10px;
-            margin-top: 10px;
-        }
-    </style>
+    <title>订单详情</title>
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/orderApi/" />";
         var orderId = "${orderBean.orderId}";
 
         $(function () {
+            <c:if test="${itemBean!=null}">
+            $("#logiName").val("${itemBean.logiName}");
+            </c:if>
             $("#confirmBtn").click(function () {
-                J.ShowDialog("confirmShip_dialog", "确认发货", function () {
-                    var self = this;
-                    confirmShip();
-                }, function () {
-                    $(this).dialog("close");
+                J.ShowDialogButton("confirmShip_dialog", "确认发货", {
+                    "确认发货": function () {
+                        confirmShip();
+                    },
+                    "重新出货": function () {
+                        reDeliver();
+                    },
+                    "取消": function () {
+                        $(this).dialog("close");
+                    }
                 });
             });
-            <c:if test="${orderBean.orderStatus==0&&orderBean.realShipAgent==null}">
-            setInterval("loadData()", 1000);
-            </c:if>
-            //loadData();
         });
 
-        function addPro(id, snCode) {
-            var proHtml = $("#pro_template").html();
-            var length = $(".proCodes").length;
-            proHtml = proHtml.replace(/{id}/g, id);
-            proHtml = proHtml.replace("{snCode}", snCode);
-            proHtml = proHtml.replace("{snBtn}", id);
-            $("#proCodePanel").append(proHtml);
-            $("#btn" + id).attr("disabled", "disabled");
-            $("#btn" + id).val("已选择");
-        }
-
-        function removePro(id) {
-            var snBtn = $("#snBtn" + id).val();
-            $("#btn" + snBtn).removeAttr("disabled");
-            $("#btn" + snBtn).val("选择");
-            $("#code" + id).remove();
-        }
-
         function confirmShip() {
-            var index = true;
-            var proCodes = "";
-            var $proCodes = $(".proCodes");
-            if ($proCodes.length == 0) {
-                $.jBox.tip("请至少选择一个货品发货");
-                return;
-            }
-            $proCodes.each(function (o, item) {
-                var code = $.trim($(item).val());
-                if (code.length == 0) {
-                    index = false;
-                    $.jBox.tip("请至少选择一个货品发货");
-                    return false;
-                }
-                if (o == $proCodes.length - 1) {
-                    proCodes += $(item).val();
-                } else {
-                    proCodes += $(item).val() + ",";
-                }
-            });
-            if (!index) {
-                return;
-            }
-//            var shipInfo = $.trim($("#shipInfo").val());
-//            if (shipInfo.length == 0) {
-//                $.jBox.tip("请输入物流信息");
-//                return;
-//            }
             var logiName = $("#logiName").val();
             var logiNum = $.trim($("#logiNum").val());
             if (logiNum.length == 0) {
@@ -106,7 +53,6 @@
             $.jBox.tip("正在提交...", "loading");
             var requestData = {
                 orderId: orderId,
-                proCodes: proCodes,
                 logiName: logiName,
                 logiNum: logiNum
             };
@@ -121,58 +67,56 @@
             }, function () {
             }, J.PostMethod);
         }
-        function loadData() {
-            J.GetJsonRespons(ajaxUrl + "getShipProList", {
-                agentMobile: "${orderBean.shipMobile}"
-            }, function (json) {
-                //$("#snProList").html("");
-                if (json.snList.length > 0) {
-                    $.each(json.snList, function (o, item) {
-                        var $hdSnId = $(".hdSnId");
-                        var index = true;
-                        $hdSnId.each(function () {
-                            if (item.id == $(this).val()) {
-                                index = false;
-                                return false;
-                            }
-                        });
-                        if (index) {
-                            $("#snProList").append("<li style='float:left;'>" + item.sn + "（" + (item.snType == 0 ? "主码" : "副码") + "）：" + item.goodBean.goodName +
-                            "<input id='btn" + item.id + "' type='button'onclick='addPro(" + item.id + ",\"" + item.sn + "\")' value='选择' />" +
-                            "<input class='hdSnId' type='hidden' value='" + item.id + "' /></li>");
+
+        function reDeliver() {
+            jBox.confirm('确定要设置重新出货？请联系出库管理员重新操作出货', '提示', function (v, h, f) {
+                if (v == "ok") {
+                    $.jBox.tip("正在设置重新出货...", "loading");
+                    var requestData = {
+                        orderId: orderId,
+                        itemId:${itemBean.id}
+                    }
+                    J.GetJsonRespons(ajaxUrl + "reDeliver", requestData, function (json) {
+                        if (json.result == 1) {
+                            $.jBox.tip("重新出货成功，请联系相应出库管理员重新操作出货", "success");
+                            window.location.reload();
+                        } else {
+                            $.jBox.tip("操作失败", "error");
                         }
-                    });
+                    }, function () {
+                    }, J.PostMethod);
                 }
-            }, function () {
-            }, J.PostMethod);
+                return true;
+            });
+
         }
     </script>
 </head>
 <body style="background-color:#e4e7ea">
 <div id="confirmShip_dialog" style="padding: 10px;display: none;">
     <div class="cnt form">
-        <!---->
+
         <form>
             <div class="waps-cpanel-content">
                 <div class="waps-step-web plb5" style="width: 782px;">
-                    <div style="float: left;">
-                        待选货品
-                        <ul id="snProList" style="width: 364px;">
-                        </ul>
-                    </div>
-                    <ul style="float:right;width: 343px;">
+                    <ul>
                         <li>
                             <span class="title">
-                                请从左侧选择货品编码：
+                                货品编号列表：
                                 <%--<a href="javascript:addPro()" id="addProCode" style="float: right"><span>--%>
                                     <%--<img style="margin-top: -5px;float:right" src="<c:url value="/resources/images/jia.png"/>" width="27px"></span></a>--%>
                             </span>
                             <br>
 
                             <div id="proCodePanel">
-                                <div>
-                                    <%--<input type="text" class="text proCodes" value="" style="margin-top: 20px;width: 303px;"/>--%>
-                                </div>
+                                <c:if test="${itemBean!=null}">
+                                    <c:forEach items="${itemBean.proList}" var="proCode">
+                                        <div>
+                                            <input readonly="readonly" type="text" class="text proCodes" value="${proCode}" style="margin-top: 20px;width: 303px;"/>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
+
                             </div>
                         </li>
                         <li>
@@ -202,7 +146,7 @@
                         </li>
                         <li>
                             <span class="title">物流单号：</span><br>
-                            <input type="text" id="logiNum"/>
+                            <input type="text" id="logiNum" value="${itemBean.logiNum}"/>
                         </li>
                     </ul>
                 </div>
@@ -258,6 +202,12 @@
                                     <span class="title">订单状态：</span>
                                     <label>${orderBean.orderStatus==0?"未发货":"已发货"}</label>
                                 </li>
+                                <c:if test="${orderBean.realShipAgent==null}">
+                                    <li>
+                                        <span class="title">出货状态：</span>
+                                        <label>${orderBean.deliverStatus==0?"未出货":"已出货"}</label>
+                                    </li>
+                                </c:if>
                                 <c:if test="${orderBean.orderStatus==1}">
                                     <li>
                                         <span class="title">发货人：</span>
@@ -280,9 +230,9 @@
                                 </c:if>
                             </ul>
                         </div>
-                        <c:if test="${orderBean.orderStatus==0&&orderBean.realShipAgent==null}">
+                        <c:if test="${orderBean.orderStatus==0&&orderBean.realShipAgent==null&&orderBean.deliverStatus==1}">
                             <div style="padding:20px 5% 20px 5%">
-                                <input type="button" value="发货" id="confirmBtn" class=" copybtn6">
+                                <input type="button" value="确认发货" id="confirmBtn" class=" copybtn6">
                             </div>
                         </c:if>
                     </div>
@@ -293,11 +243,3 @@
 </div>
 </body>
 </html>
-
-<script type="text/html" id="pro_template">
-    <div id="code{id}">
-        <input id="snBtn{id}" type="hidden" value="{snBtn}"/>
-        <input type="text" readonly="readonly" class="text proCodes" value="{snCode}" style="margin-top: 20px;width: 303px;"/>
-        <a href="#" onclick="removePro({id})" style="float: right"><span><img style="margin-top: 23px;float:right" src="<c:url value="/resources/images/jian.png"/>" width="27px"></span></a>
-    </div>
-</script>

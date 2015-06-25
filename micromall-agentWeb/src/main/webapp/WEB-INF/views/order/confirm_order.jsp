@@ -245,7 +245,7 @@
             <a class="wsws_back button" href="javascript:transferOrder()">给上级代理</a>
         </p>
     </c:if>
-    <p style="height:60px"></p>
+    <p style="height:115px"></p>
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>

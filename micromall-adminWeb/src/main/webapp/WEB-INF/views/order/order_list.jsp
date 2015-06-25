@@ -172,6 +172,7 @@
                             <th align="center" rowspan="1" colspan="1">收件人手机</th>
                             <th align="center" rowspan="1" colspan="1">订单时间</th>
                             <th align="center" rowspan="1" colspan="1">订单状态</th>
+                            <th align="center" rowspan="1" colspan="1">出库状态</th>
                             <th align="center" rowspan="1" colspan="1">操作</th>
                         </tr>
                         </thead>
@@ -188,9 +189,14 @@
                                         ${orderBean.orderStatus==1?"已发货":orderBean.realShipAgent==null?"<span style='color:red'>需要发货</span>":"未发货"}
                                 </td>
                                 <td align="center">
-                                    <c:if test="${orderBean.realShipAgent==null&&orderBean.orderStatus==0}">
-                                        <a href="javascript:shipOrder('${orderBean.orderId}')">发货</a> |
+                                    <c:if test="${orderBean.realShipAgent==null}">
+                                        ${orderBean.deliverStatus==0?"未出库":"已出库"}
                                     </c:if>
+                                </td>
+                                <td align="center">
+                                        <%--<c:if test="${orderBean.realShipAgent==null&&orderBean.orderStatus==0}">--%>
+                                        <%--<a href="javascript:shipOrder('${orderBean.orderId}')">发货</a> |--%>
+                                        <%--</c:if>--%>
                                     <a href="<c:url value="/order/orderDetail?orderId=${orderBean.orderId}" />">订单详情</a>
                                 </td>
                             </tr>

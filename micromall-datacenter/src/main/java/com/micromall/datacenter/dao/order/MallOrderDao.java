@@ -43,4 +43,32 @@ public interface MallOrderDao extends JpaRepository<MallOrderBean, String>, JpaS
 
     @Query("select sum(orderBean.proNum) from MallOrderBean orderBean where orderBean.orderStatus=1 and orderBean.realShipAgent is null and orderBean.addTime between ?1 and ?2")
     int getShipments(Date beginTime, Date endTime);
+
+    /**
+     * 设置出货状态
+     *
+     * @param orderId
+     * @param deliverStatus
+     */
+    @Modifying
+    @Query("update MallOrderBean orderBean set orderBean.deliverStatus=?2 where orderBean.orderId=?1")
+    void updateDeliver(String orderId, int deliverStatus);
+
+    /**
+     * 未出货或已出货订单数量
+     *
+     * @param customerId
+     * @param deliverStatus
+     * @return
+     */
+    int countByCustomerIdAndDeliverStatusAndRealShipAgentIsNull(int customerId, int deliverStatus);
+
+    /**
+     * 今日订单数量
+     *
+     * @param customerId
+     * @param today
+     * @return
+     */
+    int countByCustomerIdAndAddTimeGreaterThanAndRealShipAgentIsNull(int customerId, Date today);
 }

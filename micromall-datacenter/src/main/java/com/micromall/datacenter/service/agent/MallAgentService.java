@@ -54,7 +54,7 @@ public interface MallAgentService {
 
     MallAgentLevelBean findAgentLevel(int agentId);
 
-    void updatePassword(String newPass, int agentId, String originalPass);
+    int updatePassword(String newPass, int agentId, String originalPass);
 
     int getUnderAgentNum(int superAgentId);
 

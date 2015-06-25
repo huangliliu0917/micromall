@@ -165,8 +165,8 @@ public class MallAgentServiceImpl implements MallAgentService {
         return dao.findAgentLevel(agentId);
     }
 
-    public void updatePassword(String newPass, int agentId, String originalPass) {
-        dao.updatePassword(newPass, agentId, originalPass);
+    public int updatePassword(String newPass, int agentId, String originalPass) {
+        return dao.updatePassword(newPass, agentId, originalPass);
     }
 
     public int getUnderAgentNum(int superAgentId) {

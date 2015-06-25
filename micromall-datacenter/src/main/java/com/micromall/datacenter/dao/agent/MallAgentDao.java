@@ -41,7 +41,7 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
 
     @Modifying
     @Query("update MallAgentBean agentBean set agentBean.agentPassword=?1 where agentBean.agentId=?2 and agentBean.agentPassword=?3")
-    void updatePassword(String newPass, int agentId, String originalPass);
+    int updatePassword(String newPass, int agentId, String originalPass);
 
     @Query("select count(agentBean.agentId) from MallAgentBean agentBean where agentBean.superAgentId=?1")
     int getUnderAgentNum(int superAgentId);
@@ -53,5 +53,6 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
     @Query("select count(agent.agentId) from MallAgentBean agent where agent.authorizationCode=?1 and agent.customerId=?2")
     int codeExists(String code, int customerId);
 
+    @Query("select agentBean from MallAgentBean agentBean where agentBean.agentAccount=?1 and agentBean.customerId=?2 and agentBean.agentStatus=1")
     MallAgentBean findByAgentAccountAndCustomerId(String agentAccount, int customerId);
 }

@@ -19,14 +19,14 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jBox/Skins/Green/jbox.css"/>">
     <script type="text/javascript" src="<c:url value="/resources/scripts/ajaxfileupload.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/admin.upload.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/scripts/emotion/jquery.qqFace.Data.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/scripts/emotion/jquery.qqFace.js" />"></script>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/emotion/qqFace.css"/>">
+    <script type="text/javascript" src="<c:url value="/resources/scripts/kindeditor-4.1.10/kindeditor-all.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/kindeditor-4.1.10/lang/zh_CN.js" />"></script>
     <title>编辑商品</title>
     <script type="text/javascript">
         var customerId = ${customerId};
         var ajaxUrl = "<c:url value="/weaponApi/saveWeapon" />";
         var uploadUrl = "<c:url value="/upload" />";
+        var weaponId = ${weaponId};
 
         function fileChange() {
             $.jBox.tip("正在上传...", "loading");
@@ -49,9 +49,25 @@
             <c:if test="${weaponId>0}">
             $("#previewImg").attr("src", "${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}");
             </c:if>
+            var editor;
+            KindEditor.ready(function (K) {
+                editor = K.create("#weaponContent", {
+                    uploadJson: "<c:url value="/resources/scripts/kindeditor-4.1.10/jsp/upload_json.jsp?customerId=${customerId}" />",
+                });
+                if (weaponId > 0) {
+                    editor.html("${weaponBean.weaponContent}");
+                }
+            });
+
+
             $("#saveSubmit").click(function () {
-                var weaponContent = $("#weaponContent").val().replace(/\r/g, "").replace(/\n/g, "");
+                var weaponTitle = $("#weaponTitle").val();
+                var weaponContent = editor.html();
                 var weaponImgs = $("#weaponImg").val();
+                if (weaponTitle.length == 0) {
+                    $.jBox.tip("请输入标题");
+                    return;
+                }
                 if (weaponContent.length == 0) {
                     $.jBox.tip("请输入软文内容");
                     return;
@@ -62,6 +78,7 @@
                 }
                 $.jBox.tip("正在保存", "loading");
                 var requestData = {
+                    weaponTitle: weaponTitle,
                     weaponContent: weaponContent,
                     weaponImgs: weaponImgs,
                     weaponType: 1,
@@ -79,11 +96,7 @@
                 }, J.PostMethod);
             });
 
-            $("#emotion").qqFace({
-                assign: "weaponContent",
-                staticpath: "<c:url value="/resources/scripts/emotion/staticface/" />",
-                path: "<c:url value="/resources/scripts/emotion/face/" />"
-            });
+
         });
     </script>
     <style type="text/css">
@@ -124,7 +137,8 @@
 <div class="contentpanel">
     <div class="block">
         <div class="h">
-            <p style="line-height:35px; padding-left:10px;"><i class="fa  fa-file-o"></i>添加微武器（${weaponType==0?"图文":"软文"}）</p>
+            <p style="line-height:35px; padding-left:10px;"><i
+                    class="fa  fa-file-o"></i>添加微武器（${weaponType==0?"图文":"软文"}）</p>
 
         </div>
         <div class="cnt-wp">
@@ -134,21 +148,32 @@
                         <div class="waps-step-web plb5">
                             <ul>
                                 <li>
-                                    <p class="title"><i class="red">*</i>内容：<span class="emotion" id="emotion">表情</span></p>
+                                    <p class="title"><i class="red">*</i>标题：
+                                    </p>
 
                                     <p style="height: 10px;"></p>
-                                    <textarea id="weaponContent" style="width: 303px;height: 117px;padding: 5px;" placeholder="">${weaponBean.weaponContent}</textarea>
+                                    <input id="weaponTitle" value="${weaponBean.weaponTitle}" name="weaponTitle"/>
+                                </li>
+
+                                <li>
+                                    <p class="title"><i class="red">*</i>内容：
+                                    </p>
+
+                                    <p style="height: 10px;"></p>
+                                    <textarea id="weaponContent" name="content" style="width:700px;height:300px;"></textarea>
                                 </li>
                                 <li style="width: 500px;">
                                     <span class="title"><i class="red">*</i>图片（用于分享的缩略图）：</span>
-                                    <input type="file" id="btnFile" name="btnFile" onchange="fileChange()" hidden="hidden"/>
+                                    <input type="file" id="btnFile" name="btnFile" onchange="fileChange()"
+                                           hidden="hidden"/>
 
                                     <p style="height: 10px;"></p>
                                     <ul style="width: 330px;" id="imgUl">
                                         <li>
                                             <img id="previewImg" src="" class="previewImg"/>
                                             <%--<img onclick='removeImg(${index.index})' class='delImg' src='<c:url value="/resources/images/delImg.png" />'/>--%>
-                                            <input id="weaponImg" class='weaponImg' type='hidden' value='${weaponBean.weaponImgs}'/>
+                                            <input id="weaponImg" class='weaponImg' type='hidden'
+                                                   value='${weaponBean.weaponImgs}'/>
                                         </li>
                                         <li style="width:100px;height: 100px;margin-left: 5px; float: left">
                                             <div class="fg-button clearfix" style="float:right;">
@@ -174,4 +199,3 @@
 </div>
 </body>
 </html>
-

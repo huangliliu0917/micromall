@@ -36,20 +36,29 @@
     </style>
 </head>
 
-<body style="background-color:#e7e9eb; max-width:640px; margin:0 auto">
-<div class="wpcontent">图片较多，请在有WIFI的情况下打开，打开后直接保存图片，复制文字即可</div>
-<p style="height:10px;"></p>
+<body style=" max-width:640px; margin:0 auto">
+<c:if test="${weaponBean.weaponType==0}">
+    <div class="wpcontent">图片较多，请在有WIFI的情况下打开，打开后直接保存图片，复制文字即可</div>
+    <p style="height:10px;"></p>
 
-<p style="text-align:center">文字内容：${weaponBean.weaponContent}</p>
+    <p style="text-align:center">文字内容：${weaponBean.weaponContent}</p>
 
-<p style="height:20px;"></p>
+    <p style="height:20px;"></p>
 
-<div style="margin-top: 29px;text-align:center;">
-    <c:forEach items="${weaponBean.imgList}" var="img">
-        <img style="width: 96%;" src="${uploadResourceServer.resourceUri(img)}">
-    </c:forEach>
-    <p style="height:27px"></p>
-</div>
+    <div style="margin-top: 29px;text-align:center;">
+        <c:forEach items="${weaponBean.imgList}" var="img">
+            <img style="width: 96%;" src="${uploadResourceServer.resourceUri(img)}">
+        </c:forEach>
+        <p style="height:27px"></p>
+    </div>
+</c:if>
+<c:if test="${weaponBean.weaponType==1}">
+    <p style="text-align: center;font-size: 20px;">${weaponBean.weaponTitle}</p>
+
+    <div>
+            ${weaponBean.weaponContent}
+    </div>
+</c:if>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>

@@ -1,10 +1,12 @@
 package com.micromall.adminWeb.controller.order.api;
 
 import com.micromall.adminWeb.controller.BaseController;
+import com.micromall.datacenter.bean.delivery.DeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallDeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.pdaBean.SnInfoBean;
 import com.micromall.datacenter.pdaService.SnInfoService;
+import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.service.order.MallDeliverItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +28,25 @@ public class OrderApiController extends BaseController {
     private Map<Object, Object> responseData = new HashMap<Object, Object>();
     @Autowired
     private MallOrderService orderService;
-
-    @Autowired
-    private SnInfoService infoService;
     @Autowired
     private MallDeliverItemService deliverSnInfoService;
+    @Autowired
+    private DeliverItemService deliverItemService;
 
     /**
      * 确认发货
      *
      * @param orderId
-     * @param proCodes
-     * @param shipInfo
      * @return
      */
     @RequestMapping("/orderApi/confirmShip")
     @ResponseBody
-    public Map<Object, Object> confirmShip(String orderId, String proCodes, String logiName, String logiNum) {
+    public Map<Object, Object> confirmShip(String orderId, String logiName, String logiNum) {
         int result = 0;
         try {
             MallOrderBean orderBean = orderService.findByOrderId(orderId);
-            orderService.confirmShip(orderBean, proCodes.split(","), logiName, logiNum);
+            DeliverItemBean deliverItemBean = deliverItemService.findByOrderId(orderId);
+            orderService.confirmShip(orderBean, deliverItemBean.getProList(), logiName, logiNum);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());
@@ -55,11 +55,19 @@ public class OrderApiController extends BaseController {
         return responseData;
     }
 
-    @RequestMapping("/orderApi/getShipProList")
+    @RequestMapping("/orderApi/reDeliver")
     @ResponseBody
-    public Map<Object, Object> getShipProList(String agentMobile) {
-        List<MallDeliverItemBean> snList = deliverSnInfoService.findAll(getCustomerId(), agentMobile);
-        responseData.put("snList", snList);
+    public Map<Object, Object> reDeliver(String orderId, int itemId) {
+        Map<Object, Object> responseData = new HashMap<Object, Object>();
+        int result = 0;
+        try {
+            orderService.updateDeliver(orderId, 0);
+            deliverItemService.setInvalidate(itemId);
+            result = 1;
+        } catch (Exception e) {
+
+        }
+        responseData.put("result", result);
         return responseData;
     }
 }

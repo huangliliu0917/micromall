@@ -61,6 +61,11 @@ public class MallOrderBean {
 
     @Column(name = "Logi_Num")
     private String logiNum;
+    /**
+     * 是否出库，1表示已出库
+     */
+    @Column(name = "DeliverStatus")
+    private int deliverStatus;
 
     public Date getAddTime() {
         return addTime;
@@ -228,5 +233,13 @@ public class MallOrderBean {
 
     public void setRealShipAgent(MallAgentBean realShipAgent) {
         this.realShipAgent = realShipAgent;
+    }
+
+    public int getDeliverStatus() {
+        return deliverStatus;
+    }
+
+    public void setDeliverStatus(int deliverStatus) {
+        this.deliverStatus = deliverStatus;
     }
 }

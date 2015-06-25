@@ -1,8 +1,10 @@
 package com.micromall.adminWeb.controller.order;
 
 import com.micromall.adminWeb.controller.BaseController;
+import com.micromall.datacenter.bean.delivery.DeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
+import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.viewModel.log.AgentShipmentsViewModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderController extends BaseController {
     @Autowired
     private MallOrderService orderService;
+    @Autowired
+    private DeliverItemService deliverItemService;
 
     @RequestMapping("/order/orderList")
     public String orderList(MallOrderSearchViewModel searchViewModel,
@@ -36,7 +40,9 @@ public class OrderController extends BaseController {
     @RequestMapping("/order/orderDetail")
     public String orderDetail(String orderId, Model model) {
         MallOrderBean orderBean = orderService.findByOrderId(orderId);
+        DeliverItemBean itemBean = deliverItemService.findByOrderId(orderId);
         model.addAttribute("orderBean", orderBean);
+        model.addAttribute("itemBean", itemBean);
         return "order/order_detail";
     }
 

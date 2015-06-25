@@ -126,6 +126,12 @@
                             <li onclick="goMenu('<c:url value="/order/orderList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>订单查询</a></li>
                         </ul>
                     </li>
+                    <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>出货管理</span></a>
+                        <ul class="children" style="display: block">
+                            <li onclick="goMenu('<c:url value="/delivery/deliverList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>出货列表</a></li>
+                            <li onclick="goMenu('<c:url value="/delivery/managerList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>出货管理员</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>微武器</span></a>
                         <ul class="children" style="display: block">
                             <li onclick="goMenu('<c:url value="/weapon/weaponList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>微武器管理</a></li>

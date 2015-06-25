@@ -135,7 +135,7 @@
                                 <thead>
                                 <tr class="sdkbar" style="font-weight:bold;">
                                     <th align="center" rowspan="1" colspan="1">缩略图</th>
-                                    <th align="center" rowspan="1" colspan="1">软文内容</th>
+                                    <th align="center" rowspan="1" colspan="1">软文标题</th>
                                     <th align="center" rowspan="1" colspan="1">操作</th>
                                 </tr>
                                 </thead>
@@ -148,7 +148,7 @@
                                         <td align="center"><img style="width: 80px;height: 80px;" src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}"/></td>
                                         <td>
                                             <p style="width: 90%;margin: 0 auto;padding: 10px;text-overflow:ellipsis;text-align:center;white-space:nowrap;overflow:hidden;display:inline-block;">
-                                                    ${weaponBean.weaponContent}
+                                                    ${weaponBean.weaponTitle}
                                             </p>
                                         </td>
                                         <td align="center">
