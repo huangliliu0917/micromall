@@ -21,8 +21,6 @@ public interface MallOrderService {
 
     void transferOrder(String orderId, int transferTo);
 
-    String createOrderId(int customerId);
-
     Page<MallOrderBean> findAll(int customerId, int agentId, int pageIndex, int pageSize, int orderType, String orderId);
 
     int findCountInOrder(int customerId, int agentId);

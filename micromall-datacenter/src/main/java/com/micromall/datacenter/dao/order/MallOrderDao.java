@@ -71,4 +71,12 @@ public interface MallOrderDao extends JpaRepository<MallOrderBean, String>, JpaS
      * @return
      */
     int countByCustomerIdAndAddTimeGreaterThanAndRealShipAgentIsNull(int customerId, Date today);
+
+    /**
+     * 订单号码数量（判断生成的订单号是否可用）
+     *
+     * @param orderId
+     * @return
+     */
+    int countByOrderId(String orderId);
 }

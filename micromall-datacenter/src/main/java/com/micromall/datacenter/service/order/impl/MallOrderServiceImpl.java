@@ -51,7 +51,7 @@ public class MallOrderServiceImpl implements MallOrderService {
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId, int realShipId) {
         if (StringUtil.isEmpty(bean.getOrderId())) {
-            bean.setOrderId(this.createOrderId(bean.getCustomerId()));
+            bean.setOrderId(this.createOrderId());
         }
         MallGoodBean goodBean = new MallGoodBean();
         goodBean.setGoodId(goodId);
@@ -181,8 +181,17 @@ public class MallOrderServiceImpl implements MallOrderService {
         dao.save(orderBean);
     }
 
-    public String createOrderId(int customerId) {
-        return StringUtil.DateFormat(new Date(), "yyyyMMddHHmmss") + (int) (Math.random() * 89 + 10);
+    private String createOrderId() {
+        String str = StringUtil.DateFormat(new Date(), "yyyyMMddHHmmss");
+        while (true) {
+            StringBuilder stringBuilder = new StringBuilder(str);
+            for (int i = 0; i < 2; i++) {
+                stringBuilder.append((int) (Math.random() * 10));
+            }
+            if (dao.countByOrderId(stringBuilder.toString()) == 0) {
+                return stringBuilder.toString();
+            }
+        }
     }
 
     /**

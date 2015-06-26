@@ -61,7 +61,9 @@ public interface AppApiController {
      * @param proCodes 已逗号分隔的货品编号字符串
      * @return 1表示成功
      */
-    int deliverPro(String orderId, String proCodes);
+    int deliverPro(String orderId, String proCodes, int customerId, int managerId,
+                   @RequestParam(value = "logiName", required = false, defaultValue = "") String logiName,
+                   @RequestParam(value = "logiNum", required = false, defaultValue = "") String logiNum);
 
     /**
      * 修改密码

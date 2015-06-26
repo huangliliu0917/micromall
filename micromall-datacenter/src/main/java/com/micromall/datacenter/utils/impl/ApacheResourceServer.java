@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,13 +36,13 @@ public class ApacheResourceServer implements ResourceServer {
     }
 
 
-    public String saveResource(InputStream data, String orginalName, int customerId) throws IOException {
+    public String saveResource(InputStream data, String orginalName, int customerId, String folder) throws IOException {
         if (serverUri == null || resourceHome == null)
             throw new IllegalStateException("请设置micromall.resourcesUri和micromall.resourcesHome属性");
         FileOutputStream outputStream = null;
         String prefix = orginalName.substring(orginalName.lastIndexOf(".") + 1);
         Date now = new Date();
-        String fileFolder = "/uploaded/image/" + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
+        String fileFolder = folder + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
         String fileName = StringUtil.DateFormat(now, "yyyyMMddHHmmSS") + "." + prefix;
         try {
             File targetFile = new File(resourceHome + fileFolder, fileName);
@@ -58,6 +59,16 @@ public class ApacheResourceServer implements ResourceServer {
             }
         }
         return fileFolder + "/" + fileName;
+    }
+
+    public void deleteResource(String path) throws IOException {
+        if (StringUtils.isEmpty(resourceHome + path))
+            return;
+
+        File file = new File(path);
+        if (file.isFile() && file.exists()) {
+            file.delete();
+        }
     }
 
     public String resourceUri(String token) {

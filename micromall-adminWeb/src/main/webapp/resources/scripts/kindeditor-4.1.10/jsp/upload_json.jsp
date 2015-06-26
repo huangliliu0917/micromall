@@ -37,7 +37,7 @@
     while (itr.hasNext()) {
         FileItem item = (FileItem) itr.next();
         if (!item.isFormField()) {
-            String path = resourceServer.saveResource(item.getInputStream(), item.getName(), 0);
+            String path = resourceServer.saveResource(item.getInputStream(), item.getName(), 0, ResourceServer.BarCodeImage);
 
             JSONObject obj = new JSONObject();
             obj.put("error", 0);

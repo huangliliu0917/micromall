@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,20 +30,20 @@ public class LocalResourceServer implements ResourceServer {
     }
 
     private String serverUri;
+    private String resourceHome = "D:";
 
     public String getServerUri() {
         return serverUri;
     }
 
-    public String saveResource(InputStream data, String orignalFile, int customerId) throws IOException {
+    public String saveResource(InputStream data, String orignalFile, int customerId, String folder) throws IOException {
         FileOutputStream outputStream = null;
         String prefix = orignalFile.substring(orignalFile.lastIndexOf(".") + 1);
         Date now = new Date();
-        String savePath = "D:";
-        String fileFolder = "/uploaded/image/" + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
+        String fileFolder = folder + customerId + "/" + StringUtil.DateFormat(now, "yyyyMMdd");
         String fileName = StringUtil.DateFormat(now, "yyyyMMddHHmmSS") + "." + prefix;
         try {
-            File targetFile = new File(savePath + fileFolder, fileName);
+            File targetFile = new File(resourceHome + fileFolder, fileName);
             if (!targetFile.getParentFile().exists()) {
                 targetFile.getParentFile().mkdirs();
             }
@@ -55,6 +57,16 @@ public class LocalResourceServer implements ResourceServer {
             }
         }
         return fileFolder + "/" + fileName;
+    }
+
+    public void deleteResource(String path) throws IOException {
+        if (StringUtils.isEmpty(resourceHome + path))
+            return;
+
+        File file = new File(path);
+        if (file.isFile() && file.exists()) {
+            file.delete();
+        }
     }
 
     public String resourceUri(String token) {

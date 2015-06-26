@@ -128,5 +128,10 @@ Error while loading [ class org.springframework.data.jpa.repository.support.Quer
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
     </dependencies>
 </project>

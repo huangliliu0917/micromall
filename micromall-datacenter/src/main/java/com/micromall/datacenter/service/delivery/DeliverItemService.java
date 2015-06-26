@@ -54,4 +54,16 @@ public interface DeliverItemService {
      * @param orderId
      */
     void setDelivered(String orderId);
+
+    /**
+     * 出货
+     *
+     * @param customerId 商户id
+     * @param proCodes   逗号分隔的货品编号字符串
+     * @param orderId    订单id
+     * @param logiName   快递公司
+     * @param logiNum    快递单号
+     * @param managerId  出货人id
+     */
+    void deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId);
 }

@@ -1,8 +1,11 @@
 package com.micromall.datacenter.service.delivery.impl;
 
 import com.micromall.datacenter.bean.delivery.DeliverItemBean;
+import com.micromall.datacenter.bean.delivery.ManagerBean;
+import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.dao.delivery.DeliverItemDao;
 import com.micromall.datacenter.service.delivery.DeliverItemService;
+import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +26,8 @@ import java.util.List;
 public class DeliverItemServiceImpl implements DeliverItemService {
     @Autowired
     private DeliverItemDao dao;
+    @Autowired
+    private MallOrderService orderService;
 
     @Transactional
     public DeliverItemBean save(DeliverItemBean bean) {
@@ -63,5 +68,24 @@ public class DeliverItemServiceImpl implements DeliverItemService {
     @Transactional
     public void setDelivered(String orderId) {
         dao.setDelivered(orderId);
+    }
+
+    public void deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId) {
+        DeliverItemBean itemBean = new DeliverItemBean();
+        MallOrderBean orderBean = new MallOrderBean();
+        orderBean.setOrderId(orderId);
+        itemBean.setOrderBean(orderBean);
+        ManagerBean managerBean = new ManagerBean();
+        managerBean.setId(managerId);
+        itemBean.setManagerBean(managerBean);
+        itemBean.setProCode(proCodes);
+        itemBean.setAddTime(new Date());
+        itemBean.setCustomerId(customerId);
+        itemBean.setLogiName(logiName);
+        itemBean.setLogiNum(logiNum);
+        itemBean.setDeliverStatus(0);
+        this.save(itemBean);
+        //设置为已出库
+        orderService.updateDeliver(orderId, 1);
     }
 }

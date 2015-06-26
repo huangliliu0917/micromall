@@ -10,13 +10,31 @@ import java.io.InputStream;
 public interface ResourceServer {
 
     /**
+     * 商家上传的图片
+     */
+    String CustomerImage = "/uploaded/image/";
+    /**
+     * 商家声称的一维条码图片
+     */
+    String BarCodeImage = "/uploaded/barcode/";
+
+    /**
      * 保存资源 并且返回它的token
      *
      * @param data        数据
      * @param orginalName 原始名称
      * @return 一个唯一针对该资源的token 比如 uploaded/...agc.gif
      */
-    String saveResource(InputStream data, String orginalName, int customerId) throws IOException;
+    String saveResource(InputStream data, String orginalName, int customerId, String folder) throws IOException;
+
+    /**
+     * 删除资源
+     *
+     * @param path
+     * @return
+     * @throws IOException
+     */
+    void deleteResource(String path) throws IOException;
 
     /**
      * 根据传入的token返回该资源的uri

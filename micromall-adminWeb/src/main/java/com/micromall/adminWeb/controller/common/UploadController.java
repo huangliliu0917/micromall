@@ -28,7 +28,7 @@ public class UploadController extends BaseController {
         int result = 0;
         Map<Object, Object> responseData = new HashMap<Object, Object>();
         try {
-            String token = resourceServer.saveResource(files.getInputStream(), files.getOriginalFilename(), getCustomerId());
+            String token = resourceServer.saveResource(files.getInputStream(), files.getOriginalFilename(), getCustomerId(), ResourceServer.CustomerImage);
             responseData.put("file", token);
             responseData.put("fileUri", resourceServer.resourceUri(token));
             result = 1;

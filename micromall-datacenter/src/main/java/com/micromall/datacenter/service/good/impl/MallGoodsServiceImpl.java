@@ -21,24 +21,24 @@ import java.util.List;
 public class MallGoodsServiceImpl implements MallGoodsService {
     @Autowired
     private MallGoodsDao dao;
-    @Autowired
-    private PdaGoodService pdaGoodService;
+//    @Autowired
+//    private PdaGoodService pdaGoodService;
 
     @Transactional
     public MallGoodBean save(MallGoodBean bean) {
-        if (bean.getGoodId() > 0) {
-            MallGoodBean originalBean = this.findByGoodId(bean.getGoodId());
-            pdaGoodService.update(bean.getGoodCode(), bean.getGoodName(), bean.getGoodDesc(), originalBean.getGoodCode());
-        } else {
-            PdaGoodBean pdaGoodBean = new PdaGoodBean();
-            pdaGoodBean.setQcode(bean.getGoodCode());
-            pdaGoodBean.setQname(bean.getGoodName());
-            pdaGoodBean.setLastName(new Date());
-            pdaGoodBean.setState(0);
-            pdaGoodBean.setPacks(1);
-            pdaGoodBean.setQtip(bean.getGoodDesc());
-            pdaGoodService.save(pdaGoodBean);
-        }
+//        if (bean.getGoodId() > 0) {
+//            MallGoodBean originalBean = this.findByGoodId(bean.getGoodId());
+//            pdaGoodService.update(bean.getGoodCode(), bean.getGoodName(), bean.getGoodDesc(), originalBean.getGoodCode());
+//        } else {
+//            PdaGoodBean pdaGoodBean = new PdaGoodBean();
+//            pdaGoodBean.setQcode(bean.getGoodCode());
+//            pdaGoodBean.setQname(bean.getGoodName());
+//            pdaGoodBean.setLastName(new Date());
+//            pdaGoodBean.setState(0);
+//            pdaGoodBean.setPacks(1);
+//            pdaGoodBean.setQtip(bean.getGoodDesc());
+//            pdaGoodService.save(pdaGoodBean);
+//        }
 
         return dao.save(bean);
     }
@@ -46,7 +46,7 @@ public class MallGoodsServiceImpl implements MallGoodsService {
     @Transactional
     public void delete(int goodId) {
         MallGoodBean goodBean = this.findByGoodId(goodId);
-        pdaGoodService.delete(goodBean.getGoodCode());
+//        pdaGoodService.delete(goodBean.getGoodCode());
         dao.delete(goodId);
     }
 
