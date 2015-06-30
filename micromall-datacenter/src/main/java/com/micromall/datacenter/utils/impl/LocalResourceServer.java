@@ -26,11 +26,11 @@ public class LocalResourceServer implements ResourceServer {
     @Autowired
     private void setEnv(Environment env) {
         //this.serverUri = env.getProperty("micromall.resouceUri", "file:///D:");
-        this.serverUri = env.getProperty("micromall.resouceUri", "http://localhost:8080/admin");
+        this.serverUri = env.getProperty("micromall.resouceUri", "http://manager.pdmall.com/resource");
     }
 
     private String serverUri;
-    private String resourceHome = "D:";
+    private String resourceHome = "D:/work/resource";
 
     public String getServerUri() {
         return serverUri;
@@ -60,10 +60,10 @@ public class LocalResourceServer implements ResourceServer {
     }
 
     public void deleteResource(String path) throws IOException {
-        if (StringUtils.isEmpty(resourceHome + path))
+        if (StringUtils.isEmpty(path))
             return;
 
-        File file = new File(path);
+        File file = new File(resourceHome + path);
         if (file.isFile() && file.exists()) {
             file.delete();
         }

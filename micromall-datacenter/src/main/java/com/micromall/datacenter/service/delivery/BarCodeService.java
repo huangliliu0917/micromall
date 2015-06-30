@@ -1,7 +1,9 @@
 package com.micromall.datacenter.service.delivery;
 
 import com.google.zxing.WriterException;
-import com.micromall.datacenter.bean.delivery.BarCodeBean;
+import com.micromall.datacenter.bean.delivery.BatchBarCodeBean;
+import com.micromall.datacenter.bean.delivery.MainBarCodeBean;
+import com.micromall.datacenter.bean.delivery.SubBarCodeBean;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
@@ -25,28 +27,58 @@ public interface BarCodeService {
     /**
      * 批量删除
      *
-     * @param codeArray
+     * @param batchCodeId
      * @return
      */
-    int batchDelete(String codeArray) throws IOException;
+    void batchDelete(long batchCodeId) throws IOException;
 
     /**
-     * 通过id得到实体
+     * 通过id得到主码实体
      *
      * @param id
      * @return
      */
-    BarCodeBean findById(long id);
+    MainBarCodeBean findMainBarCodeById(long id);
 
     /**
-     * 分组查询
+     * 通过id得到副码实体
      *
-     * @param customerId
-     * @param goodId
-     * @param printed
+     * @param id
+     * @return
+     */
+    SubBarCodeBean findBySubBarCodeById(long id);
+
+    /**
+     * 某批次的主码分组查询
+     *
      * @param pageIndex
      * @param pageSize
      * @return
      */
-    Page<BarCodeBean> findAll(int customerId, int goodId, int printed, int pageIndex, int pageSize);
+    Page<MainBarCodeBean> findMainBarCodeAll(long batchCodeId, int pageIndex, int pageSize);
+
+    /**
+     * 得到批次的所有主码，用于打印
+     *
+     * @param batchCodeId
+     * @return
+     */
+    List<MainBarCodeBean> findByBatchCodeId(long batchCodeId);
+
+    /**
+     * 某个主码下的副码
+     *
+     * @param mainBarCodeId
+     * @return
+     */
+    List<SubBarCodeBean> findSubBarCodeByMainCode(long mainBarCodeId);
+
+    /**
+     * 修改批次为已打印
+     *
+     * @param batchCodeId
+     */
+    void updatePrinted(int batchCodeId);
+
+    Page<BatchBarCodeBean> findBatchBarCodeAll(int customerId, int goodId, int printed, int pageIndex, int pageSize);
 }

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html>
 <head>
@@ -112,7 +113,7 @@
                                 <c:if test="${itemBean!=null}">
                                     <c:forEach items="${itemBean.proList}" var="proCode">
                                         <div>
-                                            <input readonly="readonly" type="text" class="text proCodes" value="${proCode}" style="margin-top: 20px;width: 303px;"/>
+                                            <input readonly="readonly" type="text" class="text proCodes" value="${proCode}（${fn:length(proCode)==15?"主码":"副码"}）" style="margin-top: 20px;width: 303px;"/>
                                         </div>
                                     </c:forEach>
                                 </c:if>

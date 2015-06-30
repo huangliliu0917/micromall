@@ -33,9 +33,28 @@ public class BarCodeApiController extends BaseController {
 
     @RequestMapping(value = "/deleteBarCode", method = RequestMethod.POST)
     @ResponseBody
-    public Map<Object, Object> deleteBarCode(String codeArray) throws IOException {
+    public Map<Object, Object> deleteBarCode(long batchCodeId) throws IOException {
         Map<Object, Object> responseData = new HashMap<Object, Object>();
-        int result = codeService.batchDelete(codeArray);
+        int result = 0;
+        try {
+            codeService.batchDelete(batchCodeId);
+            result = 1;
+        } catch (Exception e) {
+        }
+        responseData.put("result", result);
+        return responseData;
+    }
+
+    @RequestMapping(value = "/updatePrinted", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> updatePrinted(int batchCodeId) {
+        Map<Object, Object> responseData = new HashMap<Object, Object>();
+        int result = 0;
+        try {
+            codeService.updatePrinted(batchCodeId);
+            result = 1;
+        } catch (Exception e) {
+        }
         responseData.put("result", result);
         return responseData;
     }

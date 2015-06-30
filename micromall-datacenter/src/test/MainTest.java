@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -46,5 +48,21 @@ public class MainTest {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(9090);
+            System.out.println("1232");
+            serverSocket.accept();
+            System.out.println("12111");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

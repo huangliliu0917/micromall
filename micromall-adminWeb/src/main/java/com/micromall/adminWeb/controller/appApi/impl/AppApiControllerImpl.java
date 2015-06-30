@@ -43,8 +43,9 @@ public class AppApiControllerImpl implements AppApiController {
     @ResponseBody
     public List<MallOrderBean> orderList(int customerId, @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey,
                                          @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
+                                         @RequestParam(value = "isToday", required = false, defaultValue = "0") int isToday,
                                          @RequestParam(value = "deliverStatus", required = false, defaultValue = "-1") int deliverStatus) {
-        List<MallOrderBean> list = orderService.findOrderList(customerId, searchKey, pageIndex, deliverStatus, pageIndex, 10).getContent();
+        List<MallOrderBean> list = orderService.findOrderList(customerId, searchKey, deliverStatus, isToday, pageIndex, 10).getContent();
         return list;
     }
 
@@ -64,7 +65,7 @@ public class AppApiControllerImpl implements AppApiController {
         return orderService.findByOrderId(orderId);
     }
 
-    @RequestMapping(value = "deliverPro", method = RequestMethod.POST)
+    @RequestMapping(value = "/deliverPro", method = RequestMethod.POST)
     @ResponseBody
     public int deliverPro(String orderId, String proCodes, int customerId, int managerId,
                           @RequestParam(value = "logiName", required = false, defaultValue = "") String logiName,

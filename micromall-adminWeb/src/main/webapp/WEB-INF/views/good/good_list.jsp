@@ -90,6 +90,7 @@
                                 <td align="center">${goodBean.price}</td>
                                 <td align="center">${goodBean.addTime}</td>
                                 <td align="center">
+                                    <a href="<c:url value="/delivery/batchCodeList?goodId=${goodBean.goodId}&goodName=${goodBean.goodName}" />">货品编码</a> |
                                     <a href="<c:url value="/good/goodEdit?goodId=${goodBean.goodId}" />">编辑</a> |
                                     <a href="javascript:goodHandler.setDelete(${goodBean.goodId})">删除</a>
                                 </td>

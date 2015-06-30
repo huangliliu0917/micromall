@@ -275,6 +275,7 @@ public class MallOrderServiceImpl implements MallOrderService {
         dao.updateDeliver(orderId, deliverStatus);
     }
 
+    @Transactional(readOnly = true)
     public Page<MallOrderBean> findOrderList(final int customerId, final String searchKey, final int deliverStatus, final int isToday, int pageIndex, int pageSize) {
         List<Sort.Order> orderList = new ArrayList<Sort.Order>();
         orderList.add(new Sort.Order(Sort.Direction.ASC, "deliverStatus"));
@@ -282,8 +283,8 @@ public class MallOrderServiceImpl implements MallOrderService {
         Specification<MallOrderBean> specification = new Specification<MallOrderBean>() {
             public Predicate toPredicate(Root<MallOrderBean> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate p1 = cb.equal(root.get("customerId").as(Integer.class), customerId);
-                Predicate p2 = cb.like(root.get("shipName").as(String.class), searchKey);
-                Predicate p3 = cb.like(root.get("shipMobile").as(String.class), searchKey);
+                Predicate p2 = cb.like(root.get("shipName").as(String.class), "%" + searchKey + "%");
+                Predicate p3 = cb.like(root.get("shipMobile").as(String.class), "%" + searchKey + "%");
                 Predicate p4 = cb.equal(root.get("deliverStatus").as(Integer.class), deliverStatus);
                 List<Predicate> list = new ArrayList<Predicate>();
                 list.add(cb.isNull(root.get("realShipAgent").as(MallAgentBean.class)));
@@ -296,17 +297,22 @@ public class MallOrderServiceImpl implements MallOrderService {
                     String currentDay = DateUtil.formatDate(new Date(), StringUtil.DATE_PATTERN);
                     list.add(cb.greaterThanOrEqualTo(root.get("addTime").as(Date.class), StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN)));
                 }
-                query.where(cb.and(cb.and(list.toArray(new Predicate[list.size()])), cb.or(p2, p3)));
-                return query.getRestriction();
+                //query.where(cb.and(cb.and(list.toArray(new Predicate[list.size()])), cb.or(p2, p3)));
+//                query.where(cb.and(list.toArray(new Predicate[list.size()])));
+                list.add(cb.or(p2, p3));
+                return cb.and(list.toArray(new Predicate[list.size()]));
+//                return query.getRestriction();
             }
         };
         return dao.findAll(specification, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList)));
     }
 
+    @Transactional(readOnly = true)
     public int countByDeliverStatus(int customerId, int deliverStatus) {
         return dao.countByCustomerIdAndDeliverStatusAndRealShipAgentIsNull(customerId, deliverStatus);
     }
 
+    @Transactional(readOnly = true)
     public int countByTodayOrders(int customerId) {
         String currentDay = StringUtil.DateFormat(new Date(), StringUtil.DATE_PATTERN);
         return dao.countByCustomerIdAndAddTimeGreaterThanAndRealShipAgentIsNull(customerId, StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN));

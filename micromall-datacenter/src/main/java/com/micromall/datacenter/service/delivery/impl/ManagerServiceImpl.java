@@ -36,6 +36,10 @@ public class ManagerServiceImpl implements ManagerService {
         return dao.findAll(customerId, searchKey, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "id")));
     }
 
+    public ManagerBean findById(int managerId) {
+        return dao.findOne(managerId);
+    }
+
     public void updatePassword(int managerId, String oldPass, String newPass) {
         dao.updatePassword(managerId, oldPass, newPass);
     }

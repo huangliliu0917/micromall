@@ -29,6 +29,14 @@ public interface ManagerService {
     Page<ManagerBean> findAll(int customerId, String searchKey, int pageIndex, int pageSize);
 
     /**
+     * 得到管理员实体通过id
+     *
+     * @param managerId
+     * @return
+     */
+    ManagerBean findById(int managerId);
+
+    /**
      * 修改管理员密码
      *
      * @param managerId 管理员id

@@ -4,17 +4,24 @@ import com.micromall.datacenter.bean.goods.MallGoodBean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/6/25.
  */
 @Entity
 @Table(name = "Micromall_BarCode")
-public class BarCodeBean {
+public class MainBarCodeBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private long id;
+    /**
+     * 批次
+     */
+    @ManyToOne
+    @JoinColumn(name = "BatchBarCode_Id")
+    private BatchBarCodeBean batchBarCodeBean;
     /**
      * 主码（15开头共15位)
      */
@@ -22,21 +29,17 @@ public class BarCodeBean {
     private String mainCode;
     @Column(name = "MainCodeImg")
     private String mainCodeImg;
-    /**
-     * 副码（主码开头共18位）
-     */
-    @Column(name = "SubCode")
-    private String subCode;
-    @Column(name = "SubCodeImg")
-    private String subCodeImg;
     @Column(name = "AddTime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date addTime;
     @ManyToOne
     @JoinColumn(name = "Good_Id")
     private MallGoodBean goodBean;
     private int customerId;
-    @Column(name = "Printed")
-    private int printed;
+    @Column(name = "SubCodeNum")
+    private int subCodeNum;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mainBar", orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<SubBarCodeBean> subBarCodeBeans;
 
     public long getId() {
         return id;
@@ -44,6 +47,14 @@ public class BarCodeBean {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public BatchBarCodeBean getBatchBarCodeBean() {
+        return batchBarCodeBean;
+    }
+
+    public void setBatchBarCodeBean(BatchBarCodeBean batchBarCodeBean) {
+        this.batchBarCodeBean = batchBarCodeBean;
     }
 
     public String getMainCode() {
@@ -60,22 +71,6 @@ public class BarCodeBean {
 
     public void setMainCodeImg(String mainCodeImg) {
         this.mainCodeImg = mainCodeImg;
-    }
-
-    public String getSubCode() {
-        return subCode;
-    }
-
-    public void setSubCode(String subCode) {
-        this.subCode = subCode;
-    }
-
-    public String getSubCodeImg() {
-        return subCodeImg;
-    }
-
-    public void setSubCodeImg(String subCodeImg) {
-        this.subCodeImg = subCodeImg;
     }
 
     public Date getAddTime() {
@@ -102,11 +97,19 @@ public class BarCodeBean {
         this.customerId = customerId;
     }
 
-    public int getPrinted() {
-        return printed;
+    public int getSubCodeNum() {
+        return subCodeNum;
     }
 
-    public void setPrinted(int printed) {
-        this.printed = printed;
+    public void setSubCodeNum(int subCodeNum) {
+        this.subCodeNum = subCodeNum;
+    }
+
+    public List<SubBarCodeBean> getSubBarCodeBeans() {
+        return subBarCodeBeans;
+    }
+
+    public void setSubBarCodeBeans(List<SubBarCodeBean> subBarCodeBeans) {
+        this.subBarCodeBeans = subBarCodeBeans;
     }
 }

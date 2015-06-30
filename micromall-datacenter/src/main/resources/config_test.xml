@@ -9,7 +9,7 @@
         <!-- 指定连接数据库的URL -->
         <property name="jdbcUrl" value="jdbc:sqlserver://115.28.160.96:1433;DatabaseName=OneMent2"/>
         <!-- 指定连接数据库的用户名 -->
-        <property name="user" value="sa"/>
+        <property name="user" value="mall"/>
         <!-- 指定连接数据库的密码 -->
         <!--property name="password" value="!"/-->
         <property name="password" value="root"/>

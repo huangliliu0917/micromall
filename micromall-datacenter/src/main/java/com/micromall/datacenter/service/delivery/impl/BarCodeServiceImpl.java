@@ -1,12 +1,17 @@
 package com.micromall.datacenter.service.delivery.impl;
 
 import com.google.zxing.WriterException;
-import com.micromall.datacenter.bean.delivery.BarCodeBean;
+import com.micromall.datacenter.bean.delivery.BatchBarCodeBean;
+import com.micromall.datacenter.bean.delivery.MainBarCodeBean;
+import com.micromall.datacenter.bean.delivery.SubBarCodeBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
-import com.micromall.datacenter.dao.delivery.BarCodeDao;
+import com.micromall.datacenter.dao.delivery.BatchBarCodeDao;
+import com.micromall.datacenter.dao.delivery.MainBarCodeDao;
+import com.micromall.datacenter.dao.delivery.SubBarCodeDao;
 import com.micromall.datacenter.service.delivery.BarCodeService;
 import com.micromall.datacenter.utils.BarCodeUnit;
 import com.micromall.datacenter.utils.ResourceServer;
+import com.micromall.datacenter.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,66 +30,122 @@ import java.util.List;
 @Service
 public class BarCodeServiceImpl implements BarCodeService {
     @Autowired
-    private BarCodeDao dao;
+    private MainBarCodeDao mainBarCodeDao;
+    @Autowired
+    private SubBarCodeDao subBarCodeDao;
     @Autowired
     private ResourceServer resourceServer;
+    @Autowired
+    private BarCodeUnit barCodeUnit;
+    @Autowired
+    private BatchBarCodeDao batchBarCodeDao;
 
     @Transactional
     public int createBarCode(int customerId, int mainCodeNum, int subCodeNum, int goodId) throws IOException, WriterException {
         Date addTime = new Date();
+        //‰øùÂ≠òÊâπÊ¨°
+        BatchBarCodeBean batchBarCodeBean = new BatchBarCodeBean();
+        batchBarCodeBean.setBatchCode(StringUtil.DateFormat(addTime, "yyyyMMddHHmmss"));
+        batchBarCodeBean.setMainCodeNum(mainCodeNum);
+        batchBarCodeBean.setSubCodeNum(subCodeNum);
+        batchBarCodeBean.setCustomerId(customerId);
+        batchBarCodeBean.setAddTime(addTime);
+        batchBarCodeBean.setPrinted(0);
+        MallGoodBean goodBean = new MallGoodBean();
+        goodBean.setGoodId(goodId);
+        batchBarCodeBean.setGoodBean(goodBean);
+        batchBarCodeDao.save(batchBarCodeBean);
         int index = 0;
         List<String> mainCodeArray = createMainCode(mainCodeNum);
         for (String mainCode : mainCodeArray) {
+            //‰øùÂ≠ò‰∏ªÁ†Å
+            MainBarCodeBean mainBarCodeBean = new MainBarCodeBean();
+            mainBarCodeBean.setMainCode(mainCode);
+            mainBarCodeBean.setMainCodeImg(barCodeUnit.getBarCode(mainCode, 200, 50, customerId));
+            mainBarCodeBean.setCustomerId(customerId);
+            mainBarCodeBean.setAddTime(addTime);
+            mainBarCodeBean.setGoodBean(goodBean);
+            mainBarCodeBean.setSubCodeNum(subCodeNum);
+            mainBarCodeBean.setBatchBarCodeBean(batchBarCodeBean);
+
+            //ÁîüÊàêÂâØÁ†Å
             List<String> subCodeArray = createSubCode(mainCode, subCodeNum);
+            List<SubBarCodeBean> subBarCodeBeans = new ArrayList<SubBarCodeBean>();
             for (String subCode : subCodeArray) {
-                BarCodeBean codeBean = new BarCodeBean();
-                codeBean.setMainCode(mainCode);
-                codeBean.setSubCode(subCode);
-                codeBean.setCustomerId(customerId);
-                MallGoodBean goodBean = new MallGoodBean();
-                goodBean.setGoodId(goodId);
-                codeBean.setGoodBean(goodBean);
-                codeBean.setAddTime(addTime);
-                codeBean.setMainCodeImg(BarCodeUnit.getBarCode(mainCode, 200, 50, customerId));
-                codeBean.setSubCodeImg(BarCodeUnit.getBarCode(subCode, 200, 50, customerId));
-                dao.save(codeBean);
-                index++;
+                //‰øùÂ≠òÂâØÁ†Å
+                SubBarCodeBean subBarCodeBean = new SubBarCodeBean();
+                subBarCodeBean.setAddTime(addTime);
+                subBarCodeBean.setCustomerId(customerId);
+                subBarCodeBean.setMainBar(mainBarCodeBean);
+                subBarCodeBean.setSubCode(subCode);
+                subBarCodeBean.setSubCodeImg(barCodeUnit.getBarCode(subCode, 200, 50, customerId));
+                subBarCodeBeans.add(subBarCodeBean);
             }
-        }
-        return index;
-    }
-
-    @Transactional
-    public int batchDelete(String codeArray) throws IOException {
-        int index = 0;
-        String[] codeList = codeArray.split(",");
-        for (String idStr : codeList) {
-            long id = Long.parseLong(idStr);
-            BarCodeBean codeBean = dao.findOne(id);
-
-            //…æ≥˝ ˝æ›±Ì ˝æ›
-            dao.delete(id);
-            //…æ≥˝Õº∆¨
-            resourceServer.deleteResource(codeBean.getMainCodeImg());
-            resourceServer.deleteResource(codeBean.getSubCodeImg());
+            mainBarCodeBean.setSubBarCodeBeans(subBarCodeBeans);
+            mainBarCodeDao.save(mainBarCodeBean);
             index++;
         }
         return index;
     }
 
-    @Transactional(readOnly = true)
-    public BarCodeBean findById(long id) {
-        return dao.findOne(id);
+    @Transactional
+    public void batchDelete(long batchCodeId) throws IOException {
+        //Âà†Èô§‰∏ªÁ†ÅÂíåÂâØÁ†Å
+        List<MainBarCodeBean> mainBarCodeBeans = mainBarCodeDao.findByBatchCodeId(batchCodeId);
+        for (MainBarCodeBean mainBarCodeBean : mainBarCodeBeans) {
+            mainBarCodeDao.delete(mainBarCodeBean.getId());
+            //Âà†Èô§Êù°Á†ÅÂõæÁâá
+            resourceServer.deleteResource(mainBarCodeBean.getMainCodeImg());
+            List<SubBarCodeBean> subBarCodeBeans = mainBarCodeBean.getSubBarCodeBeans();
+            for (SubBarCodeBean subBarCodeBean : subBarCodeBeans) {
+                resourceServer.deleteResource(subBarCodeBean.getSubCodeImg());
+            }
+        }
+        //Âà†Èô§ÊâπÊ¨°
+        batchBarCodeDao.delete(batchCodeId);
     }
 
     @Transactional(readOnly = true)
-    public Page<BarCodeBean> findAll(int customerId, int goodId, int printed, int pageIndex, int pageSize) {
-        return dao.findAll(customerId, goodId, printed, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "id")));
+    public MainBarCodeBean findMainBarCodeById(long id) {
+        return mainBarCodeDao.findOne(id);
+    }
+
+    @Transactional(readOnly = true)
+    public SubBarCodeBean findBySubBarCodeById(long id) {
+        return subBarCodeDao.findOne(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainBarCodeBean> findMainBarCodeAll(long batchCodeId, int pageIndex, int pageSize) {
+        return mainBarCodeDao.findAll(batchCodeId, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "id")));
+    }
+
+    @Transactional(readOnly = true)
+    public List<MainBarCodeBean> findByBatchCodeId(long batchCodeId) {
+        return mainBarCodeDao.findByBatchCodeId(batchCodeId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SubBarCodeBean> findSubBarCodeByMainCode(long mainBarCodeId) {
+        MainBarCodeBean mainBarCodeBean = new MainBarCodeBean();
+        mainBarCodeBean.setId(mainBarCodeId);
+        return subBarCodeDao.findByMainBar(mainBarCodeBean);
+    }
+
+    @Transactional
+    public void updatePrinted(int batchCodeId) {
+        batchBarCodeDao.updatePrinted(batchCodeId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BatchBarCodeBean> findBatchBarCodeAll(int customerId, int goodId, int printed, int pageIndex, int pageSize) {
+        return batchBarCodeDao.findAll(customerId, goodId, printed, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "id")));
     }
 
     /**
-     * …˙≥…÷˜¬Î
+     * ÁîüÊàê‰∏ªÁ†Å
      *
+     * @param mainCodeNum
      * @return
      */
     private List<String> createMainCode(int mainCodeNum) {
@@ -96,7 +157,7 @@ public class BarCodeServiceImpl implements BarCodeService {
                     int index = (int) (Math.random() * 10);
                     buffer.append(index);
                 }
-                if (dao.countByMainCode(buffer.toString()) == 0) {
+                if (mainBarCodeDao.countByMainCode(buffer.toString()) == 0) {
                     mainCodeArray.add(buffer.toString());
                     break;
                 }
@@ -106,8 +167,10 @@ public class BarCodeServiceImpl implements BarCodeService {
     }
 
     /**
-     * …˙≥…∏±¬Î
+     * ÁîüÊàêÂâØÁ†Å ‰∏ªÁ†ÅÂºÄÂ§¥
      *
+     * @param mainCode
+     * @param subCodeNum
      * @return
      */
     private List<String> createSubCode(String mainCode, int subCodeNum) {

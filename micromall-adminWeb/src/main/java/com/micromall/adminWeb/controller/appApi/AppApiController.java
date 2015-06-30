@@ -35,6 +35,7 @@ public interface AppApiController {
     @RequestMapping(method = RequestMethod.GET)
     List<MallOrderBean> orderList(int customerId, @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey,
                                   @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
+                                  @RequestParam(value = "isToday", required = false, defaultValue = "0") int isToday,
                                   @RequestParam(value = "deliverStatus", required = false, defaultValue = "-1") int deliverStatus);
 
     /**

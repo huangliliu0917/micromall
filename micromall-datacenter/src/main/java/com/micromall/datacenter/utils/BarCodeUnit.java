@@ -21,12 +21,12 @@ import java.util.Hashtable;
 @Component
 public class BarCodeUnit {
     @Autowired
-    private static ResourceServer resourceServer;
-    private static final String CODE = "utf-8";
-    private static final int BLACK = 0xff000000;
-    private static final int WHITE = 0xFFFFFFFF;
+    private ResourceServer resourceServer;
+    private final String CODE = "utf-8";
+    private final int BLACK = 0xff000000;
+    private final int WHITE = 0xFFFFFFFF;
 
-    public static String getBarCode(String str, int width, int height, int customerId) throws WriterException, IOException {
+    public String getBarCode(String str, int width, int height, int customerId) throws WriterException, IOException {
         if (width < 200) {
             width = 200;
         }
@@ -55,7 +55,7 @@ public class BarCodeUnit {
      * @return
      * @author wuhongbo
      */
-    private static BufferedImage toBufferedImage(BitMatrix matrix) {
+    private BufferedImage toBufferedImage(BitMatrix matrix) {
         int width = matrix.getWidth();
         int height = matrix.getHeight();
         BufferedImage image = new BufferedImage(width, height,
