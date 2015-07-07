@@ -52,10 +52,10 @@
             var editor;
             KindEditor.ready(function (K) {
                 editor = K.create("#weaponContent", {
-                    uploadJson: "<c:url value="/resources/scripts/kindeditor-4.1.10/jsp/upload_json.jsp?customerId=${customerId}" />",
+                    uploadJson: "<c:url value="/resources/scripts/kindeditor-4.1.10/jsp/upload_json.jsp?customerId=${customerId}" />"
                 });
                 if (weaponId > 0) {
-                    editor.html("${weaponBean.weaponContent}");
+                    editor.html($("#hdContent").html());
                 }
             });
 
@@ -156,10 +156,15 @@
                                 </li>
 
                                 <li>
+                                    <p id="hdContent" style="display: none;">
+                                        ${weaponBean.weaponContent}
+                                    </p>
+
                                     <p class="title"><i class="red">*</i>内容：
                                     </p>
 
                                     <p style="height: 10px;"></p>
+
                                     <textarea id="weaponContent" name="content" style="width:700px;height:300px;"></textarea>
                                 </li>
                                 <li style="width: 500px;">

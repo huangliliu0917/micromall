@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Administrator on 2015/6/29.
  */
 @Entity
-@Table(name = "BacthBarCode")
+@Table(name = "Micromall_BacthBarCode")
 public class BatchBarCodeBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

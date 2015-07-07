@@ -14,13 +14,13 @@ public class SubBarCodeBean {
     @Column(name = "Id")
     private long id;
     /**
-     * Ö÷Âëid
+     * ä¸»ç id
      */
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = true)
     @JoinColumn(name = "MainBarCodeId")
     private MainBarCodeBean mainBar;
     /**
-     * ¸±Âë£¨Ö÷Âë¿ªÍ·¹²18Î»£©
+     * ä¸»ç 15ä½+3ä½å…±18ä½æ•°å­—
      */
     @Column(name = "SubCode")
     private String subCode;
@@ -31,6 +31,8 @@ public class SubBarCodeBean {
     private Date addTime;
     @Column(name = "CustomerId")
     private int customerId;
+    @Column(name = "Locked")
+    private int locked;
 
     public long getId() {
         return id;
@@ -78,5 +80,13 @@ public class SubBarCodeBean {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public int getLocked() {
+        return locked;
+    }
+
+    public void setLocked(int locked) {
+        this.locked = locked;
     }
 }

@@ -10,20 +10,20 @@ import java.util.List;
  * Created by Administrator on 2015/6/25.
  */
 @Entity
-@Table(name = "Micromall_BarCode")
+@Table(name = "Micromall_MainBarCode")
 public class MainBarCodeBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private long id;
     /**
-     * ≈˙¥Œ
+     * ÊâπÊ¨°id
      */
     @ManyToOne
     @JoinColumn(name = "BatchBarCode_Id")
     private BatchBarCodeBean batchBarCodeBean;
     /**
-     * ÷˜¬Î£®15ø™Õ∑π≤15Œª)
+     * ‰∏ªÁ†ÅÔºà15‰ΩçÔºâ
      */
     @Column(name = "MainCode")
     private String mainCode;
@@ -40,6 +40,8 @@ public class MainBarCodeBean {
     private int subCodeNum;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mainBar", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SubBarCodeBean> subBarCodeBeans;
+    @Column(name = "Locked")
+    private int locked;
 
     public long getId() {
         return id;
@@ -111,5 +113,13 @@ public class MainBarCodeBean {
 
     public void setSubBarCodeBeans(List<SubBarCodeBean> subBarCodeBeans) {
         this.subBarCodeBeans = subBarCodeBeans;
+    }
+
+    public int getLocked() {
+        return locked;
+    }
+
+    public void setLocked(int locked) {
+        this.locked = locked;
     }
 }

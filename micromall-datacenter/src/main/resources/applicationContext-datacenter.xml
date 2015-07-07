@@ -15,23 +15,13 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
     <!-- 开启注解事务 只对当前配置文件有效 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-    <tx:annotation-driven transaction-manager="pdaTransactionManager" proxy-target-class="true"/>
-
     <jpa:repositories base-package="com.micromall.datacenter.dao" repository-impl-postfix="Impl"
                       entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager">
-    </jpa:repositories>
-
-    <jpa:repositories base-package="com.micromall.datacenter.pdaDao" repository-impl-postfix="Impl"
-                      entity-manager-factory-ref="pdaEntityManagerFactory"
-                      transaction-manager-ref="pdaTransactionManager">
     </jpa:repositories>
 
     <!--事务管理器配置 -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
-    <bean id="pdaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="pdaEntityManagerFactory"/>
     </bean>
 
 </beans>

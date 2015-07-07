@@ -4,6 +4,7 @@ import com.micromall.datacenter.bean.delivery.DeliverItemBean;
 import com.micromall.datacenter.bean.delivery.ManagerBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.dao.delivery.DeliverItemDao;
+import com.micromall.datacenter.service.delivery.BarCodeService;
 import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
 import com.micromall.datacenter.utils.StringUtil;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/23.
@@ -28,6 +29,8 @@ public class DeliverItemServiceImpl implements DeliverItemService {
     private DeliverItemDao dao;
     @Autowired
     private MallOrderService orderService;
+    @Autowired
+    private BarCodeService barCodeService;
 
     @Transactional
     public DeliverItemBean save(DeliverItemBean bean) {
@@ -63,6 +66,12 @@ public class DeliverItemServiceImpl implements DeliverItemService {
     @Transactional
     public void setInvalidate(int id) {
         dao.setInvalidate(id);
+        //将条码重新设置为未使用
+        DeliverItemBean itemBean = dao.findOne(id);
+        String[] proCodes = itemBean.getProCode().split(",");
+        for (String proCode : proCodes) {
+            barCodeService.unLockByCode(proCode);
+        }
     }
 
     @Transactional
@@ -70,10 +79,25 @@ public class DeliverItemServiceImpl implements DeliverItemService {
         dao.setDelivered(orderId);
     }
 
-    public void deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId) {
+    public Map<String, Integer> deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        MallOrderBean orderBean = orderService.findByOrderId(orderId);
+        //判断是否锁定
+        String[] proCodeArray = proCodes.split(",");
+        boolean index = true;
+        for (String proCode : proCodeArray) {
+            if (barCodeService.codeUsable(proCode, orderBean.getGood().getGoodId())) {
+                map.put(proCode, 1);
+            } else {
+                index = false;
+                map.put(proCode, 0);
+            }
+        }
+        //不可用，直接返回
+        if (!index) {
+            return map;
+        }
         DeliverItemBean itemBean = new DeliverItemBean();
-        MallOrderBean orderBean = new MallOrderBean();
-        orderBean.setOrderId(orderId);
         itemBean.setOrderBean(orderBean);
         ManagerBean managerBean = new ManagerBean();
         managerBean.setId(managerId);
@@ -85,7 +109,12 @@ public class DeliverItemServiceImpl implements DeliverItemService {
         itemBean.setLogiNum(logiNum);
         itemBean.setDeliverStatus(0);
         this.save(itemBean);
-        //����Ϊ�ѳ���
+        //更新订单出货状态
         orderService.updateDeliver(orderId, 1);
+        for (String proCode : proCodeArray) {
+            //锁定条码
+            barCodeService.lockedByCode(proCode);
+        }
+        return map;
     }
 }

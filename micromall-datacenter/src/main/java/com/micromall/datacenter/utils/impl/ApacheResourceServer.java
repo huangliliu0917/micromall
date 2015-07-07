@@ -31,8 +31,8 @@ public class ApacheResourceServer implements ResourceServer {
 
     @Autowired
     private void setEnv(Environment env) {
-        this.serverUri = env.getProperty("micromall.resourcesUri", (String) null);
-        this.resourceHome = env.getProperty("micromall.resourcesHome", (String) null);
+        this.serverUri = env.getProperty("micromall.resourcesUri", "http://pmd_manager.51flashmall.com/resource");
+        this.resourceHome = env.getProperty("micromall.resourcesHome", "D:/website/pdmall_test/res.chinaswt.cn/resource");
     }
 
 
@@ -73,9 +73,5 @@ public class ApacheResourceServer implements ResourceServer {
 
     public String resourceUri(String token) {
         return this.serverUri + token;
-    }
-
-    public String getServerUri() {
-        return serverUri;
     }
 }

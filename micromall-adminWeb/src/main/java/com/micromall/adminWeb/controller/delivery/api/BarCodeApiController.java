@@ -47,7 +47,7 @@ public class BarCodeApiController extends BaseController {
 
     @RequestMapping(value = "/updatePrinted", method = RequestMethod.POST)
     @ResponseBody
-    public Map<Object, Object> updatePrinted(int batchCodeId) {
+    public Map<Object, Object> updatePrinted(long batchCodeId) {
         Map<Object, Object> responseData = new HashMap<Object, Object>();
         int result = 0;
         try {

@@ -2,6 +2,7 @@ package com.micromall.datacenter.service.order;
 
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
+import com.micromall.datacenter.viewModel.appModel.OrderAppModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.springframework.data.domain.Page;
 
@@ -71,4 +72,12 @@ public interface MallOrderService {
      * @return
      */
     int countByTodayOrders(int customerId);
+
+    /**
+     * ×ª»»³Éappmodel·µ»Ø
+     *
+     * @param orderBean
+     * @return
+     */
+    OrderAppModel getAppModel(MallOrderBean orderBean);
 }

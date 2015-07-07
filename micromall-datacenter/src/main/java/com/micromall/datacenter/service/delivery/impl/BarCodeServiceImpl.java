@@ -106,6 +106,11 @@ public class BarCodeServiceImpl implements BarCodeService {
     }
 
     @Transactional(readOnly = true)
+    public BatchBarCodeBean findByBacthBarCodeId(long id) {
+        return batchBarCodeDao.findOne(id);
+    }
+
+    @Transactional(readOnly = true)
     public MainBarCodeBean findMainBarCodeById(long id) {
         return mainBarCodeDao.findOne(id);
     }
@@ -121,7 +126,7 @@ public class BarCodeServiceImpl implements BarCodeService {
     }
 
     @Transactional(readOnly = true)
-    public List<MainBarCodeBean> findByBatchCodeId(long batchCodeId) {
+    public List<MainBarCodeBean> findMainBarCodeAll(long batchCodeId) {
         return mainBarCodeDao.findByBatchCodeId(batchCodeId);
     }
 
@@ -133,13 +138,42 @@ public class BarCodeServiceImpl implements BarCodeService {
     }
 
     @Transactional
-    public void updatePrinted(int batchCodeId) {
+    public void updatePrinted(long batchCodeId) {
         batchBarCodeDao.updatePrinted(batchCodeId);
     }
 
     @Transactional(readOnly = true)
     public Page<BatchBarCodeBean> findBatchBarCodeAll(int customerId, int goodId, int printed, int pageIndex, int pageSize) {
         return batchBarCodeDao.findAll(customerId, goodId, printed, new PageRequest(pageIndex - 1, pageSize, new Sort(Sort.Direction.DESC, "id")));
+    }
+
+    public void lockedByCode(String code) {
+        if (code.length() == 15) {
+            mainBarCodeDao.lockedByCode(code);
+        }
+        if (code.length() == 18) {
+            subBarCodeDao.lockedByCode(code);
+        }
+    }
+
+    public void unLockByCode(String code) {
+        if (code.length() == 15) {
+            mainBarCodeDao.unLockByCode(code);
+        }
+        if (code.length() == 18) {
+            subBarCodeDao.unLockByCode(code);
+        }
+    }
+
+    public boolean codeUsable(String code, int goodId) {
+        int result = 0;
+        if (code.length() == 15) {
+            result = mainBarCodeDao.countByLocked(code, goodId);
+        }
+        if (code.length() == 18) {
+            result = subBarCodeDao.countByLocked(code, goodId);
+        }
+        return result > 0;
     }
 
     /**

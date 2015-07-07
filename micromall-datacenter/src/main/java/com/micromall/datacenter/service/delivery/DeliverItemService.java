@@ -6,13 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/23.
  */
 public interface DeliverItemService {
     /**
-     * ±£´æ³ö»õµ¥ÊµÌå
+     * ä¿å­˜
      *
      * @param bean
      * @return
@@ -20,50 +21,50 @@ public interface DeliverItemService {
     DeliverItemBean save(DeliverItemBean bean);
 
     /**
-     * ³ö¿âÁĞ±í£¨·ÖÒ³´øÌõ¼ş²éÑ¯£©
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½
      *
-     * @param customerId ÉÌ»§id
-     * @param managerKey ³ö¿â¹ÜÀíÔ±¹Ø¼ü×Ö
-     * @param shipKey    ÊÕ¼şÈË¹Ø¼ü×Ö
-     * @param beginTime  ¿ªÊ¼Ê±¼ä
-     * @param endTime    ½áÊøÊ±¼ä
-     * @param pageIndex  Ò³Âë
-     * @param pageSize   Ã¿Ò³Êı¾İÁ¿
+     * @param customerId ï¿½Ì»ï¿½id
+     * @param managerKey ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ø¼ï¿½ï¿½ï¿½
+     * @param shipKey    ï¿½Õ¼ï¿½ï¿½Ë¹Ø¼ï¿½ï¿½ï¿½
+     * @param beginTime  ï¿½ï¿½Ê¼Ê±ï¿½ï¿½
+     * @param endTime    ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+     * @param pageIndex  Ò³ï¿½ï¿½
+     * @param pageSize   Ã¿Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @return
      */
     Page<DeliverItemBean> findAll(int customerId, String managerKey, String shipKey, String beginTime, String endTime, int pageIndex, int pageSize);
 
     /**
-     * µÃµ½³ö¿âÊµÌå
+     * ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
      *
-     * @param orderId ¶©µ¥id
+     * @param orderId ï¿½ï¿½ï¿½ï¿½id
      * @return
      */
     DeliverItemBean findByOrderId(String orderId);
 
     /**
-     * ×÷·Ï³ö»õ
+     * è®¾ç½®ä¸ºå·²å¤±æ•ˆï¼Œå¹¶å°†æ¡ç é‡æ–°è§£é”
      *
      * @param id
      */
     void setInvalidate(int id);
 
     /**
-     * ÉèÖÃ×´Ì¬
+     * ï¿½ï¿½ï¿½ï¿½×´Ì¬
      *
      * @param orderId
      */
     void setDelivered(String orderId);
 
     /**
-     * ³ö»õ
+     * ï¿½ï¿½ï¿½ï¿½
      *
-     * @param customerId ÉÌ»§id
-     * @param proCodes   ¶ººÅ·Ö¸ôµÄ»õÆ·±àºÅ×Ö·û´®
-     * @param orderId    ¶©µ¥id
-     * @param logiName   ¿ìµİ¹«Ë¾
-     * @param logiNum    ¿ìµİµ¥ºÅ
-     * @param managerId  ³ö»õÈËid
+     * @param customerId ï¿½Ì»ï¿½id
+     * @param proCodes   ï¿½ï¿½ï¿½Å·Ö¸ï¿½ï¿½Ä»ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+     * @param orderId    ï¿½ï¿½ï¿½ï¿½id
+     * @param logiName   ï¿½ï¿½İ¹ï¿½Ë¾
+     * @param logiNum    ï¿½ï¿½İµï¿½ï¿½ï¿½
+     * @param managerId  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id
      */
-    void deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId);
+    Map<String, Integer> deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId);
 }

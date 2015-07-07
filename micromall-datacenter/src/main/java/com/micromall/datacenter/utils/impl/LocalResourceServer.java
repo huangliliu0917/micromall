@@ -26,15 +26,11 @@ public class LocalResourceServer implements ResourceServer {
     @Autowired
     private void setEnv(Environment env) {
         //this.serverUri = env.getProperty("micromall.resouceUri", "file:///D:");
-        this.serverUri = env.getProperty("micromall.resouceUri", "http://manager.pdmall.com/resource");
+        this.serverUri = env.getProperty("micromall.resouceUri", "http://192.168.1.117:3666/resource");
     }
 
     private String serverUri;
     private String resourceHome = "D:/work/resource";
-
-    public String getServerUri() {
-        return serverUri;
-    }
 
     public String saveResource(InputStream data, String orignalFile, int customerId, String folder) throws IOException {
         FileOutputStream outputStream = null;

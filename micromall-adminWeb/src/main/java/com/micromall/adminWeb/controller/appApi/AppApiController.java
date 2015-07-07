@@ -1,13 +1,16 @@
 package com.micromall.adminWeb.controller.appApi;
 
+import com.micromall.adminWeb.bean.ApiResult;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.viewModel.appModel.IndexInfoModel;
 import com.micromall.datacenter.viewModel.appModel.ManagerAppModel;
+import com.micromall.datacenter.viewModel.appModel.OrderAppModel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/6/24.
@@ -21,7 +24,7 @@ public interface AppApiController {
      * @return 返回null表示登录失败
      */
     @RequestMapping(method = RequestMethod.POST)
-    ManagerAppModel login(String account, String password);
+    ApiResult<ManagerAppModel> login(String account, String password);
 
     /**
      * 订单列表
@@ -33,10 +36,10 @@ public interface AppApiController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    List<MallOrderBean> orderList(int customerId, @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey,
-                                  @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
-                                  @RequestParam(value = "isToday", required = false, defaultValue = "0") int isToday,
-                                  @RequestParam(value = "deliverStatus", required = false, defaultValue = "-1") int deliverStatus);
+    ApiResult<List<OrderAppModel>> orderList(int customerId, @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey,
+                                             @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex, int pageSize,
+                                             @RequestParam(value = "isToday", required = false, defaultValue = "0") int isToday,
+                                             @RequestParam(value = "deliverStatus", required = false, defaultValue = "-1") int deliverStatus);
 
     /**
      * 首页信息
@@ -45,7 +48,7 @@ public interface AppApiController {
      * @return 今日订单总量，未出货总量，已出货总量
      */
     @RequestMapping(method = RequestMethod.GET)
-    IndexInfoModel getIndexInfo(int customerId);
+    ApiResult<IndexInfoModel> getIndexInfo(int customerId);
 
     /**
      * 订单详情
@@ -53,7 +56,7 @@ public interface AppApiController {
      * @param orderId 订单id
      * @return 订单实体
      */
-    MallOrderBean getOrderDetail(String orderId);
+    ApiResult<OrderAppModel> getOrderDetail(String orderId);
 
     /**
      * 出货
@@ -62,9 +65,9 @@ public interface AppApiController {
      * @param proCodes 已逗号分隔的货品编号字符串
      * @return 1表示成功
      */
-    int deliverPro(String orderId, String proCodes, int customerId, int managerId,
-                   @RequestParam(value = "logiName", required = false, defaultValue = "") String logiName,
-                   @RequestParam(value = "logiNum", required = false, defaultValue = "") String logiNum);
+    ApiResult<Map<String, Integer>> deliverPro(String orderId, String proCodes, int customerId, int managerId,
+                                               @RequestParam(value = "logiName", required = false, defaultValue = "") String logiName,
+                                               @RequestParam(value = "logiNum", required = false, defaultValue = "") String logiNum);
 
     /**
      * 修改密码
@@ -74,5 +77,5 @@ public interface AppApiController {
      * @param newPass   新密码
      * @return 1表示成功
      */
-    int updatePass(int managerId, String oldPass, String newPass);
+    ApiResult<Integer> updatePass(int managerId, String oldPass, String newPass);
 }

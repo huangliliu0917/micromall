@@ -7,6 +7,8 @@ public class IndexInfoModel {
     private int todayOrderNum;
     private int undeliveredNum;
     private int deliveredNum;
+    private String customerName;
+    private String customerImg;
 
     public int getTodayOrderNum() {
         return todayOrderNum;
@@ -30,5 +32,21 @@ public class IndexInfoModel {
 
     public void setDeliveredNum(int deliveredNum) {
         this.deliveredNum = deliveredNum;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerImg() {
+        return customerImg;
+    }
+
+    public void setCustomerImg(String customerImg) {
+        this.customerImg = customerImg;
     }
 }

@@ -56,6 +56,6 @@ public interface ManagerDao extends JpaRepository<ManagerBean, Integer> {
     @Query("update ManagerBean managerBean set managerBean.isDelete=1 where managerBean.id=?1")
     void setDelete(int managerId);
 
-    @Query("select managerBean from ManagerBean managerBean where managerBean.account=?1 and managerBean.password=?2")
+    @Query("select managerBean from ManagerBean managerBean where managerBean.account=?1 and managerBean.password=?2 and managerBean.isDelete=0")
     ManagerBean login(String account, String password);
 }

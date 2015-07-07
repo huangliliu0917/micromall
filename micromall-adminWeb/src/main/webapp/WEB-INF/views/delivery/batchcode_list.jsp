@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jqueryui/jquery-ui-1.10.3.custom.min.css"/>">
     <title>货品批次</title>
     <script type="text/javascript">
-        var ajaxUrl = "<c:url value="/barCodeApi/" />"
+        var ajaxUrl = "<c:url value="/barCodeApi/" />";
         var barCodeHandler = {
             createBarCode: function () {
                 J.ShowDialog("create_dialog", "货品编码生成", function () {
@@ -59,20 +59,23 @@
                 })
             },
             printCode: function (batchId) {
-                J.ShowDialog("message_dialog", "提示", function () {
-                    $.jBox.tip("正在设置...", "loading");
-                    J.GetJsonRespons(ajaxUrl + "updatePrinted", {batchCodeId: batchId}, function (json) {
-                        if (json.result == 1) {
-                            $.jBox.tip("设置成功", "success");
-                            window.location.reload();
-                        } else {
-                            $.jBox.tip("设置失败", "error");
-                        }
+
+                if (0 ==${printed}) {
+                    J.ShowDialog("message_dialog", "提示", function () {
+                        $.jBox.tip("正在设置...", "loading");
+                        J.GetJsonRespons(ajaxUrl + "updatePrinted", {batchCodeId: batchId}, function (json) {
+                            if (json.result == 1) {
+                                $.jBox.tip("设置成功", "success");
+                                window.location.reload();
+                            } else {
+                                $.jBox.tip("设置失败", "error");
+                            }
+                        }, function () {
+                        }, J.PostMethod);
                     }, function () {
-                    }, J.PostMethod);
-                }, function () {
-                    $(this).dialog("close");
-                });
+                        $(this).dialog("close");
+                    });
+                }
                 window.open("<c:url value="/delivery/printBarCode?batchCodeId=" />" + batchId);
             },
             deleteBatchCode: function (batchId) {

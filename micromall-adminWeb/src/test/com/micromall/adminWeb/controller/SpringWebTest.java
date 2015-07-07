@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -32,8 +34,6 @@ public class SpringWebTest {
     protected EntityManagerFactory managerFactory;
 
     protected MockMvc mockMvc;
-
-    protected MallBaseConfigBean configBean;
 
     @Before
     public void createMockMVC() throws Exception {

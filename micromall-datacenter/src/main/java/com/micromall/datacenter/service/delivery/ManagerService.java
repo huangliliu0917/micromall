@@ -50,7 +50,7 @@ public interface ManagerService {
      *
      * @param managerId 管理员id
      */
-    void resetPassword(int managerId, String newPass);
+    void resetPassword(int managerId);
 
     /**
      * 修改管理员名称

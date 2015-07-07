@@ -43,12 +43,4 @@ public interface ResourceServer {
      * @return uri http://www....gif
      */
     String resourceUri(String token);
-
-    /**
-     * 得到资源路径
-     *
-     * @return
-     */
-    String getServerUri();
-
 }

@@ -25,4 +25,15 @@ public interface MainBarCodeDao extends JpaRepository<MainBarCodeBean, Long> {
 
     @Query("select mainBarCode from MainBarCodeBean mainBarCode where mainBarCode.id in ?1")
     List<SubBarCodeBean> findByMainBarIn(List<Long> mainBarId);
+
+    @Modifying
+    @Query("update MainBarCodeBean mainBarCode set mainBarCode.locked=1 where mainBarCode.mainCode=?1")
+    void lockedByCode(String code);
+
+    @Modifying
+    @Query("update MainBarCodeBean set locked=1 where mainCode=?1")
+    void unLockByCode(String code);
+
+    @Query("select count(mainBarCode.id) from MainBarCodeBean mainBarCode where mainBarCode.mainCode=?1 and mainBarCode.goodBean.goodId=?2 and mainBarCode.locked=0")
+    int countByLocked(String code, int goodId);
 }

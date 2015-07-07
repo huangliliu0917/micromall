@@ -18,11 +18,12 @@ import java.util.List;
  * Created by Administrator on 2015/6/26.
  */
 @Controller
+@RequestMapping("/delivery")
 public class BarCodeController extends BaseController {
     @Autowired
     private BarCodeService codeService;
 
-    @RequestMapping("/delivery/batchCodeList")
+    @RequestMapping("/batchCodeList")
     public String batchBarCodeList(int goodId, String goodName,
                                    @RequestParam(value = "printed", required = false, defaultValue = "0") int printed,
                                    @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
@@ -37,8 +38,8 @@ public class BarCodeController extends BaseController {
         return "delivery/batchcode_list";
     }
 
-    @RequestMapping("/delivery/barCodeList")
-    public String barCodeList(int batchCodeId, String goodName, int goodId,
+    @RequestMapping("/barCodeList")
+    public String barCodeList(long batchCodeId, String goodName, int goodId,
                               @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
                               Model model) {
         Page<MainBarCodeBean> pageInfo = codeService.findMainBarCodeAll(batchCodeId, pageIndex, pageSize);
@@ -49,7 +50,7 @@ public class BarCodeController extends BaseController {
         return "delivery/mainbarcode_list";
     }
 
-    @RequestMapping("/delivery/subBarCodeList")
+    @RequestMapping("/subBarCodeList")
     public String subBarCode(long mainCodeId, Model model) {
         List<SubBarCodeBean> subBarCodeBeans = codeService.findSubBarCodeByMainCode(mainCodeId);
         model.addAttribute("mainCodeId", mainCodeId);
@@ -57,9 +58,9 @@ public class BarCodeController extends BaseController {
         return "delivery/subbarcode_list";
     }
 
-    @RequestMapping("/delivery/printBarCode")
+    @RequestMapping("/printBarCode")
     public String printBarCode(long batchCodeId, Model model) {
-        model.addAttribute("list", codeService.findByBatchCodeId(batchCodeId));
+        model.addAttribute("list", codeService.findMainBarCodeAll(batchCodeId));
         return "delivery/printbarcode";
     }
 }

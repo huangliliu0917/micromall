@@ -3,6 +3,8 @@ package com.micromall.datacenter.service.weapon;
 import com.micromall.datacenter.bean.weapon.MicroWeaponBean;
 import org.springframework.data.domain.Page;
 
+import java.io.IOException;
+
 /**
  * Created by Administrator on 2015/5/27.
  */
@@ -13,5 +15,5 @@ public interface MicroWeaponService {
 
     MicroWeaponBean findByWeaponId(int weaponId);
 
-    void deleteWeapon(int weaponId);
+    void deleteWeapon(int weaponId) throws IOException;
 }

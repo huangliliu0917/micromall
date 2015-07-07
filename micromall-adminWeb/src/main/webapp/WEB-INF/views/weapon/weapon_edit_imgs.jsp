@@ -25,7 +25,7 @@
     <title>编辑商品</title>
     <script type="text/javascript">
         var customerId = ${customerId};
-        var ajaxUrl = "<c:url value="/weaponApi/saveWeapon" />";
+        var ajaxUrl = "<c:url value="/weaponApi/" />";
         var uploadUrl = "<c:url value="/upload" />";
 
         function fileChange() {
@@ -36,7 +36,7 @@
                     var index = $(".weaponImg").length;
                     $("#imgList").append("<li id='imgLi" + index + "'><img class='previewImg' src='" + json.fileUri + "'/>" +
                     "<img onclick='removeImg(" + index + ")' class='delImg' src='<c:url value="/resources/images/delImg.png" />'/>" +
-                    "<input class='weaponImg' type='hidden' value='" + json.file + "' /></li>");
+                    "<input id='img" + index + "' class='weaponImg' type='hidden' value='" + json.file + "' /></li>");
                     if ($(".weaponImg").length >= 9) {
                         $("#addImgLi").hide();
                     }
@@ -47,8 +47,15 @@
         }
 
         function removeImg(index) {
-            $("#imgLi" + index).remove();
-            $("#addImgLi").show();
+            var imgPath = $("#img" + index).val();
+            J.GetJsonRespons(ajaxUrl + "removeImg", {imgPath: imgPath}, function (json) {
+                if (json == 1) {
+                    $("#imgLi" + index).remove();
+                    $("#addImgLi").show();
+                } else {
+                }
+            }, function () {
+            }, J.PostMethod);
         }
 
         function checkImgCount() {
@@ -88,7 +95,7 @@
                     weaponId:${weaponId}
                 }
 
-                J.GetJsonRespons(ajaxUrl, requestData, function (json) {
+                J.GetJsonRespons(ajaxUrl + "saveWeapon", requestData, function (json) {
                     if (json.result == 1) {
                         $.jBox.tip("保存成功", "success");
                         window.location.href = "<c:url value="/weapon/weaponList" />"
@@ -170,7 +177,7 @@
                                                 <li id="imgLi${index.index}">
                                                     <img src="${uploadResourceServer.resourceUri(img)}" class="previewImg"/>
                                                     <img onclick='removeImg(${index.index})' class='delImg' src='<c:url value="/resources/images/delImg.png" />'/>
-                                                    <input class='weaponImg' type='hidden' value='${img}'/>
+                                                    <input id="img${index.index}" class='weaponImg' type='hidden' value='${img}'/>
                                                 </li>
                                             </c:forEach>
                                         </div>

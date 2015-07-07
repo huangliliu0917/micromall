@@ -44,7 +44,8 @@ public class ManagerServiceImpl implements ManagerService {
         dao.updatePassword(managerId, oldPass, newPass);
     }
 
-    public void resetPassword(int managerId, String newPass) {
+    public void resetPassword(int managerId) {
+        String newPass = DigestUtils.md5Hex("123456");
         dao.resetPassword(managerId, newPass);
     }
 

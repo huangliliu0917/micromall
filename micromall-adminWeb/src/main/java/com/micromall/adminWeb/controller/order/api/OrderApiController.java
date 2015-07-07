@@ -2,13 +2,9 @@ package com.micromall.adminWeb.controller.order.api;
 
 import com.micromall.adminWeb.controller.BaseController;
 import com.micromall.datacenter.bean.delivery.DeliverItemBean;
-import com.micromall.datacenter.bean.orders.MallDeliverItemBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
-import com.micromall.datacenter.pdaBean.SnInfoBean;
-import com.micromall.datacenter.pdaService.SnInfoService;
 import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.order.MallOrderService;
-import com.micromall.datacenter.service.order.MallDeliverItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,8 +23,6 @@ public class OrderApiController extends BaseController {
     private Map<Object, Object> responseData = new HashMap<Object, Object>();
     @Autowired
     private MallOrderService orderService;
-    @Autowired
-    private MallDeliverItemService deliverSnInfoService;
     @Autowired
     private DeliverItemService deliverItemService;
 

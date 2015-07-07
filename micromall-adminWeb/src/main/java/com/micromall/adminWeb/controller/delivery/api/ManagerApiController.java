@@ -44,7 +44,7 @@ public class ManagerApiController extends BaseController {
             } else {
                 managerBean.setAddTime(new Date());
                 managerBean.setCustomerId(getCustomerId());
-                managerBean.setPassword(managerBean.getPassword().toLowerCase());
+                managerBean.setPassword(DigestUtils.md5Hex("123456"));
                 managerService.save(managerBean);
                 result = 1;
             }
@@ -84,10 +84,10 @@ public class ManagerApiController extends BaseController {
      */
     @RequestMapping("/resetPassword")
     @ResponseBody
-    public Map<Object, Object> resetPass(int managerId, String newPass) {
+    public Map<Object, Object> resetPass(int managerId) {
         int result = 0;
         try {
-            managerService.resetPassword(managerId, newPass);
+            managerService.resetPassword(managerId);
             result = 1;
         } catch (Exception e) {
             responseData.put("msg", e.getMessage());

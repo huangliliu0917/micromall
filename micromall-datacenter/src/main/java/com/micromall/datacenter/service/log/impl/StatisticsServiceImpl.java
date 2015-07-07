@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao dao;
 
+    @Transactional(readOnly = true)
     public Page<AgentShipmentsViewModel> getAgentShipments(int customerId, int levelId, String agentMobile, String beginTime, String endTime, int pageIndex, int pageSize) {
         Date beginDate = null, endDate = null;
         if (StringUtils.isEmpty(beginTime)) {
@@ -41,6 +43,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<GoodShipmentsViewModel> getGoodShipments(int customerId, String beginTime, String endTime) {
         Date beginDate = null, endDate = null;
         if (StringUtils.isEmpty(beginTime)) {

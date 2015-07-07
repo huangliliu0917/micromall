@@ -14,18 +14,18 @@ import java.util.List;
  */
 public interface BarCodeService {
     /**
-     * ´´½¨²¢±£´æÌõÂë
+     * åˆ›å»ºæ¡ç 
      *
-     * @param customerId  ÉÌ»§id
-     * @param mainCodeNum Ö÷ÂëÊıÁ¿
-     * @param subCodeNum  ¸±ÂëÊıÁ¿
-     * @param goodId      ÉÌÆ·id
+     * @param customerId  å•†å®¶id
+     * @param mainCodeNum ä¸»ç æ•°é‡
+     * @param subCodeNum  å‰¯ç æ•°é‡
+     * @param goodId      å•†å“id
      * @return
      */
     int createBarCode(int customerId, int mainCodeNum, int subCodeNum, int goodId) throws IOException, WriterException;
 
     /**
-     * ÅúÁ¿É¾³ı
+     * æ‰¹é‡åˆ é™¤
      *
      * @param batchCodeId
      * @return
@@ -33,7 +33,15 @@ public interface BarCodeService {
     void batchDelete(long batchCodeId) throws IOException;
 
     /**
-     * Í¨¹ıidµÃµ½Ö÷ÂëÊµÌå
+     * æ ¹æ®idå¾—åˆ°æ‰¹æ¬¡å®ä½“
+     *
+     * @param id
+     * @return
+     */
+    BatchBarCodeBean findByBacthBarCodeId(long id);
+
+    /**
+     * æ ¹æ®idå¾—åˆ°ä¸»ç å®ä½“
      *
      * @param id
      * @return
@@ -41,7 +49,7 @@ public interface BarCodeService {
     MainBarCodeBean findMainBarCodeById(long id);
 
     /**
-     * Í¨¹ıidµÃµ½¸±ÂëÊµÌå
+     * æ ¹æ®idå¾—åˆ°å‰¯ç å®ä½“
      *
      * @param id
      * @return
@@ -49,7 +57,7 @@ public interface BarCodeService {
     SubBarCodeBean findBySubBarCodeById(long id);
 
     /**
-     * Ä³Åú´ÎµÄÖ÷Âë·Ö×é²éÑ¯
+     * å¾—åˆ°ä¸»ç åˆ—è¡¨
      *
      * @param pageIndex
      * @param pageSize
@@ -58,15 +66,15 @@ public interface BarCodeService {
     Page<MainBarCodeBean> findMainBarCodeAll(long batchCodeId, int pageIndex, int pageSize);
 
     /**
-     * µÃµ½Åú´ÎµÄËùÓĞÖ÷Âë£¬ÓÃÓÚ´òÓ¡
+     * å¾—åˆ°æŸæ‰¹æ¬¡çš„æ‰€æœ‰ä¸»ç ï¼ˆç”¨äºæ‰“å°ï¼‰
      *
      * @param batchCodeId
      * @return
      */
-    List<MainBarCodeBean> findByBatchCodeId(long batchCodeId);
+    List<MainBarCodeBean> findMainBarCodeAll(long batchCodeId);
 
     /**
-     * Ä³¸öÖ÷ÂëÏÂµÄ¸±Âë
+     * æ ¹æ®ä¸»ç idå¾—åˆ°å‰¯ç 
      *
      * @param mainBarCodeId
      * @return
@@ -74,11 +82,43 @@ public interface BarCodeService {
     List<SubBarCodeBean> findSubBarCodeByMainCode(long mainBarCodeId);
 
     /**
-     * ĞŞ¸ÄÅú´ÎÎªÒÑ´òÓ¡
+     * æ›´æ–°æ‰¹æ¬¡æ‰“å°çŠ¶æ€
      *
      * @param batchCodeId
      */
-    void updatePrinted(int batchCodeId);
+    void updatePrinted(long batchCodeId);
 
+    /**
+     * å¾—åˆ°æ‰¹æ¬¡åˆ—è¡¨ï¼ˆåˆ†ç»„ï¼‰
+     *
+     * @param customerId
+     * @param goodId
+     * @param printed
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
     Page<BatchBarCodeBean> findBatchBarCodeAll(int customerId, int goodId, int printed, int pageIndex, int pageSize);
+
+    /**
+     * é”å®šæ¡ç 
+     *
+     * @param code
+     */
+    void lockedByCode(String code);
+
+    /**
+     * å–æ¶ˆé”å®šæ¡ç 
+     *
+     * @param code
+     */
+    void unLockByCode(String code);
+
+    /**
+     * æ˜¯å¦å¯ç”¨æˆ–è€…é”å®š
+     *
+     * @param code
+     * @return trueè¡¨ç¤ºå¯ç”¨ï¼Œfalseä¸å¯ç”¨
+     */
+    boolean codeUsable(String code, int goodId);
 }

@@ -2,6 +2,7 @@ package com.micromall.datacenter.service.order.impl;
 
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallUserBean;
+import com.micromall.datacenter.bean.delivery.DeliverItemBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.bean.orders.MallOrderBean;
 import com.micromall.datacenter.bean.orders.MallOrderItemBean;
@@ -11,8 +12,10 @@ import com.micromall.datacenter.service.agent.MallUserService;
 import com.micromall.datacenter.service.delivery.DeliverItemService;
 import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.service.order.MallOrderService;
+import com.micromall.datacenter.utils.ResourceServer;
 import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
+import com.micromall.datacenter.viewModel.appModel.OrderAppModel;
 import com.micromall.datacenter.viewModel.order.MallOrderSearchViewModel;
 import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,8 @@ public class MallOrderServiceImpl implements MallOrderService {
     private Environment environment;
     @Autowired
     private DeliverItemService deliverItemService;
+    @Autowired
+    private ResourceServer resourceServer;
 
     @Transactional
     public MallOrderBean create(MallOrderBean bean, int goodId, int realShipId) {
@@ -297,14 +302,20 @@ public class MallOrderServiceImpl implements MallOrderService {
                     String currentDay = DateUtil.formatDate(new Date(), StringUtil.DATE_PATTERN);
                     list.add(cb.greaterThanOrEqualTo(root.get("addTime").as(Date.class), StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN)));
                 }
-                //query.where(cb.and(cb.and(list.toArray(new Predicate[list.size()])), cb.or(p2, p3)));
-//                query.where(cb.and(list.toArray(new Predicate[list.size()])));
                 list.add(cb.or(p2, p3));
                 return cb.and(list.toArray(new Predicate[list.size()]));
-//                return query.getRestriction();
             }
         };
-        return dao.findAll(specification, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList)));
+        Page<MallOrderBean> pageInfo = dao.findAll(specification, new PageRequest(pageIndex - 1, pageSize, new Sort(orderList)));
+        for (MallOrderBean orderBean : pageInfo.getContent()) {
+            orderBean.setOrderImg(resourceServer.resourceUri(orderBean.getGood().getGoodImg()));
+            if (orderBean.getOrderItems() != null) {
+                for (MallOrderItemBean orderItemBean : orderBean.getOrderItems()) {
+                    orderItemBean.setOrdersBean(null);
+                }
+            }
+        }
+        return pageInfo;
     }
 
     @Transactional(readOnly = true)
@@ -316,5 +327,38 @@ public class MallOrderServiceImpl implements MallOrderService {
     public int countByTodayOrders(int customerId) {
         String currentDay = StringUtil.DateFormat(new Date(), StringUtil.DATE_PATTERN);
         return dao.countByCustomerIdAndAddTimeGreaterThanAndRealShipAgentIsNull(customerId, StringUtil.DateFormat(currentDay, StringUtil.DATE_PATTERN));
+    }
+
+    public OrderAppModel getAppModel(MallOrderBean orderBean) {
+        OrderAppModel appModel = new OrderAppModel();
+        appModel.setOrderId(orderBean.getOrderId());
+        appModel.setOrderName(orderBean.getOrderName());
+        appModel.setOrderImg(resourceServer.resourceUri(orderBean.getGood().getGoodImg()));
+        appModel.setProNum(orderBean.getProNum());
+        appModel.setAddTime(orderBean.getAddTime());
+        appModel.setShipName(orderBean.getShipName());
+        appModel.setShipMobile(orderBean.getShipMobile());
+        appModel.setShipAddr(orderBean.getShipAddr());
+        appModel.setDeliverStatus(orderBean.getDeliverStatus());
+        appModel.setLogiName(orderBean.getLogiName());
+        appModel.setLogiNum(orderBean.getLogiNum());
+        if (orderBean.getDeliverStatus() == 0) {
+            appModel.setOrderItems(null);
+        } else {
+            if (orderBean.getOrderStatus() == 1) {
+                List<String> orderItems = new ArrayList<String>();
+                for (MallOrderItemBean itemBean : orderBean.getOrderItems()) {
+                    orderItems.add(itemBean.getProCode());
+                }
+                appModel.setOrderItems(orderItems);
+            } else {
+                DeliverItemBean itemBean = deliverItemService.findByOrderId(orderBean.getOrderId());
+                List<String> orderItems = Arrays.asList(itemBean.getProList());
+                appModel.setOrderItems(orderItems);
+                appModel.setLogiName(itemBean.getLogiName());
+                appModel.setLogiNum(itemBean.getLogiNum());
+            }
+        }
+        return appModel;
     }
 }
