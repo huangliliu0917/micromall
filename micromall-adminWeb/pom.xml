@@ -91,7 +91,36 @@
             <version>1.4</version>
         </dependency>
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo-jc</id>
+            <name>JiangCai Repository</name>
+            <url>http://115.29.228.62:8082/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
     <build>
+        <plugins>
+            <plugin>
+                <groupId>com.huotu.tools.deploy</groupId>
+                <artifactId>huotu-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <server>huotudeployserver</server>
+                    <url>http://120.24.243.104/huotudeploy</url>
+                    <projectId>3101</projectId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <finalName>micromall-adminWeb</finalName>
     </build>
 </project>
