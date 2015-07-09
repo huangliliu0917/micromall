@@ -79,6 +79,7 @@ public class DeliverItemServiceImpl implements DeliverItemService {
         dao.setDelivered(orderId);
     }
 
+    @Transactional
     public Map<String, Integer> deliverPro(int customerId, String proCodes, String orderId, String logiName, String logiNum, int managerId) {
         Map<String, Integer> map = new HashMap<String, Integer>();
         MallOrderBean orderBean = orderService.findByOrderId(orderId);

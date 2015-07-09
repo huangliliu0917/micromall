@@ -22,6 +22,6 @@ public interface SubBarCodeDao extends JpaRepository<SubBarCodeBean, Long> {
     int countByLocked(String code, int goodId);
 
     @Modifying
-    @Query("update SubBarCodeBean set locked=1 where subCode=?1")
+    @Query("update SubBarCodeBean set locked=0 where subCode=?1")
     void unLockByCode(String code);
 }
