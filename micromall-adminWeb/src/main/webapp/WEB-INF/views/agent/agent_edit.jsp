@@ -35,12 +35,35 @@
         $(function () {
             agentHandler.init(ajaxUrl);
             <c:if test="${agentId>0}">
+            var groups = "${agentBean.groups}";
+            if (groups == "all") {
+                $("#checkAll").attr("checked", "checked");
+                $("input[name='chkGroup']").attr("disabled", "disabled");
+            } else {
+                var groupArray = groups.substring(1, groups.length - 1).split("|");
+                $.each(groupArray, function (o, item) {
+                    $("input[name='chkGroup'][value='" + item + "']").attr("checked", "checked");
+                })
+            }
             $("#agentMobile").attr("disabled", "disabled");
-            agentHandler.setSuperAgent(${agentBean.agentLevel.levelId}, superAgentId);
+            //agentHandler.setSuperAgent(${agentBean.agentLevel.levelId}, superAgentId);
+            var agentLevelId = ${agentBean.agentLevel.levelId};
 
+            <c:if test="${agentBean.superAgentId>0}">
+            agentHandler.getSuperLevel(agentLevelId, ${superAgent.agentLevel.levelId});
+            agentHandler.getSuperAgent(${superAgent.agentLevel.levelId}, ${superAgent.agentId});
+            </c:if>
             $("#previewCardImg").show();
             $("#agentChannel").val("${agentBean.agentChannel}");
             </c:if>
+
+            $("#checkAll").change(function () {
+                if ($(this).attr("checked")) {
+                    $("input[name='chkGroup']").attr("disabled", "disabled");
+                } else {
+                    $("input[name='chkGroup']").removeAttr("disabled");
+                }
+            })
         });
 
         function uploadImg() {
@@ -104,9 +127,19 @@
                                 </li>
                                 <li>
                                     <span class="title"><i class="red">*</i>上级代理：</span>
+                                    <select id="superLevel">
+                                        <option value="0">请选择</option>
+                                    </select>
                                     <select id="superAgent">
                                         <option value="0">请选择</option>
                                     </select>
+                                </li>
+                                <li>
+                                    <span class="title"><i class="red">*</i>选择分组：</span>
+                                    <input value="0" id="checkAll" type="checkbox"/>全部
+                                    <c:forEach items="${groupList}" var="group">
+                                        &nbsp; &nbsp; &nbsp;<input name="chkGroup" type="checkbox" value="${group.groupId}"/>${group.groupName}
+                                    </c:forEach>
                                 </li>
                                 <li>
                                     <span class="title"><i class="red">*</i>身份证：</span>

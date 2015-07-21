@@ -26,7 +26,7 @@ public class LocalResourceServer implements ResourceServer {
     @Autowired
     private void setEnv(Environment env) {
         //this.serverUri = env.getProperty("micromall.resouceUri", "file:///D:");
-        this.serverUri = env.getProperty("micromall.resouceUri", "http://192.168.1.117:3666/resource");
+        this.serverUri = env.getProperty("micromall.resouceUri", "http://192.168.1.128:3666/resource");
     }
 
     private String serverUri;

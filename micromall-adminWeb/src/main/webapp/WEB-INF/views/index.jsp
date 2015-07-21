@@ -111,6 +111,7 @@
                             <li onclick="goMenu('<c:url value="/agent/agentEdit"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加代理商</a></li>
                             <li onclick="goMenu('<c:url value="/agent/levelList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商等级管理</a></li>
                             <li onclick="goMenu('<c:url value="/agent/applyAgentList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商申请管理</a></li>
+                            <li onclick="goMenu('<c:url value="/group/groupList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>代理商分组管理</a></li>
                         </ul>
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>商品管理</span></a>

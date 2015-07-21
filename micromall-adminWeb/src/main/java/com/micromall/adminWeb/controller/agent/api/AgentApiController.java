@@ -52,6 +52,7 @@ public class AgentApiController extends BaseController {
                     preBean.setAgentAddr(agentBean.getAgentAddr());
                     preBean.setAgentCardImg(agentBean.getAgentCardImg());
                     preBean.setAgentTaobaoId(agentBean.getAgentTaobaoId());
+                    preBean.setGroups(agentBean.getGroups());
 
                     if (StringUtil.isNotEmpty(agentBean.getAgentPassword())) {
                         preBean.setAgentPassword(agentBean.getAgentPassword());
@@ -104,18 +105,19 @@ public class AgentApiController extends BaseController {
         return responseData;
     }
 
+    @RequestMapping(value = "/agentApi/getSuperLevel", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> getSuperLevel(int levelId) {
+        MallAgentLevelBean currentLevelBean = levelService.findByLevelId(levelId);
+        List<MallAgentLevelBean> levelList = levelService.findByCustomerIdAndSortNumLessThan(getCustomerId(), currentLevelBean.getSortNum());
+        responseData.put("levelList", levelList);
+        return responseData;
+    }
+
     @RequestMapping(value = "/agentApi/getSuperAgent", method = RequestMethod.POST)
     @ResponseBody
-    public Map<Object, Object> getSuperAgent(int levelId) {
-        List<MallAgentBean> list = new ArrayList<MallAgentBean>();
-        if (levelId > 0) {
-            MallAgentLevelBean currentLevelBean = levelService.findByLevelId(levelId);
-            int sortNum = currentLevelBean.getSortNum() - 1;
-            if (sortNum >= 0) {
-                MallAgentLevelBean levelBean = levelService.findByCustomerIdAndSortNum(getCustomerId(), sortNum);
-                list = agentService.findAgentByAgentLevel(levelBean, getCustomerId());
-            }
-        }
+    public Map<Object, Object> getSuperAgent(int superLevel) {
+        List<MallAgentBean> list = agentService.findByAgentLevel(getCustomerId(), superLevel);
         responseData.put("list", list);
         return responseData;
     }

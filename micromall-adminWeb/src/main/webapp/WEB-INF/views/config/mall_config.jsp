@@ -19,7 +19,9 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/scripts/jBox/Skins/Green/jbox.css"/>">
     <script type="text/javascript" src="<c:url value="/resources/scripts/ajaxfileupload.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/admin.upload.js" />"></script>
-    <title>编辑商品</title>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/kindeditor-4.1.10/kindeditor-all.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/scripts/kindeditor-4.1.10/lang/zh_CN.js" />"></script>
+    <title>基本设置</title>
     <script type="text/javascript">
         var customerId = ${customerId};
         var ajaxUrl = "<c:url value="/config/saveConfig" />";
@@ -42,13 +44,52 @@
         $(function () {
             <c:if test="${configBean!=null}">
             $("#previewLogo").show();
+            $("input[name='raAboutUsType'][value='${configBean.aboutUsType}']").attr("checked", "checked");
+            <c:if test="${configBean.aboutUsType==1}">
+            $("#aboutUs").val("${configBean.aboutUs}");
+            $("#type1").show();
+            $("#type0").hide();
             </c:if>
+            <c:if test="${configBean.aboutUsType==0}">
+            $("#type1").hide();
+            $("#type0").show();
+            </c:if>
+            </c:if>
+
+            var editor;
+            KindEditor.ready(function (K) {
+                editor = K.create("#weaponContent", {
+                    uploadJson: "<c:url value="/resources/scripts/kindeditor-4.1.10/jsp/upload_json.jsp?customerId=${customerId}" />"
+                });
+                <c:if test="${configBean!=null}">
+                <c:if test="${configBean.aboutUsType==0}">
+                editor.html($("#hdContent").html());
+                </c:if>
+
+                </c:if>
+            });
+
+            $("input[name='raAboutUsType']").change(function () {
+                if ($(this).val() == 1) {
+                    $("#type1").show();
+                    $("#type0").hide();
+                } else {
+                    $("#type1").hide();
+                    $("#type0").show();
+                }
+            })
 
             $("#saveSubmit").click(function () {
                 var title = $.trim($("#title").val());
                 var logo = $("#logo").val();
                 var contact = $.trim($("#contact").val());
-                var aboutUs = $.trim($("#aboutUs").val()).replace(/\r/g, "").replace(/\n/g, "");
+                var aboutUsType = $("input[name='raAboutUsType']:checked").val();
+                var aboutUs;
+                if (aboutUsType == 0) {
+                    aboutUs = editor.html();
+                } else {
+                    aboutUs = $.trim($("#aboutUs").val());
+                }
 
                 if (title.length == 0) {
                     $.jBox.tip("请输入商家名称");
@@ -70,6 +111,7 @@
                     title: title,
                     logo: logo,
                     contact: contact,
+                    aboutUsType: aboutUsType,
                     aboutUs: aboutUs
                 }
 
@@ -120,8 +162,20 @@
                                     <input type="text" class="text" value="${configBean.contact}" id="contact" onkeydown="J.CertainNumber(event)"/>
                                 </li>
                                 <li>
+                                    <p id="hdContent" style="display: none;">
+                                        ${configBean.aboutUs}
+                                    </p>
                                     <span class="title"><i class="red">*</i>关于我们：</span>
-                                    <textarea id="aboutUs">${configBean.aboutUs}</textarea>
+                                    <input type="radio" name="raAboutUsType" checked="checked" value="0"/>自定义
+                                    <input type="radio" name="raAboutUsType" value="1"/>外链
+                                    <p style="height: 10px;"></p>
+
+                                    <div id="type0">
+                                        <textarea id="weaponContent" name="content" style="width:700px;height:300px;"></textarea>
+                                    </div>
+                                    <div id="type1" style="display: none;">
+                                        http:// <input class="text" id="aboutUs"/>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

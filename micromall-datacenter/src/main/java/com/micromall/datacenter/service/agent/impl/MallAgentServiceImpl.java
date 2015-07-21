@@ -151,6 +151,11 @@ public class MallAgentServiceImpl implements MallAgentService {
     }
 
     @Transactional(readOnly = true)
+    public List<MallAgentBean> findByAgentLevel(int customerId, int agentLevel) {
+        return dao.findByAgentLevel(customerId, agentLevel);
+    }
+
+    @Transactional(readOnly = true)
     public boolean accountExist(String account, int customerId) {
         return dao.accountExist(account, customerId) > 0 ? true : false;
     }

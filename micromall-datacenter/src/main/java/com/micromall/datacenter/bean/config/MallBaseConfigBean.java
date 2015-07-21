@@ -22,6 +22,10 @@ public class MallBaseConfigBean {
     @Column(name = "Mall_Contact")
     private String contact;
 
+    @Column(name = "Mall_AboutUsType")
+    private int aboutUsType;
+
+    @Lob
     @Column(name = "Mall_AboutUs")
     private String aboutUs;
 
@@ -55,6 +59,14 @@ public class MallBaseConfigBean {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public int getAboutUsType() {
+        return aboutUsType;
+    }
+
+    public void setAboutUsType(int aboutUsType) {
+        this.aboutUsType = aboutUsType;
     }
 
     public String getAboutUs() {

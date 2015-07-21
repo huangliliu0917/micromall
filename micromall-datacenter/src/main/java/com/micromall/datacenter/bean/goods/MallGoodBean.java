@@ -37,6 +37,8 @@ public class MallGoodBean {
     private double price;
     @Column(name = "CustomerId")
     private int customerId;
+    @Column(name = "Groups")
+    private String groups;
 
     @Transient
     private List<GoodPriceViewModel> priceViewModelList;
@@ -127,5 +129,13 @@ public class MallGoodBean {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getGroups() {
+        return groups;
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
     }
 }

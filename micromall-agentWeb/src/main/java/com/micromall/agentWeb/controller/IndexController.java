@@ -1,5 +1,6 @@
 package com.micromall.agentWeb.controller;
 
+import com.micromall.datacenter.bean.config.MallBaseConfigBean;
 import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.config.MallBaseConfigService;
@@ -11,13 +12,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * Created by Administrator on 2015/5/21.
  */
 @Controller
 public class IndexController extends BaseController {
-    @Autowired
-    private MallAgentService agentService;
     @Autowired
     private MallBaseConfigService configService;
     @Autowired
@@ -31,6 +33,17 @@ public class IndexController extends BaseController {
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("returnUrl", returnUrl);
         return "login";
+    }
+
+    @RequestMapping("/aboutUs")
+    public String aboutUs(Model model) throws IOException {
+        MallBaseConfigBean configBean = configService.findByCustomerId(getCustomerId());
+        if (configBean.getAboutUsType() == 1) {
+            return "redirect:http://" + configBean.getAboutUs();
+        } else {
+            model.addAttribute("configBean", configBean);
+            return "about_us";
+        }
     }
 
     @RequestMapping({"/index", ""})

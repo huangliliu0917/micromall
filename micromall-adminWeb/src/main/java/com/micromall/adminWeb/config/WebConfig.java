@@ -47,9 +47,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         converters.add(converter);
     }
 
+    @Autowired
+    private AccountIntercepter accountIntercepter;
+
+    @Bean
+    public AccountIntercepter accountIntercepter() {
+        return new AccountIntercepter();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AccountIntercepter()).excludePathPatterns("/**/app/*");
+        registry.addInterceptor(accountIntercepter).excludePathPatterns("/**/app/*");
     }
 
     @Bean

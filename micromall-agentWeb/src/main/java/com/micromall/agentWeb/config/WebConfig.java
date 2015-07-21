@@ -52,7 +52,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(accountInterceptor);
+        registry.addInterceptor(accountInterceptor).excludePathPatterns("/**/weaponDetail");
     }
 
     @Bean

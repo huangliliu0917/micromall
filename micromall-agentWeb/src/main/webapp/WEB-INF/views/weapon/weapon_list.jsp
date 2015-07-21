@@ -99,7 +99,7 @@
                 <p class="pngi" style="margin: 16px 3px 6px 16px;"><img src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}" width="75px" height="75px"></p>
 
                 <p style="width:68%;margin: 0 auto;padding: 9px 1px;text-overflow: ellipsis;overflow: hidden;display: inline-block;height: 56px;">
-                        ${weaponBean.weaponContent}
+                        ${weaponBean.weaponTitle}
                 </p>
                     <%--<a class="wpbuttons" style="margin-top: 62px;" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span>查看</span></a>--%>
                 <a style="margin-top: 71px;" class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span style="float: right;color: #fff;padding: 0px 12px;background-color:#FF7A00;">查看</span></a>

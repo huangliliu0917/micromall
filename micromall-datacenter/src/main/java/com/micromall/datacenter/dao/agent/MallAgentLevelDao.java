@@ -21,4 +21,6 @@ public interface MallAgentLevelDao extends JpaRepository<MallAgentLevelBean, Int
     MallAgentLevelBean findByCustomerIdAndSortNum(int customerId, int sortNum);
 
     List<MallAgentLevelBean> findByCustomerIdAndSortNumGreaterThan(int customerId, int sortNum);
+
+    List<MallAgentLevelBean> findByCustomerIdAndSortNumLessThan(int customerId, int sortNum);
 }

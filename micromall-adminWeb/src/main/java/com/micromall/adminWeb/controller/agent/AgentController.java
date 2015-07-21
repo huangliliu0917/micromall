@@ -1,12 +1,17 @@
 package com.micromall.adminWeb.controller.agent;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.micromall.adminWeb.controller.BaseController;
 import com.micromall.datacenter.bean.agent.MallAgentApplyBean;
 import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.agent.MallAgentLevelBean;
+import com.micromall.datacenter.bean.agent.MallGroupBean;
 import com.micromall.datacenter.service.agent.MallAgentApplyService;
 import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
+import com.micromall.datacenter.service.agent.MallGroupService;
 import com.micromall.datacenter.viewModel.agent.MallAgentSearchViewModel;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +37,14 @@ public class AgentController extends BaseController {
     private MallAgentLevelService levelService;
     @Autowired
     private MallAgentApplyService applyService;
+    @Autowired
+    private MallGroupService groupService;
 
     @RequestMapping("/agent/agentList")
     public ModelAndView agentList(MallAgentSearchViewModel searchParams,
                                   @RequestParam(value = "pageIndex", required = false, defaultValue = "1") int pageIndex,
                                   @RequestParam(value = "superAgentId", required = false, defaultValue = "0") int superAgentId,
-                                  @RequestParam(value = "agentStatus", required = false, defaultValue = "-1") int agentStatus) {
+                                  @RequestParam(value = "agentStatus", required = false, defaultValue = "-1") int agentStatus) throws JsonProcessingException {
         ModelMap modelMap = new ModelMap();
         searchParams.setAgentStatus(agentStatus);
         searchParams.setCustomerId(getCustomerId());
@@ -51,6 +58,9 @@ public class AgentController extends BaseController {
 
         List<MallAgentLevelBean> levelList = levelService.findByCustomerId(getCustomerId());
         modelMap.put("levelList", levelList);
+        List<MallGroupBean> groupList = groupService.findAll(getCustomerId());
+        ObjectMapper objectMapper = new ObjectMapper();
+        modelMap.put("groupList", objectMapper.writeValueAsString(groupList));
 
         return new ModelAndView("agent/agent_list", modelMap);
     }
@@ -60,8 +70,13 @@ public class AgentController extends BaseController {
 //        int agentId = getQueryString("agentId", 0);
         ModelMap modelMap = new ModelMap();
         modelMap.put("agentId", agentId);
+        modelMap.put("groupList", groupService.findAll(getCustomerId()));
         if (agentId > 0) {
             MallAgentBean agentBean = agentService.findByAgentId(agentId);
+            if (agentBean.getSuperAgentId() > 0) {
+                MallAgentBean superAgent = agentService.findByAgentId(agentBean.getSuperAgentId());
+                modelMap.put("superAgent", superAgent);
+            }
             modelMap.put("agentBean", agentBean);
         }
         List<MallAgentLevelBean> levelList = levelService.findByCustomerId(getCustomerId());

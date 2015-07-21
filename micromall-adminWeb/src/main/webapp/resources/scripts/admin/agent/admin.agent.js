@@ -4,6 +4,7 @@
 
 var index = true;
 var superAgentCount = 0;
+var superLevelCount = 0;
 var agentHandler = {
     ajaxUrl: "",
     init: function (ajaxUrl) {
@@ -92,9 +93,26 @@ var agentHandler = {
             $(this).dialog("close");
         });
     },
-    setSuperAgent: function (agentLevel, superAgentId) {
+    getSuperLevel: function (levelId, superLevel) {
+        J.GetJsonRespons(agentHandler.ajaxUrl + "getSuperLevel", {
+            levelId: levelId
+        }, function (json) {
+            var $dom = $("#superLevel");
+            $dom.empty();
+            $dom.append('<option value="0">请选择</option>');
+            superLevelCount = json.levelList.length;
+            $.each(json.levelList, function (o, item) {
+                $dom.append('<option value="' + item.levelId + '">' + item.levelName + '</option>');
+            })
+            if (superLevel > 0) {
+                $dom.val(superLevel);
+            }
+        }, function () {
+        }, J.PostMethod);
+    },
+    getSuperAgent: function (superLevel, superAgentId) {
         J.GetJsonRespons(agentHandler.ajaxUrl + "getSuperAgent", {
-            levelId: agentLevel
+            superLevel: superLevel
         }, function (json) {
             var $dom = $("#superAgent");
             $dom.empty();
@@ -103,7 +121,7 @@ var agentHandler = {
             $.each(json.list, function (o, item) {
                 $dom.append('<option value="' + item.agentId + '">' + item.name + '</option>');
             })
-            if (agentId > 0) {
+            if (superAgentId > 0) {
                 $("#superAgent").val(superAgentId);
             }
         }, function () {
@@ -117,6 +135,7 @@ function checkForm() {
     var agentPassword = $.trim($("#agentPassword").val());
     var confirmPass = $.trim($("#confirmPass").val());
     var agentLevel = $("#agentLevel").val();
+    var superLevel = $("#superLevel").val();
     var superAgent = $("#superAgent").val();
     var agentArea = $.trim($("#agentArea").val());
     var agentChannel = $.trim($("#agentChannel").val());
@@ -126,6 +145,16 @@ function checkForm() {
     var agentWeixin = $.trim($("#agentWeixin").val());
     var agentAddr = $.trim($("#agentAddr").val());
     var agentTaobaoId = $.trim($("#agentTaobaoId").val());
+    var groups = "";
+    if ($("#checkAll").attr("checked")) {
+        groups = "all";
+    } else {
+        var $chkDom = $("input[name='chkGroup']:checked");
+        $chkDom.each(function () {
+            groups += $(this).val() + "|";
+        })
+        groups = "|" + groups;
+    }
 
     if (agentMobile.length == 0) {
         $.jBox.tip("请输入代理人手机号");
@@ -153,8 +182,12 @@ function checkForm() {
         $.jBox.tip("请选择代理商等级");
         return null;
     }
-    if (superAgentCount > 0 && superAgent == 0) {
+    if (superLevelCount > 0 && superAgent == 0) {
         $.jBox.tip("请选择上级代理");
+        return null;
+    }
+    if (groups.length == 0) {
+        $.jBox.tip("请选择分组");
         return null;
     }
     if (agentCardId.length == 0) {
@@ -189,7 +222,8 @@ function checkForm() {
         agentCertificate: "",
         levelId: agentLevel,
         agentCardImg: agentCardImg,
-        agentTaobaoId: agentTaobaoId
+        agentTaobaoId: agentTaobaoId,
+        groups: groups
     }
 
     return requestData;
@@ -216,7 +250,12 @@ $(function () {
     });
 
     $("#agentLevel").change(function () {
-        agentHandler.setSuperAgent($(this).val(), 0);
+        agentHandler.getSuperLevel($(this).val(), 0);
+        //agentHandler.setSuperAgent($(this).val(), 0);
+    });
+
+    $("#superLevel").change(function () {
+        agentHandler.getSuperAgent($(this).val(), 0);
     })
 
     $("#setAgentStatus").change(function () {

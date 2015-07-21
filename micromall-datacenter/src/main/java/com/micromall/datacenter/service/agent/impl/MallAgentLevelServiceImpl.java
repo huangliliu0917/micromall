@@ -61,4 +61,9 @@ public class MallAgentLevelServiceImpl implements MallAgentLevelService {
     public List<MallAgentLevelBean> findByCustomerIdAndSortNumGreaterThan(int customerId, int sortNum) {
         return dao.findByCustomerIdAndSortNumGreaterThan(customerId, sortNum);
     }
+
+    @Transactional(readOnly = true)
+    public List<MallAgentLevelBean> findByCustomerIdAndSortNumLessThan(int customerId, int sortNum) {
+        return dao.findByCustomerIdAndSortNumLessThan(customerId, sortNum);
+    }
 }

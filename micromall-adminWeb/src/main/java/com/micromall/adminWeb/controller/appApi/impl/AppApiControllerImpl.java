@@ -49,10 +49,10 @@ public class AppApiControllerImpl implements AppApiController {
         ApiResult<ManagerAppModel> apiResult = new ApiResult<ManagerAppModel>();
         if (managerBean == null) {
             apiResult.setResultCode(0);
-            apiResult.setMsg("登录失败");
+            apiResult.setMsg("璇锋眰鎴愬姛");
         } else {
             apiResult.setResultCode(1);
-            apiResult.setMsg("登录成功");
+            apiResult.setMsg("璇锋眰澶辫触");
         }
         apiResult.setResponseData(managerService.getAppModel(managerBean));
         return apiResult;
@@ -75,9 +75,9 @@ public class AppApiControllerImpl implements AppApiController {
                 resultList.add(orderService.getAppModel(orderBean));
             }
             result = 1;
-            apiResult.setMsg("请求成功");
+            apiResult.setMsg("璇锋眰鎴愬姛");
         } catch (Exception e) {
-            apiResult.setMsg("请求失败--" + e.getMessage());
+            apiResult.setMsg("璇锋眰澶辫触--" + e.getMessage());
         }
         apiResult.setResponseData(resultList);
         apiResult.setResultCode(result);
@@ -96,7 +96,7 @@ public class AppApiControllerImpl implements AppApiController {
             MallBaseConfigBean baseConfigBean = configService.findByCustomerId(customerId);
             indexInfoModel.setCustomerName(baseConfigBean.getTitle());
             indexInfoModel.setCustomerImg(resourceServer.resourceUri(baseConfigBean.getLogo()));
-            apiResult = new ApiResult<IndexInfoModel>(1, "请求成功", indexInfoModel);
+            apiResult = new ApiResult<IndexInfoModel>(1, "璇锋眰鎴愬姛", indexInfoModel);
         } catch (Exception e) {
             apiResult = new ApiResult<IndexInfoModel>(0, e.getMessage(), null);
         }
@@ -110,7 +110,7 @@ public class AppApiControllerImpl implements AppApiController {
         try {
             MallOrderBean orderBean = orderService.findByOrderId(orderId);
             OrderAppModel appModel = orderService.getAppModel(orderBean);
-            apiResult = new ApiResult<OrderAppModel>(1, "请求成功", appModel);
+            apiResult = new ApiResult<OrderAppModel>(1, "璇锋眰鎴愬姛", appModel);
         } catch (Exception e) {
             apiResult = new ApiResult<OrderAppModel>(0, e.getMessage(), null);
         }
@@ -127,7 +127,7 @@ public class AppApiControllerImpl implements AppApiController {
         try {
             Map<String, Integer> map = itemService.deliverPro(customerId, proCodes, orderId, logiName, logiNum, managerId);
             if (!map.containsValue(0)) result = 1;
-            apiResult = new ApiResult<Map<String, Integer>>(result, "请求成功", map);
+            apiResult = new ApiResult<Map<String, Integer>>(result, "璇锋眰鎴愬姛", map);
         } catch (Exception e) {
             apiResult = new ApiResult<Map<String, Integer>>(result, e.getMessage(), null);
         }
@@ -140,7 +140,7 @@ public class AppApiControllerImpl implements AppApiController {
         ApiResult<Integer> apiResult = null;
         try {
             managerService.updatePassword(managerId, oldPass, newPass);
-            apiResult = new ApiResult<Integer>(1, "请求成功", 1);
+            apiResult = new ApiResult<Integer>(1, "璇锋眰鎴愬姛", 1);
         } catch (Exception e) {
             apiResult = new ApiResult<Integer>(0, e.getMessage(), 0);
         }

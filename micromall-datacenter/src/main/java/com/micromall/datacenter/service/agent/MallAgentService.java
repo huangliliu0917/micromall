@@ -8,12 +8,12 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * ´úÀíÉÌÂß¼­
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
  * Created by Administrator on 2015/5/13.
  */
 public interface MallAgentService {
     /**
-     * Ìí¼Ó»òÕßÐÞ¸Ä´úÀíÉÌÐÅÏ¢
+     * ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½Þ¸Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
      *
      * @param bean
      * @param levelId
@@ -22,7 +22,7 @@ public interface MallAgentService {
     MallAgentBean save(MallAgentBean bean, int levelId);
 
     /**
-     * Í¨¹ý´úÀíÉÌidµÃµ½´úÀíÉÌÊµÌå
+     * Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
      *
      * @param agentId
      * @return
@@ -30,7 +30,7 @@ public interface MallAgentService {
     MallAgentBean findByAgentId(int agentId);
 
     /**
-     * ´øÌõ¼þ·ÖÒ³²éÕÒ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½
      *
      * @param searchBean
      * @param pageIndex
@@ -48,6 +48,8 @@ public interface MallAgentService {
 
     List<MallAgentBean> findAgentByAgentLevel(MallAgentLevelBean levelBean, int customerId);
 
+    List<MallAgentBean> findByAgentLevel(int customerId, int agentLevel);
+
     boolean accountExist(String account, int customerId);
 
     Page<MallAgentBean> findBySearchKey(int customerId, String searchKey, int pageIndex, int pageSize, int superAgentId);
@@ -61,7 +63,7 @@ public interface MallAgentService {
     void updateAddr(String newAddr, int agentId);
 
     /**
-     * Í¨¹ýaccountºÍcustomeridµÃµ½ÊµÌå
+     * Í¨ï¿½ï¿½accountï¿½ï¿½customeridï¿½Ãµï¿½Êµï¿½ï¿½
      *
      * @param agentAccount
      * @param customerId

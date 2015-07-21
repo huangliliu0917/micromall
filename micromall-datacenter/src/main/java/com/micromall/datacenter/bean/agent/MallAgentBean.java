@@ -59,6 +59,8 @@ public class MallAgentBean {
     private String refuseReason;
     @Column(name = "Authorization_Code")
     private String authorizationCode;
+    @Column(name = "Groups")
+    private String groups;
 
     public String getAgentAccount() {
         return agentAccount;
@@ -236,4 +238,11 @@ public class MallAgentBean {
         this.authorizationCode = authorizationCode;
     }
 
+    public String getGroups() {
+        return groups;
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
+    }
 }

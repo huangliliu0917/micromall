@@ -14,8 +14,9 @@ public class MicroWeaponBean {
     private int weaponId;
     @Column(name = "Weapon_Type")
     private int weaponType;
-    @Column(name = "Weapon_Imgs")
+    @Column(name = "Weapon_Imgs", length = 2000)
     private String weaponImgs;
+    @Lob
     @Column(name = "Weapon_Content")
     private String weaponContent;
     @Column(name = "CustomerId")

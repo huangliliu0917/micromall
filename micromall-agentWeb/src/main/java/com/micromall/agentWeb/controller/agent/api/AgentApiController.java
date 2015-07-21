@@ -188,7 +188,7 @@ public class AgentApiController extends BaseController {
 
             //重新登录
             result = agentService.updatePassword(newPass, getAgentId(), orignalPass);
-            if(result>0) {
+            if (result > 0) {
                 CookieHelper.setCookie(response, "account_" + getCustomerId(), agentBean.getAgentAccount());
                 CookieHelper.setCookie(response, "password_" + getCustomerId(), newPass);
                 request.getSession().setAttribute("loginToken_" + getCustomerId(), agentBean.getAgentAccount());

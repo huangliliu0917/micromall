@@ -2,6 +2,7 @@ package com.micromall.adminWeb.controller;
 
 import com.micromall.datacenter.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Administrator on 2015/5/16.
  */
 @Controller
+@Scope("request")
 public class BaseController {
     @Autowired
     private HttpServletRequest request;

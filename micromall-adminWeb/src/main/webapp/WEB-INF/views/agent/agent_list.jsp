@@ -26,6 +26,7 @@
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/agentApi/" />";
         var superAgentId = ${superAgentId};
+        var groupList = ${groupList};
         $(function () {
             agentHandler.init(ajaxUrl);
             $("#agentLevel").val(${searchParams.agentLevel});
@@ -33,7 +34,40 @@
             if (superAgentId > 0) {
                 $("#backBtn").show();
             }
+
+            $(".agentIdClass").each(function () {
+                var agentId = $(this).val();
+                var groups = $("#groups" + agentId).val();
+                if (groups.length > 0) {
+                    var groupName = "";
+                    if (groups == "all") {
+                        groupName = "全部";
+                    } else {
+                        var groupArray = groups.substring(1, groups.length - 1).split("|");
+                        $.each(groupArray, function (o, item) {
+                            if (o == groupArray.length - 1) {
+                                groupName += getGroupName(item);
+                            } else {
+                                groupName += getGroupName(item) + ",";
+                            }
+
+                        });
+                    }
+                    $("#groupName" + agentId).html(groupName);
+                }
+            })
         })
+
+        function getGroupName(groupId) {
+            var groupName = "";
+            $.each(groupList, function (o, item) {
+                if (groupId == item.groupId) {
+                    groupName = item.groupName;
+                    return false;
+                }
+            })
+            return groupName;
+        }
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/agent/admin.agent.js" />"></script>
 </head>
@@ -113,6 +147,7 @@
                             <th align="center" rowspan="1" colspan="1">手机</th>
                             <th align="center" rowspan="1" colspan="1">姓名</th>
                             <th align="center" rowspan="1" colspan="1">代理级别</th>
+                            <th align="center" rowspan="1" colspan="1">分组</th>
                             <th align="center" rowspan="1" colspan="1">审核</th>
                             <th align="center" rowspan="1" colspan="1">微信号</th>
                             <th align="center" rowspan="1" colspan="1">状态</th>
@@ -126,11 +161,17 @@
                         <tbody>
                         <c:forEach items="${pageInfo.getContent()}" var="agentBean">
                             <tr height="28px" class="odd">
-                                <td align="center">${agentBean.authorizationCode}</td>
+                                <td align="center">
+                                        ${agentBean.authorizationCode}
+                                    <input type="hidden" class="agentIdClass" value="${agentBean.agentId}"/>
+                                </td>
                                 <td align="center">${agentBean.agentAccount}
                                 </td>
                                 <td align="center">${agentBean.name}</td>
                                 <td align="center">${agentBean.agentLevel.levelName}</td>
+                                <td align="center"><input type="hidden" id="groups${agentBean.agentId}" value="${agentBean.groups}"/>
+                                    <span id="groupName${agentBean.agentId}"></span>
+                                </td>
                                 <td align="center">${agentBean.agentStatus==0?"待审核":agentBean.agentStatus==1?"审核通过":"审核失败"}</td>
                                 <td align="center">${agentBean.agentWeixin}</td>
                                 <td align="center">${agentBean.isDelete==0?"<span style='color:green'>活动</span>":"<span style='color:red'>冻结</span>"}</td>

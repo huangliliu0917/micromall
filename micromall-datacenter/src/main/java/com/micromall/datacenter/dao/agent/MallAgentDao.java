@@ -27,8 +27,11 @@ public interface MallAgentDao extends JpaRepository<MallAgentBean, Integer>, Jpa
     @Query("select agent from MallAgentBean agent where agent.agentAccount=?1 and agent.agentPassword=?2 and agent.customerId=?3 and agent.isDelete=0 and agent.agentStatus=1")
     MallAgentBean checkLogin(String account, String password, int customerId);
 
-    @Query("select agent from MallAgentBean agent where agent.agentStatus=1 and agent.customerId=?1 and agent.agentLevel=?2")
+    @Query("select agent from MallAgentBean agent where agent.agentStatus=1 and agent.isDelete=0 and agent.customerId=?1 and agent.agentLevel=?2")
     List<MallAgentBean> findByAgentLevel(int customerId, MallAgentLevelBean agentLevel);
+
+    @Query("select agent from MallAgentBean agent where agent.agentStatus=1 and agent.isDelete=0 and agent.customerId=?1 and agent.agentLevel.levelId=?2")
+    List<MallAgentBean> findByAgentLevel(int customerId, int agentLevel);
 
     @Query("select count(agent.agentId) from MallAgentBean agent where agent.agentAccount=?1 and agent.customerId=?2")
     int accountExist(String account, int customerId);

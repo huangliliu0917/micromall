@@ -127,14 +127,18 @@
     <p class="h10" style="clear:both"></p>
 
     <%--<ul class="ull">--%>
-        <%--<li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>--%>
-        <%--<li class="wenz1">统计</li>--%>
+    <%--<li class="png"><img src="<c:url value="/resources/images/connection-empty.png" />" width="100%"></li>--%>
+    <%--<li class="wenz1">统计</li>--%>
     <%--</ul>--%>
 
 
     <ul class="ull" onclick="goMenu('<c:url value="/usercenter?customerId=${customerId}"/>')">
         <li class="png"><img src="<c:url value="/resources/images/settings.png" />" width="100%"></li>
         <li class="wenz1">个人中心</li>
+    </ul>
+    <ul class="ull" onclick="goMenu('<c:url value="/aboutUs?customerId=${customerId}"/>')">
+        <li class="png"><img src="<c:url value="/resources/images/aboutus.png" />" width="100%"></li>
+        <li class="wenz1">关于我们</li>
     </ul>
 </div>
 
