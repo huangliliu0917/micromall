@@ -98,6 +98,8 @@ public class AgentApiController extends BaseController {
                     agentBean.setCustomerId(getCustomerId());
                     agentBean.setAddTime(new Date());
                     agentBean.setAgentStatus(0);
+                    MallAgentBean currentAgent = agentService.findByAgentId(getAgentId());
+                    agentBean.setGroups(currentAgent.getGroups());
                 }
                 agentBean.setSuperAgentId(getAgentId());
 

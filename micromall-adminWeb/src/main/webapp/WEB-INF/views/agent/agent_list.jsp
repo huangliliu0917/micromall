@@ -26,10 +26,11 @@
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/agentApi/" />";
         var superAgentId = ${superAgentId};
-        var groupList = ${groupList};
+        var groupList = ${groupListJson};
         $(function () {
             agentHandler.init(ajaxUrl);
             $("#agentLevel").val(${searchParams.agentLevel});
+            $("#groupId").val(${searchParams.groupId});
             $("#agentStatus").val(${agentStatus});
             if (superAgentId > 0) {
                 $("#backBtn").show();
@@ -102,26 +103,40 @@
                         <table width="100%">
                             <tbody>
                             <tr>
-                                <td width="55%">
+                                <td width="584px">
                                     <input type="hidden" value="${pageIndex}" name="pageIndex" id="pageIndex"/>
                                     <input type="hidden" value="${superAgentId}" name="superAgentId"/>
-                                    登录名：<input size="10" name="agentAccount" id="agentAccount" value="${searchParams.agentAccount}" class="hasDatepicker">
-                                    姓名：<input size="10" name="agentName" id="agentName" value="${searchParams.agentName}" class="hasDatepicker">
-                                    等级：<select id="agentLevel" name="agentLevel">
-                                    <option value="0">请选择</option>
-                                    <c:forEach items="${levelList}" var="levelBean" varStatus="index">
-                                        <option value="${levelBean.levelId}">${levelBean.levelName}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                                    审核状态：<select id="agentStatus" name="agentStatus">
-                                    <option value="-1">请选择</option>
-                                    <option value="0">待审核</option>
-                                    <option value="1">审核通过</option>
-                                    <option value="2">审核失败</option>
-                                </select>
-                                    <input type="submit" class="copybtn" value="查询" style="margin-left: 100px;">
+                                    登录名：<input style="width:200px;" name="agentAccount" id="agentAccount" value="${searchParams.agentAccount}" class="hasDatepicker">
+                                    姓名：<input style="width:200px;" name="agentName" id="agentName" value="${searchParams.agentName}" class="hasDatepicker">
+                                    <br><br>
+                                    等级：
+                                    <select id="agentLevel" name="agentLevel">
+                                        <option value="0">请选择</option>
+                                        <c:forEach items="${levelList}" var="levelBean" varStatus="index">
+                                            <option value="${levelBean.levelId}">${levelBean.levelName}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                    &nbsp;
+                                    审核状态：
+                                    <select id="agentStatus" name="agentStatus">
+                                        <option value="-1">请选择</option>
+                                        <option value="0">待审核</option>
+                                        <option value="1">审核通过</option>
+                                        <option value="2">审核失败</option>
+                                    </select>
+                                    &nbsp;
+                                    分组：
+                                    <select id="groupId" name="groupId">
+                                        <option value="0">请选择</option>
+                                        <c:forEach items="${groupList}" var="group">
+                                            <option value="${group.groupId}">${group.groupName}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <br><br>
+                                    <input type="submit" class="copybtn" value="查询" style="margin-left: 20px;">
                                     <input type="button" onclick="javascript:window.location.href='<c:url value="/agent/agentList"/>'" class="copybtn" value="显示全部" style="margin-left: 10px;">
+                                    </p>
                                 </td>
 
                                 <td align="right">
@@ -169,7 +184,8 @@
                                 </td>
                                 <td align="center">${agentBean.name}</td>
                                 <td align="center">${agentBean.agentLevel.levelName}</td>
-                                <td align="center"><input type="hidden" id="groups${agentBean.agentId}" value="${agentBean.groups}"/>
+                                <td align="center">
+                                    <input type="hidden" id="groups${agentBean.agentId}" value="${agentBean.groups}"/>
                                     <span id="groupName${agentBean.agentId}"></span>
                                 </td>
                                 <td align="center">${agentBean.agentStatus==0?"待审核":agentBean.agentStatus==1?"审核通过":"审核失败"}</td>

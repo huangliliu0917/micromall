@@ -27,7 +27,7 @@ public interface MallGoodsService {
     MallGoodBean findByGoodCode(int customerId, String goodCode);
 
     /**
-     * Î´É¾³ıµÄÉÌÆ·ÊıÁ¿
+     * Î´É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
      *
      * @param customerId
      * @return
@@ -35,10 +35,19 @@ public interface MallGoodsService {
     int countByCustomerId(int customerId);
 
     /**
-     * µÃµ½ÉÌÆ·±àºÅ
+     * ï¿½Ãµï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
      *
      * @param customerId
      * @return
      */
     String getGoodCode(int customerId);
+
+    /**
+     * å¾—åˆ°ä»£ç†å•†å¯æŸ¥çœ‹çš„å•†å“åˆ—è¡¨
+     *
+     * @param customerId
+     * @param agentId
+     * @return
+     */
+    List<MallGoodBean> findCheckableGoods(int customerId, int agentId);
 }

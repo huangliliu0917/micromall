@@ -24,6 +24,8 @@
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/agentApi/" />";
         var superAgentCount = 0;
+        var superLevelCount = 0;
+        var superGroup = "all";
         $(function () {
             $("#confirmBtn").click(function () {
                 $("#tipSpan").html("通过理由");
@@ -79,7 +81,28 @@
             });
 
             $("#agentLevel").change(function () {
-                setSuperAgent($(this).val(), 0);
+                resetSuper();
+                resetGroup();
+                getSuperLevel($(this).val(), 0);
+            });
+
+            $("#superLevel").change(function () {
+                resetGroup();
+                getSuperAgent($(this).val(), 0);
+            });
+
+            $("#superAgent").change(function () {
+                resetGroup();
+                superGroup = $(this).find("option:selected").attr("group-data");
+                if (superGroup == "all") {
+                    $("#checkAll").attr("checked", "checked");
+                    $("#checkAll").change();
+                } else {
+                    var groupArray = superGroup.substring(1, superGroup.length - 1).split("|");
+                    $.each(groupArray, function (o, item) {
+                        $("input[name='chkGroup'][value='" + item + "']").attr("checked", "checked");
+                    });
+                }
             });
 
             $("#applyStatus").change(function () {
@@ -91,21 +114,76 @@
                     $("#tipSpan").html("拒绝理由");
                 }
             });
+
+            $("#checkAll").change(function () {
+                if (superGroup != "all") {
+                    $.jBox.tip("该代理商分组只能包含于选择的上级代理分组");
+                    $(this).removeAttr("checked");
+                    return;
+                }
+                $("input[name='chkGroup']").removeAttr("checked", "checked");
+                if ($(this).attr("checked")) {
+                    $("input[name='chkGroup']").attr("disabled", "disabled");
+                } else {
+                    $("input[name='chkGroup']").removeAttr("disabled");
+                }
+            });
+
+            $("input[name='chkGroup']").change(function () {
+                if (superGroup != "all") {
+                    if (superGroup.indexOf("|" + $(this).val() + "|") == -1) {
+                        $.jBox.tip("该代理商分组只能包含于选择的上级代理分组");
+                        $(this).removeAttr("checked");
+                        return;
+                    }
+                }
+            });
         });
 
-        function setSuperAgent(agentLevel, superAgentId) {
+        function getSuperAgent(superLevel) {
             J.GetJsonRespons(ajaxUrl + "getSuperAgent", {
-                levelId: agentLevel
+                superLevel: superLevel
             }, function (json) {
                 var $dom = $("#superAgent");
                 $dom.empty();
                 $dom.append('<option value="0">请选择</option>');
                 superAgentCount = json.list.length;
                 $.each(json.list, function (o, item) {
-                    $dom.append('<option value="' + item.agentId + '">' + item.name + '</option>');
+                    $dom.append('<option group-data="' + item.groups + '" value="' + item.agentId + '">' + item.name + '</option>');
                 });
             }, function () {
             }, J.PostMethod);
+        }
+
+        function getSuperLevel(levelId) {
+            J.GetJsonRespons(ajaxUrl + "getSuperLevel", {
+                levelId: levelId
+            }, function (json) {
+                var $dom = $("#superLevel");
+                $dom.empty();
+                $dom.append('<option value="0">请选择</option>');
+                superLevelCount = json.levelList.length;
+                $.each(json.levelList, function (o, item) {
+                    $dom.append('<option value="' + item.levelId + '">' + item.levelName + '</option>');
+                });
+                if (superLevelCount == 0) {
+                    $("#checkAll").attr("checked", "checked");
+                    $("#checkAll").change();
+                }
+            }, function () {
+            }, J.PostMethod);
+        }
+
+        function resetSuper() {
+            $("#superLevel").html('<option value="0">请选择</option>');
+            $("#superAgent").html('<option value="0">请选择</option>');
+        }
+
+        function resetGroup() {
+            superGroup = "all";
+            $("#checkAll").removeAttr("checked")
+            $("input[name='chkGroup']").removeAttr("checked", "checked");
+            $("input[name='chkGroup']").removeAttr("disabled");
         }
     </script>
 </head>
@@ -136,9 +214,19 @@
                         </li>
                         <li class="levelLi">
                             <span class="title"><i class="red">*</i>上级代理：</span>
+                            <select id="superLevel">
+                                <option value="0">请选择</option>
+                            </select>
                             <select id="superAgent">
                                 <option value="0">请选择</option>
                             </select>
+                        </li>
+                        <li class="levelLi">
+                            <span class="title"><i class="red">*</i>选择分组：</span>
+                            <input value="0" id="checkAll" type="checkbox"/>全部
+                            <c:forEach items="${groupList}" var="group">
+                                &nbsp; &nbsp; &nbsp;<input name="chkGroup" type="checkbox" value="${group.groupId}"/>${group.groupName}
+                            </c:forEach>
                         </li>
                         <li id="refuseLi">
                             <span class="title"><i class="red">*</i><span id="tipSpan">拒绝理由</span>：</span>

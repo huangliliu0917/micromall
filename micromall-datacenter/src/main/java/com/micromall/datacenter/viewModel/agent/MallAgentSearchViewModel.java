@@ -13,15 +13,7 @@ public class MallAgentSearchViewModel {
     private String agentAccount;
     private int customerId;
     private int agentStatus;
-    //private int superAgentId;
-
-//    public int getSuperAgentId() {
-//        return superAgentId;
-//    }
-//
-//    public void setSuperAgentId(int superAgentId) {
-//        this.superAgentId = superAgentId;
-//    }
+    private int groupId;
 
     public int getAgentStatus() {
         return agentStatus;
@@ -61,5 +53,13 @@ public class MallAgentSearchViewModel {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }

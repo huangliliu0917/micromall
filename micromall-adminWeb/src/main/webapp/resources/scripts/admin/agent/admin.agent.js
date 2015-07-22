@@ -103,7 +103,13 @@ var agentHandler = {
             superLevelCount = json.levelList.length;
             $.each(json.levelList, function (o, item) {
                 $dom.append('<option value="' + item.levelId + '">' + item.levelName + '</option>');
-            })
+            });
+
+            if (superLevelCount == 0) {
+                $("#checkAll").attr("checked", "checked");
+                $("#checkAll").change();
+            }
+
             if (superLevel > 0) {
                 $dom.val(superLevel);
             }
@@ -119,7 +125,7 @@ var agentHandler = {
             $dom.append('<option value="0">请选择</option>');
             superAgentCount = json.list.length;
             $.each(json.list, function (o, item) {
-                $dom.append('<option value="' + item.agentId + '">' + item.name + '</option>');
+                $dom.append('<option group-data="' + item.groups + '" value="' + item.agentId + '">' + item.name + '</option>');
             })
             if (superAgentId > 0) {
                 $("#superAgent").val(superAgentId);
@@ -228,7 +234,7 @@ function checkForm() {
 
     return requestData;
 }
-
+var superGroup = "all";
 $(function () {
     $("#agentMobile").blur(function () {
         if (agentId == 0) {
@@ -250,13 +256,29 @@ $(function () {
     });
 
     $("#agentLevel").change(function () {
+        resetSuper();
+        resetGroup();
         agentHandler.getSuperLevel($(this).val(), 0);
-        //agentHandler.setSuperAgent($(this).val(), 0);
     });
 
     $("#superLevel").change(function () {
+        resetGroup();
         agentHandler.getSuperAgent($(this).val(), 0);
-    })
+    });
+
+    $("#superAgent").change(function () {
+        resetGroup();
+        superGroup = $(this).find("option:selected").attr("group-data");
+        if (superGroup == "all") {
+            $("#checkAll").attr("checked", "checked");
+            $("#checkAll").change();
+        } else {
+            var groupArray = superGroup.substring(1, superGroup.length - 1).split("|");
+            $.each(groupArray, function (o, item) {
+                $("input[name='chkGroup'][value='" + item + "']").attr("checked", "checked");
+            });
+        }
+    });
 
     $("#setAgentStatus").change(function () {
         if ($(this).val() == 2) {
@@ -266,5 +288,41 @@ $(function () {
             $("#tipSpan").html("通过理由");
         }
         $("#refuseReason").val("");
-    })
-})
+    });
+
+    $("#checkAll").change(function () {
+        if (superGroup != "all") {
+            $.jBox.tip("该代理商分组只能包含于选择的上级代理分组");
+            $(this).removeAttr("checked");
+            return;
+        }
+        $("input[name='chkGroup']").removeAttr("checked", "checked");
+        if ($(this).attr("checked")) {
+            $("input[name='chkGroup']").attr("disabled", "disabled");
+        } else {
+            $("input[name='chkGroup']").removeAttr("disabled");
+        }
+    });
+
+    $("input[name='chkGroup']").change(function () {
+        if (superGroup != "all") {
+            if (superGroup.indexOf("|" + $(this).val() + "|") == -1) {
+                $.jBox.tip("该代理商分组只能包含于选择的上级代理分组");
+                $(this).removeAttr("checked");
+                return;
+            }
+        }
+    });
+});
+
+function resetSuper() {
+    $("#superLevel").html('<option value="0">请选择</option>');
+    $("#superAgent").html('<option value="0">请选择</option>');
+}
+
+function resetGroup() {
+    superGroup = "all";
+    $("#checkAll").removeAttr("checked")
+    $("input[name='chkGroup']").removeAttr("checked", "checked");
+    $("input[name='chkGroup']").removeAttr("disabled");
+}

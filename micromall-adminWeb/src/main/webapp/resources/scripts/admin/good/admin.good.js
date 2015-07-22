@@ -63,6 +63,16 @@ function checkForm() {
     var goodImg = $.trim($("#goodImg").val());
     var price = $.trim($("#price").val());
     var levelPriceInfo = "";
+    var groups = "";
+    if ($("#checkAll").attr("checked")) {
+        groups = "all";
+    } else {
+        var $chkDom = $("input[name='chkGroup']:checked");
+        $chkDom.each(function () {
+            groups += $(this).val() + "|";
+        })
+        groups = "|" + groups;
+    }
     if (goodName.length == 0) {
         $.jBox.tip("请输入商品名称");
         return;
@@ -84,6 +94,10 @@ function checkForm() {
         $.jBox.tip("还有价格未设置");
         return null;
     }
+    if (groups.length == 0) {
+        $.jBox.tip("请选择分组");
+        return null;
+    }
     var goodDesc = $.trim($("#goodDesc").val()).replace(/\r/g, "").replace(/\n/g, "");
     if (goodDesc.length == 0) {
         $.jBox.tip("请输入商品描述");
@@ -97,7 +111,8 @@ function checkForm() {
         priceInfo: levelPriceInfo,
         goodDesc: goodDesc,
         goodImg: goodImg,
-        price: price
+        price: price,
+        groups: groups
     }
 
     return requestData;

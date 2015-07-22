@@ -1,7 +1,9 @@
 package com.micromall.datacenter.service.good.impl;
 
+import com.micromall.datacenter.bean.agent.MallAgentBean;
 import com.micromall.datacenter.bean.goods.MallGoodBean;
 import com.micromall.datacenter.dao.good.MallGoodsDao;
+import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.good.MallGoodsService;
 import com.micromall.datacenter.viewModel.good.GoodPriceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.util.List;
 public class MallGoodsServiceImpl implements MallGoodsService {
     @Autowired
     private MallGoodsDao dao;
+    @Autowired
+    private MallAgentService agentService;
 
     @Transactional
     public MallGoodBean save(MallGoodBean bean) {
@@ -109,5 +113,35 @@ public class MallGoodsServiceImpl implements MallGoodsService {
         String suffix = "000" + (countByCustomerId(customerId) + 1);
         suffix = suffix.substring(suffix.length() - 3, suffix.length());
         return customerId + suffix;
+    }
+
+    public List<MallGoodBean> findCheckableGoods(int customerId, int agentId) {
+        MallAgentBean agentBean = agentService.findByAgentId(agentId);
+        List<MallGoodBean> goodList = this.findAll(customerId, "");
+        if ("all".equals(agentBean.getGroups())) {
+            return goodList;
+        } else {
+            String[] groupArray = agentBean.getGroups().substring(1, agentBean.getGroups().length() - 1).split("/|");
+            List<MallGoodBean> resultGoodList = new ArrayList<MallGoodBean>();
+            for (MallGoodBean goodBean : goodList) {
+                if ("all".equals(goodBean.getGroups())) {
+                    resultGoodList.add(goodBean);
+                } else {
+                    boolean index = false;
+                    for (String groupId : groupArray) {
+                        if (goodBean.getGroups().contains("|" + groupId + "|"))
+                            index = true;
+                        else {
+                            index = false;
+                            break;
+                        }
+                    }
+                    if (index) {
+                        resultGoodList.add(goodBean);
+                    }
+                }
+            }
+            return resultGoodList;
+        }
     }
 }

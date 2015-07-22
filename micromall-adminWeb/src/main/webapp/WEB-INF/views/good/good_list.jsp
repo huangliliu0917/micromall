@@ -25,6 +25,41 @@
 
     <script type="text/javascript">
         var ajaxUrl = "<c:url value="/goodApi/" />";
+        var groupList = ${groupListJson};
+        $(function () {
+            $(".goodIdClass").each(function () {
+                var goodId = $(this).val();
+                var groups = $("#groups" + goodId).val();
+                if (groups.length > 0) {
+                    var groupName = "";
+                    if (groups == "all") {
+                        groupName = "全部";
+                    } else {
+                        var groupArray = groups.substring(1, groups.length - 1).split("|");
+                        $.each(groupArray, function (o, item) {
+                            if (o == groupArray.length - 1) {
+                                groupName += getGroupName(item);
+                            } else {
+                                groupName += getGroupName(item) + ",";
+                            }
+
+                        });
+                    }
+                    $("#groupName" + goodId).html(groupName);
+                }
+            })
+        });
+
+        function getGroupName(groupId) {
+            var groupName = "";
+            $.each(groupList, function (o, item) {
+                if (groupId == item.groupId) {
+                    groupName = item.groupName;
+                    return false;
+                }
+            })
+            return groupName;
+        }
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/good/admin.good.js" />"></script>
 </head>
@@ -75,6 +110,7 @@
                             <th align="center" rowspan="1" colspan="1">商品编号</th>
                             <th align="center" rowspan="1" colspan="1">商品名称</th>
                             <th align="center" rowspan="1" colspan="1">销售价</th>
+                            <th align="center" rowspan="1" colspan="1">可查看分组</th>
                             <th align="center" rowspan="1" colspan="1">创建日期</th>
                             <th align="center" rowspan="1" colspan="1">操作</th>
                         </tr>
@@ -85,9 +121,14 @@
                         <tbody>
                         <c:forEach items="${goodList}" var="goodBean">
                             <tr height="28px" class="odd">
-                                <td align="center">${goodBean.goodCode}</td>
+                                <td align="center">${goodBean.goodCode}
+                                    <input type="hidden" class="goodIdClass" value="${goodBean.goodId}"/></td>
                                 <td align="center">${goodBean.goodName}</td>
                                 <td align="center">${goodBean.price}</td>
+                                <td align="center">
+                                    <input type="hidden" id="groups${goodBean.goodId}" value="${goodBean.groups}"/>
+                                    <span id="groupName${goodBean.goodId}"></span>
+                                </td>
                                 <td align="center">${goodBean.addTime}</td>
                                 <td align="center">
                                     <a href="<c:url value="/delivery/batchCodeList?goodId=${goodBean.goodId}&goodName=${goodBean.goodName}" />">货品编码</a> |

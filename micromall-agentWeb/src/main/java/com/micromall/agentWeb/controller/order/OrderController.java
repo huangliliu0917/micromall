@@ -34,7 +34,7 @@ public class OrderController extends BaseController {
     private MallUserService userService;
 
     /**
-     * ·¢Æğ¶©µ¥¸øÒÑÓĞÓÃ»§
+     * ä»£ç†å•†å‡ºè´§
      *
      * @param sendId
      * @param model
@@ -42,7 +42,7 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/order/createOrder")
     public String createOrder(@RequestParam(value = "sendId", required = false, defaultValue = "0") int sendId, Model model) {
-        List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), "");
+        List<MallGoodBean> goodList = goodsService.findCheckableGoods(getCustomerId(), getAgentId());
         ShipInfoViewModel shipInfo = new ShipInfoViewModel();
 
         MallUserBean userBean = userService.findByUserId(sendId);
@@ -59,14 +59,14 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * ·¢Æğ¶©µ¥¸øÓÃ»§£¬ÎŞÓÃ»§ÔòÌí¼Ó
+     * åˆ›å»ºè®¢å•ã€‚å¿«é€Ÿæ·»åŠ ç”¨æˆ·
      *
      * @param model
      * @return
      */
     @RequestMapping("/order/createOrderFastReg")
     public String createOrderFastReg(Model model) {
-        List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), "");
+        List<MallGoodBean> goodList = goodsService.findCheckableGoods(getCustomerId(), getAgentId());
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("goodList", goodList);
 
@@ -74,14 +74,14 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * ´úÀíÉÌ½ø»õ
+     * ä»£ç†å•†è¿›è´§
      *
      * @param model
      * @return
      */
     @RequestMapping("/order/createAgentOrderIn")
     public String createAgentOrderIn(Model model) {
-        List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), "");
+        List<MallGoodBean> goodList = goodsService.findCheckableGoods(getCustomerId(), getAgentId());
         MallAgentBean agentBean = agentService.findByAgentId(getAgentId());
         ShipInfoViewModel shipInfo = new ShipInfoViewModel();
 
@@ -99,7 +99,7 @@ public class OrderController extends BaseController {
     }
 
     /**
-     * ¸ø´úÀíÉÌÖ÷¶¯·¢Æğ¶©µ¥
+     * ä»£ç†å•†å‡ºè´§ï¼ˆç»™ä»£ç†å•†ï¼‰
      *
      * @param agentId
      * @param model
@@ -107,7 +107,7 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/order/createAgentOrderOut")
     public String createAgentOrderOut(int agentId, Model model) {
-        List<MallGoodBean> goodList = goodsService.findAll(getCustomerId(), "");
+        List<MallGoodBean> goodList = goodsService.findCheckableGoods(getCustomerId(), agentId);
         MallAgentBean agentBean = agentService.findByAgentId(agentId);
         goodList = goodsService.setAgentPrice(goodList, agentBean.getAgentLevel().getLevelId());
         ShipInfoViewModel shipInfo = new ShipInfoViewModel();

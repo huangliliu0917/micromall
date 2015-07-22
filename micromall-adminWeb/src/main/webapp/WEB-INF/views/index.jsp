@@ -118,7 +118,6 @@
                         <ul class="children" style="display: block">
                             <li onclick="goMenu('<c:url value="/good/goodList"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>商品列表</a></li>
                             <li onclick="goMenu('<c:url value="/good/goodEdit"/>',this)"><a href="#"><i class="fa fa-caret-right"></i>添加商品</a></li>
-
                         </ul>
                     </li>
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>货品订单</span></a>
@@ -150,6 +149,7 @@
             </div>
             <!-- leftpanelinner -->
         </div>
+        <div style=" height:40px;"></div>
     </div>
     <!-- leftpanel -->
 

@@ -52,18 +52,11 @@
             <c:if test="${agentBean.superAgentId>0}">
             agentHandler.getSuperLevel(agentLevelId, ${superAgent.agentLevel.levelId});
             agentHandler.getSuperAgent(${superAgent.agentLevel.levelId}, ${superAgent.agentId});
+            superGroup = "${superAgent.groups}";
             </c:if>
             $("#previewCardImg").show();
             $("#agentChannel").val("${agentBean.agentChannel}");
             </c:if>
-
-            $("#checkAll").change(function () {
-                if ($(this).attr("checked")) {
-                    $("input[name='chkGroup']").attr("disabled", "disabled");
-                } else {
-                    $("input[name='chkGroup']").removeAttr("disabled");
-                }
-            })
         });
 
         function uploadImg() {

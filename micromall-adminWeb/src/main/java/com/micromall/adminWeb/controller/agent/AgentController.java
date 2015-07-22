@@ -60,7 +60,8 @@ public class AgentController extends BaseController {
         modelMap.put("levelList", levelList);
         List<MallGroupBean> groupList = groupService.findAll(getCustomerId());
         ObjectMapper objectMapper = new ObjectMapper();
-        modelMap.put("groupList", objectMapper.writeValueAsString(groupList));
+        modelMap.put("groupListJson", objectMapper.writeValueAsString(groupList));
+        modelMap.put("groupList", groupList);
 
         return new ModelAndView("agent/agent_list", modelMap);
     }
@@ -103,7 +104,7 @@ public class AgentController extends BaseController {
         model.addAttribute("applyBean", applyBean);
         model.addAttribute("levelList", levelService.findByCustomerId(getCustomerId()));
         model.addAttribute("applyLevel", levelService.findByLevelId(applyBean.getApplyLevelId()));
-
+        model.addAttribute("groupList", groupService.findAll(getCustomerId()));
         return "agent/agent_apply_detail";
     }
 }

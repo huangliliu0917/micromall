@@ -96,9 +96,11 @@ public class MallAgentServiceImpl implements MallAgentService {
                     if (searchBean.getAgentStatus() != -1) {
                         list.add(criteriaBuilder.equal(root.get("agentStatus").as(Integer.class), searchBean.getAgentStatus()));
                     }
-//                    if (searchBean.getSuperAgentId() > 0) {
-//                        list.add(criteriaBuilder.equal(root.get("superAgentId").as(Integer.class), searchBean.getSuperAgentId()));
-//                    }
+                    if (searchBean.getGroupId() > 0) {
+                        Predicate p1 = criteriaBuilder.like(root.get("groups").as(String.class), "%|" + searchBean.getGroupId() + "|%");
+                        Predicate p2 = criteriaBuilder.equal(root.get("groups").as(String.class), "all");
+                        list.add(criteriaBuilder.or(p1, p2));
+                    }
                 }
 
                 Predicate[] p = new Predicate[list.size()];

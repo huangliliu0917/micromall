@@ -29,12 +29,29 @@
             if (goodId > 0) {
                 $("#previewImg").show();
                 //设置价格
-
                 <c:forEach items="${goodBean.priceViewModelList}" var="viewModel">
                 $("#level${viewModel.levelId}_price").val(${viewModel.price});
                 </c:forEach>
-            }
 
+                var groups = "${goodBean.groups}";
+                if (groups == "all") {
+                    $("#checkAll").attr("checked", "checked");
+                    $("input[name='chkGroup']").attr("disabled", "disabled");
+                } else {
+                    $("#checkAll").removeAttr("checked");
+                    var groupArray = groups.substring(1, groups.length - 1).split("|");
+                    $.each(groupArray, function (o, item) {
+                        $("input[name='chkGroup'][value='" + item + "']").attr("checked", "checked");
+                    })
+                }
+            }
+            $("#checkAll").change(function () {
+                if ($(this).attr("checked")) {
+                    $("input[name='chkGroup']").attr("disabled", "disabled");
+                } else {
+                    $("input[name='chkGroup']").removeAttr("disabled");
+                }
+            })
         })
     </script>
     <script type="text/javascript" src="<c:url value="/resources/scripts/admin/good/admin.good.js" />"></script>
@@ -89,8 +106,18 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <span class="title"><i class="red"></i>可查看分组：</span>
+                                    <input value="0" id="checkAll" checked="checked" type="checkbox"/>全部
+                                    <c:forEach items="${groupList}" var="group">
+                                        &nbsp; &nbsp; &nbsp;<input name="chkGroup" type="checkbox" value="${group.groupId}"/>${group.groupName}
+                                    </c:forEach>
+                                    <br>
+                                    <span style="color:red;">tip:指定分组的代理商才可以查看</span>
+                                </li>
+                                <li>
                                     <span class="title"><i class="red">*</i>描述：</span>
-                                    <textarea id="goodDesc">${goodBean.goodDesc}</textarea>
+                                    <br><br>
+                                    <textarea style="width: 401px;height: 136px;" id="goodDesc">${goodBean.goodDesc}</textarea>
                                 </li>
                             </ul>
                         </div>
