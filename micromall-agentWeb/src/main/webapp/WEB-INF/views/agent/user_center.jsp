@@ -121,6 +121,25 @@
             });
             updateAddrDialog.show();
         }
+        var logoutUri = "<c:url value="/logout" />";
+        function logOut() {
+            loading.show("正在退出");
+            var op = {
+                type: "post",
+                url: logoutUri,
+                data: {
+                    customerId: customerId
+                },
+                dataType: 'json',
+                success: function (json) {
+                    loading.close();
+                    if (json.result == 1) {
+                        window.location.reload();
+                    }
+                }
+            };
+            $.ajax(op);
+        }
     </script>
     <style>
         .name {
@@ -213,7 +232,7 @@
 
     <div class="add_wei_shang_ii bottom">
         <div onclick="updatePass()" class="my_menu_btn2">
-            <a><span class="fontwp">修改密码</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+            <a href="#"><span class="fontwp">修改密码</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
 
         <div class="my_menu_btn2">
@@ -221,12 +240,14 @@
         </div>
 
         <div onclick="updateAddr()" class="my_menu_btn2">
-            <a><span class="fontwp">修改我的地址</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+            <a href="#"><span class="fontwp">修改我的地址</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
         <div class="my_menu_btn2">
             <a href="<c:url value="/certificates?customerId=${customerId}&agentAccount=${agentBean.agentAccount}" />"><span class="fontwp">查看我的代理证书</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
         </div>
-
+        <div class="my_menu_btn2">
+            <a href="javascript:logOut()"><span class="fontwp">退出登录</span><span style="float: right; padding-right: 10px; font-size:18pt;">＞</span></a>
+        </div>
     </div>
 </div>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
@@ -247,9 +268,6 @@
             <td><input class="upInput" type="password" id="confirmPass"/></td>
         </tr>
     </table>
-    <%--旧密码：<input class="upInput" type="password" id="orignalPass"/><br><br>--%>
-    <%--新密码：<input class="upInput" type="password" id="newPass"/><br><br>--%>
-    <%--确认新密码：<input class="upInput" type="password" id="confirmPass"/>--%>
 </script>
 <script type="text/html" id="update_addr_temp">
     收货地址：<input type="text" class="upInput" id="newAddr"/>

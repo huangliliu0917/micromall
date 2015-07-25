@@ -36,6 +36,7 @@ public class MicroWeaponController extends BaseController {
         MicroWeaponBean weaponBean = weaponService.findByWeaponId(weaponId);
         model.addAttribute("customerId", getCustomerId());
         model.addAttribute("weaponBean", weaponBean);
+        model.addAttribute("agentId", getAgentId());
         return "weapon/weapon_detail";
     }
 }

@@ -18,14 +18,14 @@
     <title>关于${configBean.title}</title>
     <style>
         #content img {
-            width: 100%;
+            max-width: 100%;
         }
     </style>
 </head>
-<body>
+<body style="max-width:640px; margin:0 auto">
 <p style="text-align: center;font-size: 20px;">关于${configBean.title}</p>
 
-<div id="content">
+<div id="content" style="padding: 14px;">
     ${configBean.aboutUs}
 </div>
 </body>

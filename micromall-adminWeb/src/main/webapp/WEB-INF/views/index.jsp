@@ -75,12 +75,21 @@
 <section>
     <div style="overflow: auto;" id="leftpanel" class="leftpanel">
         <div class="logopanel">
-            <img src="${uploadResourceServer.resourceUri(configBean.logo)}" height="40px" style="margin-left:15px">
-            <span style="width:160px; text-overflow:ellipsis;white-space:nowrap; overflow:hidden;display:inline-block;">
-                                <a href="#" style="color:#8f939e">${configBean.title}</a>
-                            </span>
+            <p style="float: left;width: 50%;">
+                <img src="${uploadResourceServer.resourceUri(configBean.logo)}" height="58px" width="58px" style="margin-left:15px">
+
+                <span style="width:160px;margin-top: 10px; text-overflow:ellipsis;white-space:nowrap; overflow:hidden;display:inline-block;">
+                                    <a href="#" style="color:#8f939e">${configBean.title}</a>
+                                </span>
+            </p>
+
+            <p style="float: right;width: 50%;text-align: center;">
+                <img style="width: 38px;" src="<c:url value="/resources/images/29@2x.png" />"/>
+                <span style="text-overflow:ellipsis;white-space:nowrap; overflow:hidden;display:inline-block;">
+                    <a href="http://120.24.243.104/resources/微商宝.apk" style="color:#8f939e">扫码app下载</a>
+                </span>
+            </p>
         </div>
-        <!-- logopanel -->
 
         <div class="leftpanelinner" style="border-bottom:1px dotted #444">
             <ul class="nav nav-pills nav-stacked nav-bracket" style="margin-bottom:0px">
@@ -90,20 +99,13 @@
                             <span>
                                 <a href="javascript:goMenu('<c:url value="/config/mallConfig" />')" style="color:#8f939e">商家设置</a>
                             </span>
-                            <span style="float: right">
-                                <a href="#" style="color:#8f939e">退出</a>
-                            </span>
                     </p>
                 </li>
 
             </ul>
         </div>
-
-
         <div style="height:100%;">
             <div class="leftpanelinner">
-
-
                 <ul class="nav nav-pills nav-stacked nav-bracket">
                     <li class="nav-parent nav-active active" style="border-bottom: 1px dotted #444;"><a href=""><i class="fa fa-chevron-circle-right"></i> <span>代理商管理</span></a>
                         <ul class="children" style="display: block">
@@ -158,8 +160,6 @@
         <div style="clear:both"></div>
         <iframe src="<c:url value="/agent/agentList"/>" scrolling="auto" frameborder="0" height="1000px" id="contentFrame" width="100%"></iframe>
     </div>
-    <!-- mainpanel -->
-
 </section>
 </body>
 </html>

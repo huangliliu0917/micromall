@@ -24,29 +24,12 @@
     <title>微商管理</title>
     <script type="text/javascript">
         var customerId = ${customerId};
-        var ajaxUrl = "<c:url value="/logout" />";
+
         function goMenu(uri) {
             window.location.href = uri;
         }
 
-        function logOut() {
-            loading.show("正在退出");
-            var op = {
-                type: "post",
-                url: ajaxUrl,
-                data: {
-                    customerId: customerId
-                },
-                dataType: 'json',
-                success: function (json) {
-                    loading.close();
-                    if (json.result == 1) {
-                        window.location.reload();
-                    }
-                }
-            };
-            $.ajax(op);
-        }
+
         $(function () {
             var orderNum = ${unShipCount};
             if (orderNum > 0) {
@@ -146,14 +129,14 @@
 <!---------------------/////////////////------------------------------------>
 <p class="h20"></p>
 <!---------------------/////////////////------------------------------------>
-<div class="ws_wrap">
-    <p class="h20"></p>
+<%--<div class="ws_wrap">--%>
+    <%--<p class="h20"></p>--%>
 
-    <p style="text-align:center;">
-        <a href="#"><span class="wj_i">关于长生鸟</span></a> |
-        <a href="javascript:logOut()"><span class="wj_i">退出登录</span></a>
-    </p>
-</div>
+    <%--<p style="text-align:center;">--%>
+        <%--<a href="#"><span class="wj_i">关于长生鸟</span></a> |--%>
+        <%--<a href="javascript:logOut()"><span class="wj_i">退出登录</span></a>--%>
+    <%--</p>--%>
+<%--</div>--%>
 <%@include file="/resources/navbar/navbarmall.jsp" %>
 </body>
 </html>

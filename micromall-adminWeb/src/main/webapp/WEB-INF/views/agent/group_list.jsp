@@ -40,7 +40,17 @@
             deleteGroup: function (groupId) {
                 jBox.confirm('确定要删除该分组？', '提示', function (v, h, f) {
                     if (v == "ok") {
-
+                        $.jBox.tip("正在删除...", "loading");
+                        J.GetJsonRespons(ajaxUrl + "delete", {groupId: groupId}, function (json) {
+                            if (json == 1) {
+                                $.jBox.tip("删除成功", "success");
+                            } else if (json == 2) {
+                                $.jBox.tip("该分组已被使用，无法删除");
+                            } else {
+                                $.jBox.tip("删除失败", "error");
+                            }
+                        }, function () {
+                        }, J.PostMethod);
                     }
                     return true;
                 });
@@ -103,14 +113,10 @@
                             <tr>
                                 <td width="55%">
                                 </td>
-
                                 <td align="right">
-
-
                                     <div class="fg-button clearfix" style="float:right">
                                         <a href="javascript:groupHandler.saveGroup(0,'','')">添加</a>
                                     </div>
-
                                 </td>
                             </tr>
                             </tbody>

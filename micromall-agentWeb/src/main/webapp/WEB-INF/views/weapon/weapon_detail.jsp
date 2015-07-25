@@ -32,6 +32,10 @@
             padding: 6px;
             text-align: center;
         }
+
+        #content img {
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -54,11 +58,13 @@
 <c:if test="${weaponBean.weaponType==1}">
     <p style="text-align: center;font-size: 20px;">${weaponBean.weaponTitle}</p>
 
-    <div>
+    <div id="content" style="padding: 14px;">
             ${weaponBean.weaponContent}
     </div>
 </c:if>
-<%@include file="/resources/navbar/navbarmall.jsp" %>
+<c:if test="${agentId>0}">
+    <%@include file="/resources/navbar/navbarmall.jsp" %>
+</c:if>
 </body>
 </html>
 
