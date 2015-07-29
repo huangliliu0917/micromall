@@ -41,14 +41,14 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
         return dao.save(applyBean);
     }
 
-    public MallAgentApplyBean updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason) {
+    public MallAgentApplyBean updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason, String groups) {
         dao.updateApplyStatus(applyStatus, refuseReason, applyId);
         MallAgentApplyBean applyBean = findByApplyId(applyId);
         applyBean.setApplyStatus(applyStatus);
         applyBean.setRefuseReason(refuseReason);
 
         if (applyStatus == 1) {
-            //ÉóºËÍ¨¹ı
+            //ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
             MallAgentBean agentBean = new MallAgentBean();
             agentBean.setAddTime(new Date());
             agentBean.setAgentAccount(applyBean.getMobile());
@@ -61,6 +61,7 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
             agentBean.setCustomerId(applyBean.getCustomerId());
             agentBean.setIsDelete(0);
             agentBean.setName(applyBean.getName());
+            agentBean.setGroups(groups);
             MallAgentBean resultBean = agentService.save(agentBean, levelId);
 
             applyBean.setResultLevel(resultBean.getAgentLevel());
@@ -68,17 +69,17 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
                 applyBean.setResultReferrer(agentService.findByAgentId(resultBean.getSuperAgentId()).getAgentAccount());
             }
             if (env.acceptsProfiles("prod")) {
-                //·¢ËÍ¶ÌĞÅ
+                //å®¡æ ¸æˆåŠŸ
                 MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
                 MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-                SMSHelper.send(applyBean.getMobile(), String.format("¹§Ï²Äú³ÉÎª%sµÄ´úÀíÉÌ£¬µ±Ç°´úÀí¼¶±ğÎª%s¡£ÄúµÄÉÏ¼¶´úÀíÊÇ£º%s£¬ÉÏ¼¶ÁªÏµµç»°£º%s¡£Çë¹Ø×¢¹«ÖÚºÅµÇÂ¼£¬µÇÂ¼ÕËºÅÎªÄúµÄÊÖ»úºÅ£¬µÇÂ¼ÃÜÂëÎªÄúÊÖ»úºÅµÄÄ©6Î»",
+                SMSHelper.send(applyBean.getMobile(), String.format("æ­å–œæ‚¨æˆä¸º%sçš„ä»£ç†å•†ï¼Œä»£ç†ç­‰çº§ä¸ºï¼š%sï¼Œä¸Šçº¿ä»£ç†ä¸ºï¼š%sï¼Œä¸Šçº¿ä»£ç†è”ç³»æ–¹å¼ï¼š%sï¼Œç¥æ‚¨ç”Ÿæ´»æ„‰å¿«",
                         configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
             }
         } else {
             if (env.acceptsProfiles("prod")) {
-                //·¢ËÍ¶ÌĞÅ
-                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-                SMSHelper.send(applyBean.getMobile(), String.format("¸ĞĞ»Äú¹Ø×¢%s,±§Ç¸Äú»¹ÎŞ·¨³ÉÎªÎÒÃÇ´úÀíÉÌ£¬ÀíÓÉ£º%s", configBean.getTitle(), applyBean.getRefuseReason()));
+                //ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½
+//                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
+//                SMSHelper.send(applyBean.getMobile(), String.format("ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½×¢%s,ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½Ş·ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½É£ï¿½%s", configBean.getTitle(), applyBean.getRefuseReason()));
             }
         }
         return this.save(applyBean);

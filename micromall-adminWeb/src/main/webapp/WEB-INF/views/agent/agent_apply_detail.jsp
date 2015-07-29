@@ -43,10 +43,25 @@
                             $.jBox.tip("请选择代理商等级");
                             return;
                         }
-                        if (superAgentCount > 0 && superAgent == 0) {
+                        if (superLevelCount > 0 && superAgent == 0) {
                             $.jBox.tip("请选择上级代理");
                             return;
                         }
+                    }
+
+                    var groups = "";
+                    if ($("#checkAll").attr("checked")) {
+                        groups = "all";
+                    } else {
+                        var $chkDom = $("input[name='chkGroup']:checked");
+                        $chkDom.each(function () {
+                            groups += $(this).val() + "|";
+                        })
+                        groups = "|" + groups;
+                    }
+                    if (groups.length == 0) {
+                        $.jBox.tip("请选择分组");
+                        return null;
                     }
 
                     if (refuseReason.length == 0) {
@@ -61,7 +76,8 @@
                         levelId: levelId,
                         superAgentId: superAgent,
                         applyStatus: applyStatus,
-                        refuseReason: refuseReason
+                        refuseReason: refuseReason,
+                        groups: groups
                     };
 
                     J.GetJsonRespons(ajaxUrl + "applyAgent", requestData, function (json) {

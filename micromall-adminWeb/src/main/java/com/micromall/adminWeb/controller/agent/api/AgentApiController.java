@@ -130,14 +130,14 @@ public class AgentApiController extends BaseController {
 
     @RequestMapping(value = "/agentApi/applyAgent", method = RequestMethod.POST)
     @ResponseBody
-    public Map<Object, Object> applyAgent(String mobile, int applyId, int levelId, int superAgentId, String password, int applyStatus, String refuseReason) {
+    public Map<Object, Object> applyAgent(String mobile, int applyId, int levelId, int superAgentId, String password, int applyStatus, String refuseReason, String groups) {
         int result = 0;
         try {
             if (agentService.accountExist(mobile, getCustomerId())) {
                 result = 2;//手机号码已存在
             } else {
 //                MallAgentApplyBean applyBean = applyService.findByApplyId(applyId);
-                applyService.updateApplyStataus(applyId, superAgentId, password, levelId, applyStatus, refuseReason);
+                applyService.updateApplyStataus(applyId, superAgentId, password, levelId, applyStatus, refuseReason,groups);
                 result = 1;
             }
         } catch (Exception e) {

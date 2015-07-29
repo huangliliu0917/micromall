@@ -19,7 +19,7 @@ public interface MallAgentApplyService {
      * @param applyStatus
      * @param refuseReason
      */
-    MallAgentApplyBean updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason);
+    MallAgentApplyBean updateApplyStataus(int applyId, int superAgentId, String password, int levelId, int applyStatus, String refuseReason, String groups);
 
     Page<MallAgentApplyBean> findByCustomerId(int customerId, String searchKey, int applyStatus, int pageIndex, int pageSize);
 
