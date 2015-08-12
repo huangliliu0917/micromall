@@ -113,9 +113,12 @@
                                             </p>
 
                                             <p style="text-align:center">
-                                                <c:forEach items="${weaponBean.imgList}" var="img">
-                                                    <span class="pngii"><img src="${uploadResourceServer.resourceUri(img)}" width="80px" height="80px"></span>
-                                                </c:forEach>
+                                                <c:if test="${weaponBean.weaponImgs!=''}">
+                                                    <c:forEach items="${weaponBean.imgList}" var="img">
+                                                        <span class="pngii"><img src="${uploadResourceServer.resourceUri(img)}" width="80px" height="80px"></span>
+                                                    </c:forEach>
+                                                </c:if>
+
                                             </p>
 
                                             <p style="clear: both"></p>
@@ -145,7 +148,11 @@
                                 <tbody>
                                 <c:forEach items="${pageInfo.getContent()}" var="weaponBean">
                                     <tr height="28px" class="odd">
-                                        <td align="center"><img style="width: 80px;height: 80px;" src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}"/></td>
+                                        <td align="center">
+                                            <c:if test="${weaponBean.weaponImgs!=''}">
+                                                <img style="width: 80px;height: 80px;" src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}"/>
+                                            </c:if>
+                                        </td>
                                         <td>
                                             <p style="width: 90%;margin: 0 auto;padding: 10px;text-overflow:ellipsis;text-align:center;white-space:nowrap;overflow:hidden;display:inline-block;">
                                                     ${weaponBean.weaponTitle}

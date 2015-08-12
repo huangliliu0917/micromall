@@ -10,6 +10,8 @@ import com.micromall.datacenter.service.agent.MallAgentLevelService;
 import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.agent.MallGroupService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class GroupApiControllerTest extends SpringWebTest {
+    private final static Log log = LogFactory.getLog(GroupApiControllerTest.class);
     @Autowired
     private MallAgentService agentService;
     @Autowired

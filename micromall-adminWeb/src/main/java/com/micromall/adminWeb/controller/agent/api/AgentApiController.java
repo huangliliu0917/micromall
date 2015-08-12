@@ -11,6 +11,8 @@ import com.micromall.datacenter.service.agent.MallAgentService;
 import com.micromall.datacenter.service.config.MallBaseConfigService;
 import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ import java.util.*;
 @Controller
 @Scope("request")
 public class AgentApiController extends BaseController {
+    private static final Log log = LogFactory.getLog(AgentApiController.class);
     @Autowired
     private MallAgentService agentService;
     @Autowired
@@ -131,16 +134,18 @@ public class AgentApiController extends BaseController {
     @RequestMapping(value = "/agentApi/applyAgent", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> applyAgent(String mobile, int applyId, int levelId, int superAgentId, String password, int applyStatus, String refuseReason, String groups) {
+        log.error("applyAgent_test log");
         int result = 0;
         try {
             if (agentService.accountExist(mobile, getCustomerId())) {
                 result = 2;//手机号码已存在
             } else {
 //                MallAgentApplyBean applyBean = applyService.findByApplyId(applyId);
-                applyService.updateApplyStataus(applyId, superAgentId, password, levelId, applyStatus, refuseReason,groups);
+                applyService.updateApplyStataus(applyId, superAgentId, password, levelId, applyStatus, refuseReason, groups);
                 result = 1;
             }
         } catch (Exception e) {
+            log.error("applyAgent", e);
             responseData.put("msg", e.getMessage());
         }
         responseData.put("result", result);

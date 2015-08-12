@@ -81,10 +81,10 @@
                     SimplePrompt.showPrompt("请输入您的身份证号码");
                     return;
                 }
-                if (cardIdImg.length == 0) {
-                    SimplePrompt.showPrompt("请上传手持身份证照片");
-                    return;
-                }
+//                if (cardIdImg.length == 0) {
+//                    SimplePrompt.showPrompt("请上传手持身份证照片");
+//                    return;
+//                }
                 if (applyReason.length == 0) {
                     SimplePrompt.showPrompt("请输入申请理由");
                     return;
@@ -109,7 +109,7 @@
                 J.GetJsonRespons(ajaxUrl, requestData, function (json) {
                     loading.close();
                     if (json.result == 1) {
-                        SimplePrompt.showPrompt("感谢您的关注，您已成功提交审核，请等待审核结果");
+                        SimplePrompt.showPrompt("感谢您的关注，您已成功提交审核，请等待审核结果，如审核通过，请使用您的手机号码登录，登录密码为您手机号码的后6位，请及时修改密码");
                     } else {
                         SimplePrompt.showPrompt("您的提交失败了");
                     }

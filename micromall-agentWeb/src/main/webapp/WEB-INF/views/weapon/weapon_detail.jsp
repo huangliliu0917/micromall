@@ -49,9 +49,12 @@
     <p style="height:20px;"></p>
 
     <div style="margin-top: 29px;text-align:center;">
-        <c:forEach items="${weaponBean.imgList}" var="img">
-            <img style="width: 96%;" src="${uploadResourceServer.resourceUri(img)}">
-        </c:forEach>
+        <c:if test="${weaponBean.weaponImgs!=''}">
+            <c:forEach items="${weaponBean.imgList}" var="img">
+                <img style="width: 96%;" src="${uploadResourceServer.resourceUri(img)}">
+            </c:forEach>
+        </c:if>
+
         <p style="height:27px"></p>
     </div>
 </c:if>

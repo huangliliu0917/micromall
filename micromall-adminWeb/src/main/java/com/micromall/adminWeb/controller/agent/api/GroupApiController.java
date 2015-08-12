@@ -3,6 +3,8 @@ package com.micromall.adminWeb.controller.agent.api;
 import com.micromall.adminWeb.controller.BaseController;
 import com.micromall.datacenter.bean.agent.MallGroupBean;
 import com.micromall.datacenter.service.agent.MallGroupService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

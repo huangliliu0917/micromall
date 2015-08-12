@@ -46,7 +46,7 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
         MallAgentApplyBean applyBean = findByApplyId(applyId);
         applyBean.setApplyStatus(applyStatus);
         applyBean.setRefuseReason(refuseReason);
-
+        MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
         if (applyStatus == 1) {
             //���ͨ��
             MallAgentBean agentBean = new MallAgentBean();
@@ -71,13 +71,19 @@ public class MallAgentApplyServiceImpl implements MallAgentApplyService {
             if (env.acceptsProfiles("prod")) {
                 //审核成功
                 MallAgentBean superAgent = agentService.findByAgentId(superAgentId);
-                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
-                SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，代理等级为：%s，上线代理为：%s，上线代理联系方式：%s，祝您生活愉快",
-                        configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+
+                if (superAgent == null) {
+                    SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，代理等级为：%s，祝您生活愉快",
+                            configBean.getTitle(), resultBean.getAgentLevel()));
+                } else {
+                    SMSHelper.send(applyBean.getMobile(), String.format("恭喜您成为%s的代理商，代理等级为：%s，上线代理为：%s，上线代理联系方式：%s，祝您生活愉快",
+                            configBean.getTitle(), resultBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+                }
             }
         } else {
             if (env.acceptsProfiles("prod")) {
-                //���Ͷ���
+                SMSHelper.send(applyBean.getMobile(), String.format("由于一些原因您无法成为%s的代理商，理由：%s", configBean.getTitle(), refuseReason));
+                //
 //                MallBaseConfigBean configBean = configService.findByCustomerId(applyBean.getCustomerId());
 //                SMSHelper.send(applyBean.getMobile(), String.format("��л����ע%s,��Ǹ�����޷���Ϊ���Ǵ����̣����ɣ�%s", configBean.getTitle(), applyBean.getRefuseReason()));
             }

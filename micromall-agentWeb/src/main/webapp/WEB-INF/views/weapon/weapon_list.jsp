@@ -82,9 +82,11 @@
                 </p>
 
                 <div style="text-align:center">
-                    <c:forEach items="${weaponBean.imgList}" var="img">
-                        <p class="pngii"><img src="${uploadResourceServer.resourceUri(img)}" width="80px" height="80px"></p>
-                    </c:forEach>
+                    <c:if test="${weaponBean.weaponImgs!=''}">
+                        <c:forEach items="${weaponBean.imgList}" var="img">
+                            <p class="pngii"><img src="${uploadResourceServer.resourceUri(img)}" width="80px" height="80px"></p>
+                        </c:forEach>
+                    </c:if>
                 </div>
                 <p style="clear:both; height:5px"></p>
                 <a class="wpbuttons" href="<c:url value="/weapon/weaponDetail?customerId=${customerId}&weaponId=${weaponBean.weaponId}" />"><span style="float: right;color: #fff;padding: 0px 12px;background-color:#FF7A00;">查看</span></a>
@@ -96,7 +98,10 @@
     <c:otherwise>
         <c:forEach items="${pageInfo.getContent()}" var="weaponBean">
             <div class="boxxr">
-                <p class="pngi" style="margin: 16px 3px 6px 16px;"><img src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}" width="75px" height="75px"></p>
+                <c:if test="${weaponBean.weaponImgs!=''}">
+                    <p class="pngi" style="margin: 16px 3px 6px 16px;"><img src="${uploadResourceServer.resourceUri(weaponBean.weaponImgs)}" width="75px" height="75px"></p>
+                </c:if>
+
 
                 <p style="width:68%;margin: 0 auto;padding: 9px 1px;text-overflow: ellipsis;overflow: hidden;display: inline-block;height: 56px;">
                         ${weaponBean.weaponTitle}

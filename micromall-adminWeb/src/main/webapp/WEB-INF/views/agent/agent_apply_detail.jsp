@@ -248,6 +248,9 @@
                             <span class="title"><i class="red">*</i><span id="tipSpan">拒绝理由</span>：</span>
                             <textarea id="refuseReason" style="width: 303px;height: 117px;margin-top: 20px;padding: 10px;"></textarea>
                         </li>
+                        <li>
+                            <span style="color:red;" class="title">如审核通过，代理商登录密码为手机号码后6位</span>
+                        </li>
                     </ul>
                 </div>
             </div>

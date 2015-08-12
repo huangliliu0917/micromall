@@ -72,10 +72,10 @@
                     $.jBox.tip("请输入软文内容");
                     return;
                 }
-                if (weaponImgs.length == 0) {
-                    $.jBox.tip("请上传缩略图");
-                    return;
-                }
+//                if (weaponImgs.length == 0) {
+//                    $.jBox.tip("请上传缩略图");
+//                    return;
+//                }
                 $.jBox.tip("正在保存", "loading");
                 var requestData = {
                     weaponTitle: weaponTitle,

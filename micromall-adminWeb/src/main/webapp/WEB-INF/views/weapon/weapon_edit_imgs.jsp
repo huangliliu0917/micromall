@@ -83,10 +83,10 @@
                     $.jBox.tip("请输入软文内容");
                     return;
                 }
-                if ($imgs.length == 0) {
-                    $.jBox.tip("请至少上传一张图片");
-                    return;
-                }
+//                if ($imgs.length == 0) {
+//                    $.jBox.tip("请至少上传一张图片");
+//                    return;
+//                }
                 $.jBox.tip("正在保存", "loading");
                 var requestData = {
                     weaponContent: weaponContent,

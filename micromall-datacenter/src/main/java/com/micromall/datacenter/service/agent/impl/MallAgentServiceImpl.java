@@ -10,6 +10,7 @@ import com.micromall.datacenter.utils.SMSHelper;
 import com.micromall.datacenter.utils.StringUtil;
 import com.micromall.datacenter.viewModel.agent.MallAgentSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,6 +34,8 @@ public class MallAgentServiceImpl implements MallAgentService {
     private MallAgentDao dao;
     @Autowired
     private MallBaseConfigService configService;
+    @Autowired
+    private Environment env;
 
     /**
      * 保存一个实体
@@ -130,15 +133,23 @@ public class MallAgentServiceImpl implements MallAgentService {
      */
     public void updateAgentStatus(int agentStatus, String refuseReason, int agentId) {
         dao.updateAgentStatus(agentStatus, refuseReason, agentId);
-        //发送短信
-        MallAgentBean agentBean = this.findByAgentId(agentId);
-        MallAgentBean superAgent = this.findByAgentId(agentBean.getSuperAgentId());
-        MallBaseConfigBean configBean = configService.findByCustomerId(agentBean.getCustomerId());
-        if (agentStatus == 1) {
-            SMSHelper.send(agentBean.getAgentAccount(), String.format("恭喜您成为%s的代理商，当前代理级别为%s，您的上级代理是：%s，上级联系电话：%s。请关注公众号",
-                    configBean.getTitle(), agentBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
-        } else {
-            SMSHelper.send(agentBean.getAgentAccount(), String.format("由于一些原因您无法成为%s的代理商，理由：%s", configBean.getTitle(), refuseReason));
+
+        if (env.acceptsProfiles("prod")) {
+            //发送短信
+            MallAgentBean agentBean = this.findByAgentId(agentId);
+            MallAgentBean superAgent = this.findByAgentId(agentBean.getSuperAgentId());
+            MallBaseConfigBean configBean = configService.findByCustomerId(agentBean.getCustomerId());
+            if (agentStatus == 1) {
+                if (superAgent == null) {
+                    SMSHelper.send(agentBean.getAgentAccount(), String.format("恭喜您成为%s的代理商，代理等级为：%s，祝您生活愉快",
+                            configBean.getTitle(), agentBean.getAgentLevel().getLevelName()));
+                } else {
+                    SMSHelper.send(agentBean.getAgentAccount(), String.format("恭喜您成为%s的代理商，当前代理级别为%s，您的上级代理是：%s，上级联系电话：%s。请关注公众号",
+                            configBean.getTitle(), agentBean.getAgentLevel().getLevelName(), superAgent.getName(), superAgent.getAgentAccount()));
+                }
+            } else {
+                SMSHelper.send(agentBean.getAgentAccount(), String.format("由于一些原因您无法成为%s的代理商，理由：%s", configBean.getTitle(), refuseReason));
+            }
         }
     }
 
